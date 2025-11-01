@@ -1,6 +1,6 @@
 # Week 1: Introduction to Python and Basic Concepts
 
-## Introduction to Programming
+## Introduction to Programming and Data Science
 
 ### What is programming?
 
