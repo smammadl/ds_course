@@ -1,7 +1,5 @@
 # Week 1: Introduction to Python and Basic Concepts
 
-This document provides a detailed overview of the topics covered in the first week of the "Python for Data Science: Beginner Level" course.
-
 ## Introduction to Programming
 
 ### What is programming?
