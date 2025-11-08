@@ -28,20 +28,54 @@
     *   Input
 
 ## 1.2. Data Structures and Control Flow
-<!-- *   Introduction to Data Structures
+*   Introduction to Data Structures
 *   Lists
+    *   Creating Lists
+    *   List Membership
+    *   Indexing and Slicing
+    *   Modifying Lists
+    *   List Methods
+    *   Nested Lists
 *   Tuples
+    *   Creating Tuples
+    *   When to use Tuples?
+*   Logical Operators
+    *   Chained Comparison Operators
 *   Conditional Statements
+    *   `if`, `elif`, and `else`
+    *   Nested Conditional Statements
+    *   Single-line Conditional Statements
+    *   Match Statement
 *   Loops 
-*   Basic Data Manipulation  -->
+    *   `for` Loops
+    *   `while` Loops
+    *   `break`, `continue`, `pass`
+    *   Nested Loops
+*   List Comprehensions
+    *   The Basic Syntax
+    *   Adding a Condition
+    *   `if-else` in List Comprehensions
+    *   Nested List Comprehensions
 
 ## 1.3. Advanced Data Structures and Functions
-<!-- *   Dictionaries 
+*   Dictionaries 
+    *   Creating Dictionaries
+    *   Accessing Values
+    *   Modifying Dictionaries
+    *   More complex Dictionaries
+    *   Operations on Dictionaries
 *   Sets 
+    *   Creating Sets
+    *   Set Operations
 *   Introduction to Functions 
+    *   Writing and Calling Functions
 *   Function Arguments 
+    *   Positional Arguments
+    *   Keyword Arguments
+    *   Using return statement
+    *   Adding logic to functions
 *   Scope of Variables 
-*   Basic Data Transformation  -->
+<!-- *   Basic Data Transformation  -->
 
 ## 1.4. File Handling and Modules
 <!-- *   Reading and Writing Files 
