@@ -77,35 +77,33 @@
 *   Scope of Variables 
 <!-- *   Basic Data Transformation  -->
 
-## 1.4. File Handling and Modules
-<!-- *   Reading and Writing Files 
-*   Introduction to Python's Standard Library 
-*   Basic Data Analysis  -->
-
 # 2. Python: Intermediate (2 Weeks)
 
 ## 2.1. Advanced Functions and Functional Programming for Data Processing
-<!-- *   Lambda Functions
+*   Lambda Functions
 *   Map, Filter, and Reduce
 *   List Comprehensions
 *   Dictionary and Set Comprehensions
 *   Error Handling
-*   Raising Exceptions -->
+*   Raising Exceptions
 
 ## 2.2. Object-Oriented Programming (OOP)
-<!-- *   Introduction to OOP
+*   Introduction to OOP
 *   Creating Classes
 *   Inheritance
 *   Polymorphism
 *   Encapsulation
-*   Data Classes -->
+*   Data Classes
 
 ## 2.3. Advanced Data Structures and Iterators
-<!-- *   Generators
+*   Args and Kwargs
+*   Generators
 *   Decorators
+*   Reading and Writing Files 
 *   Context Managers
+*   Introduction to Python's Standard Library 
 *   Collections Module
-*   Itertools Module -->
+*   Itertools Module
 
 ## 2.4. Working with Data and APIs
 <!-- *   JSON and XML
@@ -114,14 +112,108 @@
 *   Data Validation and Cleaning -->
 
 # 3. Python for Data Analysis (2 Weeks)
-## Numpy
 
-## Pandas
-*   CSV and Excel Processing
+## 3.1. Numpy
+*   Introduction to NumPy, ndarrays
+*   Array Creation and Data Types
+*   Indexing and Slicing
+*   Array Operations and Vectorization
+*   Mathematical and Statistical Functions
+*   Broadcasting
 
-## Visualization
+## 3.2. Pandas
+*   Introduction to Pandas: Series and DataFrame
+*   Loading and Saving Data (CSV, Excel, JSON, SQL)
+*   Indexing, Selection, and Filtering
+*   Handling Missing Data
+*   Grouping and Aggregating Data
+*   Merging, Joining, and Concatenating DataFrames
+*   Time Series Basics
 
-# 4. SQL (2 Weeks)
+## 3.3. Visualization
+*   Data Visualization with Matplotlib
+    *   Basic Plots: Line, Bar, Scatter, Histogram
+    *   Customizing Plots
+*   Statistical Plotting with Seaborn
+*   (Optional) Interactive Plots with Plotly
+
+# 4. SQL (2-4 Weeks)
+*   Introduction to Relational Databases and SQL
+    *   Comments
+    *   Data Types
+    *   Constraints
+*   Basic Queries: 
+    *   `SELECT` 
+    *   `FROM` 
+    *   `WHERE`
+    *   Aliases
+*   Filtering and Sorting: 
+    *   `ORDER BY` 
+    *   `LIMIT` 
+    *   `DISTINCT`
+    *   `LIKE`
+    *   `AND`, `OR`, `NOT`
+    *   `IN`, `NOT IN`
+    *   `BETWEEN`
+    *   `IS NULL`, `IS NOT NULL`
+*   Row Level Operations: 
+    *   String Functions
+        *   `CONCAT`
+        *   `UPPER`
+        *   `LOWER`
+        *   `TRIM`
+        *   `REPLACE`
+        *   `LEN`
+        *   `LEFT`
+        *   `RIGHT`
+        *   `SUBSTRING`
+    *   Numerical Functions
+        *   `ABS`
+        *   `CEIL`
+        *   `FLOOR`
+        *   `ROUND`
+        *   `TRUNC`
+        *   `SQRT`
+        *   `POWER`
+        *   `LOG`
+    *   Date Functions
+    *   `CASE` 
+    *   `CAST`
+*   Aggregate Functions: 
+    *   `COUNT` 
+    *   `SUM` 
+    *   `AVG` 
+    *   `MIN` 
+    *   `MAX`
+*   Grouping Data: 
+    *   `GROUP BY`
+    *   `HAVING`
+*   Joining Multiple Tables: 
+    *   Keys
+    *   `INNER` 
+    *   `LEFT` 
+    *   `RIGHT` 
+    *   `FULL OUTER JOIN`
+    *   Self Joins
+    *   Cross Join
+    *   `UNION`, `UNION ALL`
+    *   `INTERSECT`, `EXCEPT`
+*   Subqueries
+*   Common Table Expressions (CTEs) using `WITH`
+*   Window Functions: 
+    *   `ROW_NUMBER` 
+    *   `RANK` 
+    *   `LEAD` 
+    *   `LAG`
+*   Data Cleaning and Transformation: 
+*   Advanced Topics:
+    *   Indexes
+    *   Triggers
+    *   Views
+    *   Stored Procedures
+    *   Transactions
+    *   Connectors (python)
+    *   ORMs (python)
 
 # 5. Statistics (2 Weeks)
 
