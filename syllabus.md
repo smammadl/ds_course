@@ -75,7 +75,7 @@
     *   Using return statement
     *   Adding logic to functions
 *   Scope of Variables 
-<!-- *   Basic Data Transformation  -->
+\u003c!-- *   Basic Data Transformation  --\u003e
 
 ## 1.4. Advanced Functions and Functional Programming for Data Processing
 *   What is Functional Programming?
@@ -124,11 +124,11 @@
     *   Collections Module
     *   Itertools Module
 
-<!-- ## 1.7. Working with Data and APIs
+\u003c!-- ## 1.7. Working with Data and APIs
 *   JSON and XML
 *   Working with APIs
 *   Introduction to Regular Expressions
-*   Data Validation and Cleaning -->
+*   Data Validation and Cleaning --\u003e
 
 # 2. Data Analysis and Statistics
 
@@ -166,26 +166,25 @@
 *   Date/Time Manipulation
     *   Time Series Basics
 
-## 2.3. SQL for Data Analysis
+## 2.3. SQL for Data Analysis (from a Pandas Perspective)
 *   Introduction to Relational Databases and SQL
     *   Comments
     *   Data Types
     *   Constraints
-*   Basic Queries: 
-    *   `SELECT` 
-    *   `FROM` 
-    *   `WHERE`
+*   Querying and Selecting Data (similar to `df[]` and `df.loc`)
+    *   Basic Queries: `SELECT`, `FROM`, `WHERE`
     *   Aliases
-*   Filtering and Sorting: 
-    *   `ORDER BY` 
-    *   `LIMIT` 
-    *   `DISTINCT`
-    *   `LIKE`
-    *   `AND`, `OR`, `NOT`
-    *   `IN`, `NOT IN`
-    *   `BETWEEN`
-    *   `IS NULL`, `IS NOT NULL`
-*   Row Level Operations: 
+    *   `DISTINCT` for unique values
+*   Filtering and Sorting Data (similar to boolean indexing and `df.sort_values()`)
+    *   `ORDER BY`
+    *   `LIMIT`
+    *   Logical operators: `AND`, `OR`, `NOT`
+    *   Comparison operators: `IN`, `NOT IN`, `BETWEEN`
+    *   Pattern matching with `LIKE`
+    *   Handling nulls with `IS NULL`, `IS NOT NULL`
+*   Data Manipulation and Cleaning (similar to `df.apply`, `.astype`, and string methods)
+    *   `CASE` statements for conditional logic
+    *   `CAST` for type conversion
     *   String Functions
         *   `CONCAT`
         *   `UPPER`
@@ -206,43 +205,24 @@
         *   `POWER`
         *   `LOG`
     *   Date Functions
-    *   `CASE` 
-    *   `CAST`
-*   Aggregate Functions: 
-    *   `COUNT` 
-    *   `SUM` 
-    *   `AVG` 
-    *   `MIN` 
-    *   `MAX`
-*   Grouping Data: 
+*   Aggregation and Grouping (similar to `df.groupby()` and aggregation functions)
+    *   Aggregate Functions: `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`
     *   `GROUP BY`
-    *   `HAVING`
-*   Joining Multiple Tables: 
+    *   `HAVING` for filtering groups
+*   Combining Tables (similar to `pd.merge` and `pd.concat`)
     *   Keys
-    *   `INNER` 
-    *   `LEFT` 
-    *   `RIGHT` 
-    *   `FULL OUTER JOIN`
-    *   Self Joins
-    *   Cross Join
+    *   `INNER`, `LEFT`, `RIGHT`, `FULL OUTER JOIN`
+    *   Self Joins & Cross Join
     *   `UNION`, `UNION ALL`
     *   `INTERSECT`, `EXCEPT`
-*   Subqueries
-*   Common Table Expressions (CTEs) using `WITH`
-*   Window Functions: 
-    *   `ROW_NUMBER` 
-    *   `RANK` 
-    *   `LEAD` 
-    *   `LAG`
-*   Data Cleaning and Transformation: 
-*   Advanced Topics:
-    *   Indexes
-    *   Triggers
-    *   Views
-    *   Stored Procedures
-    *   Transactions
-    *   Connectors (python)
-    *   ORMs (python)
+*   Advanced Querying
+    *   Subqueries
+    *   Common Table Expressions (CTEs) with `WITH`
+    *   Window Functions: `ROW_NUMBER`, `RANK`, `LEAD`, `LAG`
+*   Advanced Topics
+    *   Data Cleaning and Transformation
+    *   Indexes, Triggers, Views, Stored Procedures, Transactions
+    *   Connectors and ORMs for Python
 
 ## 2.4. Visualization with Python
 *   Introduction to Data Visualization
