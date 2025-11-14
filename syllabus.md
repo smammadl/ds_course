@@ -1,4 +1,4 @@
-# 1. Python: Beginner (2 Weeks)
+# 1. Programming with Python
 
 ## 1.1: Introduction to Python and Basic Concepts
 *   Introduction to Python and Data Science
@@ -77,67 +77,96 @@
 *   Scope of Variables 
 <!-- *   Basic Data Transformation  -->
 
-# 2. Python: Intermediate (2 Weeks)
-
-## 2.1. Advanced Functions and Functional Programming for Data Processing
+## 1.4. Advanced Functions and Functional Programming for Data Processing
+*   What is Functional Programming?
 *   Lambda Functions
-*   Map, Filter, and Reduce
+*   `map`, `filter`, and `reduce`
+    *   `map`
+    *   `filter`
+    *   `reduce`
 *   List Comprehensions
+    *   Basic Syntax
+    *   Adding a Condition
+    *   `if-else` in List Comprehensions
 *   Dictionary and Set Comprehensions
-*   Error Handling
-*   Raising Exceptions
+    *   Dictionary Comprehensions
+    *   Set Comprehensions
+*   Error Handling (`try...except`)
+    *   Basic Syntax
+    *   Handling Multiple Exceptions
+    *   `else` and `finally` clauses
+*   Raising Exceptions (`raise`)
+*   Assertions
 
-## 2.2. Object-Oriented Programming (OOP)
+## 1.5. Object-Oriented Programming (OOP)
 *   Introduction to OOP
 *   Creating Classes
+    *   Defining a Class
+    *   Creating an Instance (Object)
+    *   A different example
 *   Inheritance
 *   Polymorphism
 *   Encapsulation
+*   Special Methods
 *   Data Classes
 
-## 2.3. Advanced Data Structures and Iterators
+## 1.6. Advanced Data Structures and Iterators
 *   Args and Kwargs
+    *   `*args`
+    *   `**kwargs`
+    *   Using `*args` and `**kwargs` together
 *   Generators
+*   Iterators
 *   Decorators
 *   Reading and Writing Files 
-*   Context Managers
 *   Introduction to Python's Standard Library 
-*   Collections Module
-*   Itertools Module
+    *   Pathlib Module
+    *   Collections Module
+    *   Itertools Module
 
-## 2.4. Working with Data and APIs
-<!-- *   JSON and XML
+<!-- ## 1.7. Working with Data and APIs
+*   JSON and XML
 *   Working with APIs
 *   Introduction to Regular Expressions
 *   Data Validation and Cleaning -->
 
-# 3. Python for Data Analysis (2 Weeks)
+# 2. Data Analysis and Statistics
 
-## 3.1. Numpy
-*   Introduction to NumPy, ndarrays
-*   Array Creation and Data Types
-*   Indexing and Slicing
-*   Array Operations and Vectorization
+## 2.1. Numerical Computing with NumPy
+*   Introduction to NumPy
+*   NumPy Arrays (ndarrays)
+    *   Creating NumPy Arrays
+    *   Array Attributes
+*   Array Indexing and Slicing
+*   Array Operations
+    *   Vectorized Operations
+    *   Broadcasting
 *   Mathematical and Statistical Functions
-*   Broadcasting
+*   Linear Algebra with NumPy
 
-## 3.2. Pandas
-*   Introduction to Pandas: Series and DataFrame
-*   Loading and Saving Data (CSV, Excel, JSON, SQL)
-*   Indexing, Selection, and Filtering
-*   Handling Missing Data
-*   Grouping and Aggregating Data
-*   Merging, Joining, and Concatenating DataFrames
-*   Time Series Basics
+## 2.2. Data Manipulation with Pandas
+*   Introduction to Pandas
+*   Pandas Data Structures
+    *   Series
+    *   DataFrame
+*   Reading and Writing Data (CSV, Excel, etc.)
+*   Indexing and Selecting Data
+    *   `loc` and `iloc`
+    *   Conditional Selection
+*   Data Cleaning and Preparation
+    *   Handling Missing Data
+    *   Handling Duplicated Data
+    *   Data type conversions
+    *   Outlier detection
+    *   Data validation
+    *   Inconsistent formatting
+*   Data Transformation
+    *   Aggregating and Grouping Data
+    *   Merging, Joining, and Concatenating DataFrames
+*   Date/Time Manipulation
+    *   Time Series Basics
 
-## 3.3. Visualization
-*   Data Visualization with Matplotlib
-    *   Basic Plots: Line, Bar, Scatter, Histogram
-    *   Customizing Plots
-*   Statistical Plotting with Seaborn
-*   (Optional) Interactive Plots with Plotly
-
-# 4. SQL (2-4 Weeks)
+## 2.3. SQL for Data Analysis
 *   Introduction to Relational Databases and SQL
     *   Comments
     *   Data Types
@@ -215,8 +244,29 @@
     *   Connectors (python)
     *   ORMs (python)
 
-# 5. Statistics (2 Weeks)
+## 2.4. Visualization with Python
+*   Introduction to Data Visualization
+*   Matplotlib
+    *   Creating Basic Plots (Line, Bar, Scatter, Histogram)
+    *   Customizing Plots (Labels, Titles, Colors)
+    *   Subplots
+*   Seaborn
+    *   Introduction to Statistical Visualization
+    *   Advanced Plots (Box Plots, Violin Plots, Heatmaps)
+    *   Styling and Themes
+*   Plotly
+*   Streamlit
 
-# 6. Machine Learning (3 month)
+## 2.5. PowerBI
+*   Introduction to PowerBI
+*   Data Sources
+*   Data Modeling
+*   Data Visualization
+*   Dashboards
+*   Reports
+
+# 5. Statistics
+
+# 6. Machine Learning
 ## Scikit-learn
 ## PyTorch
