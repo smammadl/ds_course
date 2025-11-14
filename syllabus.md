@@ -75,7 +75,7 @@
     *   Using return statement
     *   Adding logic to functions
 *   Scope of Variables 
-\u003c!-- *   Basic Data Transformation  --\u003e
+<!-- *   Basic Data Transformation  -->
 
 ## 1.4. Advanced Functions and Functional Programming for Data Processing
 *   What is Functional Programming?
@@ -124,11 +124,11 @@
     *   Collections Module
     *   Itertools Module
 
-\u003c!-- ## 1.7. Working with Data and APIs
+<!-- ## 1.7. Working with Data and APIs
 *   JSON and XML
 *   Working with APIs
 *   Introduction to Regular Expressions
-*   Data Validation and Cleaning --\u003e
+*   Data Validation and Cleaning -->
 
 # 2. Data Analysis and Statistics
 
@@ -226,16 +226,35 @@
 
 ## 2.4. Visualization with Python
 *   Introduction to Data Visualization
-*   Matplotlib
+*   Static Visualization with Matplotlib and Seaborn
     *   Creating Basic Plots (Line, Bar, Scatter, Histogram)
     *   Customizing Plots (Labels, Titles, Colors)
     *   Subplots
-*   Seaborn
-    *   Introduction to Statistical Visualization
-    *   Advanced Plots (Box Plots, Violin Plots, Heatmaps)
+    *   Introduction to Statistical Visualization with Seaborn
+    *   Advanced Plots (Box Plots, Violin Plots, Heatmaps) with Seaborn
     *   Styling and Themes
-*   Plotly
+*   Interactive Visualization with Plotly
+    *   Getting Started: Plotly Express vs Graph Objects
+    *   Interactive Features: hover, zoom, selection
+    *   Styling and Layout: axes, annotations, themes
+    *   Subplots and Faceting
+    *   Advanced Charts: treemap, sunburst, polar, funnel
+    *   Maps: choropleth, scatter_mapbox
+    *   Time Series and Animation
+    *   Integrating with Pandas
+    *   Exporting: static images, HTML
 *   Streamlit
+    *   App Structure and `streamlit run`
+    *   Widgets and Interactivity
+    *   Forms and Validation
+    *   State Management with `st.session_state`
+    *   Caching with `st.cache_data` and `st.cache_resource`
+    *   Displaying DataFrames and Tables
+    *   Layout: sidebar, columns, tabs
+    *   Visualizations: Matplotlib, Seaborn, Plotly
+    *   File Upload/Download
+    *   Multipage Apps
+    *   Deployment Basics
 
 ## 2.5. PowerBI
 *   Introduction to PowerBI
