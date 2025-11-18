@@ -14,7 +14,7 @@ conda activate tk
 >**Note:** Or choose one of your existing environments and activate it. Anything other than `base` is fine.
 6. Copy and paste following after `>`:
 ```bash
-pip install ttkbootstrap, pyinstaller
+pip install ttkbootstrap pyinstaller
 ```
 7. Press Enter.
 >**Note:** Python comes with tkinter library. So there is no need to install it. `ttkbootstrap` is a library that provides a modern and customizable theme for tkinter. `pyinstaller` is a tool that converts Python scripts into executable files.
