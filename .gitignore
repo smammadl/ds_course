@@ -1,2 +1,5 @@
 others/
 files/
+build/
+dist/
+*.spec
