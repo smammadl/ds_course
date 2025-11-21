@@ -118,9 +118,12 @@
 *   Generators
 *   Iterators
 *   Decorators
+    *   Examples
+    *   Built-in Decorators
 *   Reading and Writing Files 
-*   Introduction to Python's Standard Library 
     *   Pathlib Module
+    *   File Operations
+*   Introduction to Python's Standard Library 
     *   Collections Module
     *   Itertools Module
 
@@ -137,12 +140,24 @@
 *   NumPy Arrays (ndarrays)
     *   Creating NumPy Arrays
     *   Array Attributes
+    *   Reshaping Arrays
+    *   Data Types
+    *   Array from Functions
 *   Array Indexing and Slicing
+    *   1D Array Indexing and Slicing
+    *   2D Array Indexing and Slicing
+    *   Ellipsis
+    *   Boolean Indexing
 *   Array Operations
     *   Vectorized Operations
     *   Broadcasting
+    *   Stacking Arrays
+    *   Splitting Arrays
+    *   Transposing Arrays
 *   Mathematical and Statistical Functions
 *   Linear Algebra with NumPy
+    *   Examples
+    *   Solving a system of linear scalar equations
 
 ## 2.2. Data Manipulation with Pandas
 *   Introduction to Pandas
