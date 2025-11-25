@@ -126,12 +126,41 @@
 *   Introduction to Python's Standard Library 
     *   Collections Module
     *   Itertools Module
+    *   Random Module
 
 <!-- ## 1.7. Working with Data and APIs
 *   JSON and XML
 *   Working with APIs
 *   Introduction to Regular Expressions
 *   Data Validation and Cleaning -->
+
+## 1.7. Advanced Topic (Not Covered in the Course)
+*   Advanced OOP and Design Patterns
+    *   Metaclasses
+    *   Descriptors
+    *   Abstract Base Classes (ABCs)
+    *   Common Design Patterns
+    *   Data Model Protocols
+*   Concurrency and Parallelism
+    *   Introduction to Concurrency
+    *   Threading Module
+    *   Multiprocessing Module
+    *   Asyncio
+    *   Concurrent Data Processing
+*   Performance and Optimization
+    *   Profiling Code
+    *   Memoization and Caching
+    *   Working with C/C++ extensions
+    *   Memory Management
+    *   Vectorization Principles
+    *   Numerical Computing Foundations
+*   Production-Ready Data Science Code
+    *   Creating Data Science Packages
+    *   Virtual Environments and Dependency Management
+    *   Testing Data Pipelines
+    *   Code Style and Documentation
+    *   Logging and Monitoring
+    *   Bridging to Data Science Libraries
 
 # 2. Data Analysis and Statistics
 
