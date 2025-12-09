@@ -191,24 +191,33 @@
 ## 2.2. Data Manipulation with Pandas
 *   Introduction to Pandas
 *   Pandas Data Structures
-    *   Series
-    *   DataFrame
-*   Reading and Writing Data (CSV, Excel, etc.)
-*   Indexing and Selecting Data
-    *   `loc` and `iloc`
-    *   Conditional Selection
-*   Data Cleaning and Preparation
-    *   Handling Missing Data
-    *   Handling Duplicated Data
-    *   Data type conversions
-    *   Outlier detection
-    *   Data validation
-    *   Inconsistent formatting
-*   Data Transformation
-    *   Aggregating and Grouping Data
+*   Series
+    *   Creating a Series
+    *   Index
+    *   Automatic Alignment
+    *   Name of the Series
+    *   Conditional Replace
+    *   Counting values
+    *   Applying a Function
+    *   Series Utils
+*   DataFrame, IO, Multi-Index
+    *   Creating a DataFrame
+    *   Reading and Writing Data
+    *   Multi-Index DataFrame
+    *   Operations on Indexes and Columns
+*   Sort, Index, Ops
+    *   Accessing Rows and Columns
+    *   Sorting a DataFrame
+    *   Operations on DataFrames
+    *   Data Cleaning and Preparation
+*   Data Transformations
     *   Merging, Joining, and Concatenating DataFrames
-*   Date/Time Manipulation
-    *   Time Series Basics
+    *   Aggregating and Grouping Data
+    *   Aggregate, Filter, Transform, Apply
+    *   Pivot Tables
+*   String and DateTime
+    *   Vectorized String Operations
+    *   Date/Time Manipulation
 
 ## 2.3. SQL for Data Analysis (from a Pandas Perspective)
 *   Introduction to Relational Databases and SQL
