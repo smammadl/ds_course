@@ -219,7 +219,64 @@
     *   Vectorized String Operations
     *   Date/Time Manipulation
 
-## 2.3. SQL for Data Analysis (from a Pandas Perspective)
+## 2.3. Visualization with Matplotlib and Seaborn (Vanderplas' Book)
+*   Simple Line Plots
+    *   Adjusting the Plot: Line Colors and Styles
+    *   Adjusting the Plot: Axes Limits
+    *   Labeling Plots
+*   Simple Scatter Plots
+    *   Scatter Plots with plt.plot
+    *   Scatter Plots with plt.scatter
+    *   Visualizing Uncertainties
+*   Density and ContourPlots
+    *   Visualizing a Three-Dimensional Function
+    *   Histograms, Binnings, and Density
+    *   Two-Dimensional Histograms and Binnings
+*   Customizing Plot Legends
+    *   Choosing Elements for the Legend
+    *   Legend for Size of Points
+    *   Multiple Legends
+*   Customizing Colorbars
+    *   Customizing Colorbars
+    *   Choosing the Colormap
+    *   Color Limits and Extensions
+    *   Discrete Colorbars
+*   Multiple Subplots
+    *   plt.axes: Subplots by Hand
+    *   plt.subplot: Simple Grids of Subplots
+    *   plt.subplots: The Whole Grid in One Go
+    *   plt.GridSpec: More Complicated Arrangements
+*   Text and Annotation
+    *   Transforms and Text Position
+    *   Arrows and Annotation
+*   Customizing Ticks
+    *   Major and Minor Ticks
+    *   Hiding Ticks or Labels
+    *   Reducing or Increasing the Number of Ticks
+    *   Fancy Tick Formats
+    *   Summary of Formatters and Locators
+*   Customizing Matplotlib: Configurations and Stylesheets
+    *   Plot Customization by Hand
+    *   Changing the Defaults: rcParams
+    *   Stylesheets
+*   Three-Dimensional Plotting in Matplotlib
+    *   Three-Dimensional Points and Lines
+    *   Three-Dimensional Contour Plots
+    *   Wireframes and Surface Plots
+    *   Surface Triangulations
+    *   Example: Visualizing a Möbius Strip
+*   Visualization with Seaborn
+    *   Exploring Seaborn Plots
+        *   Histograms, KDE, and Densities
+        *   Pair Plots
+        *   Faceted Histograms
+    *   Categorical Plots
+        *   Joint Distributions
+        *   Bar Plots
+    *   Violin Plots
+    *   Heatmaps
+
+## 2.4. SQL for Data Analysis (from a Pandas Perspective)
 *   Introduction to Relational Databases and SQL
     *   Comments
     *   Data Types
@@ -277,15 +334,7 @@
     *   Indexes, Triggers, Views, Stored Procedures, Transactions
     *   Connectors and ORMs for Python
 
-## 2.4. Visualization with Python
-*   Introduction to Data Visualization
-*   Static Visualization with Matplotlib and Seaborn
-    *   Creating Basic Plots (Line, Bar, Scatter, Histogram)
-    *   Customizing Plots (Labels, Titles, Colors)
-    *   Subplots
-    *   Introduction to Statistical Visualization with Seaborn
-    *   Advanced Plots (Box Plots, Violin Plots, Heatmaps) with Seaborn
-    *   Styling and Themes
+## 2.5. Analytics applications
 *   Interactive Visualization with Plotly
     *   Getting Started: Plotly Express vs Graph Objects
     *   Interactive Features: hover, zoom, selection
@@ -296,6 +345,13 @@
     *   Time Series and Animation
     *   Integrating with Pandas
     *   Exporting: static images, HTML
+* PowerBI
+    *   Introduction to PowerBI
+    *   Data Sources
+    *   Data Modeling
+    *   Data Visualization
+    *   Dashboards
+    *   Reports
 *   Streamlit
     *   App Structure and `streamlit run`
     *   Widgets and Interactivity
@@ -309,15 +365,7 @@
     *   Multipage Apps
     *   Deployment Basics
 
-## 2.5. PowerBI
-*   Introduction to PowerBI
-*   Data Sources
-*   Data Modeling
-*   Data Visualization
-*   Dashboards
-*   Reports
-
-# 5. Statistics
+# 5. Statistics and Data Science
 
 # 6. Machine Learning
 ## Scikit-learn
