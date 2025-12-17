@@ -1,0 +1,67 @@
+# List of Leetcode Problems
+- **visit [leetcode](https://leetcode.com/) and create an account.**
+- **login to your account.**
+- **open the following link:**
+    - [List of Leetcode Problems](https://leetcode.com/problem-list/v1mkt2ih/)
+- **sort by `Acceptance` in *descending* order (or use the below list for guidance).**
+
+
+## Problems List
+- 2356 - Number of Unique Subjects Taught by Each Teacher
+- 1757 - Recyclable and Low Fat Products
+- 1693 - Daily Leads and Partners
+- 1741 - Find Total Time Spent by Each Employee
+- 1795 - Rearrange Products Table
+- 1068 - Product Sales Analysis I
+- 3475 - DNA Pattern Recognition
+- 1683 - Invalid Tweets
+- 1393 - Capital Gain/Loss
+- 627 - Swap Sex of Employees
+- 1378 - Replace Employee ID With The Unique Identifier
+- 1587 - Bank Account Summary II
+- 175 - Combine Two Tables
+- 1484 - Group Sold Products By The Date
+- 1890 - The Latest Login in 2020
+- 577 - Employee Bonus
+- 1148 - Article Views I
+- 1179 - Reformat Department Table
+- 511 - Game Play Analysis I
+- 620 - Not Boring Movies
+- 3497 - Analyze Subscription Conversion
+- 626 - Exchange Seats
+- 1789 - Primary Department for Each Employee
+- 182 - Duplicate Emails
+- 1965 - Employees With Missing Information
+- 181 - Employees Earning More Than Their Managers
+- 584 - Find Customer Referee
+- 1327 - List the Products Ordered in a Period
+- 183 - Customers Who Never Order
+- 1050 - Actors and Directors Who Cooperated At Least Three Times
+- 619 - Biggest Single Number
+- 1729 - Find Followers Count
+- 1204 - Last Person to Fit in the Bus
+- 595 - Big Countries
+- 1581 - Customer Who Visited but Did Not Make Any Transactions
+- 1661 - Average Time of Process per Machine
+- 178 - Rank Scores
+- 1075 - Project Employees I
+- 607 - Sales Person
+- 196 - Delete Duplicate Emails
+- 586 - Customer Placing the Largest Number of Orders
+- 1907 - Count Salary Categories
+- 1045 - Customers Who Bought All Products
+- 602 - Friend Requests II: Who Has the Most Friends
+- 3521 - Find Product Recommendation Pairs
+- 185 - Department Top Three Salaries
+- 1193 - Monthly Transactions I
+- 1321 - Restaurant Growth
+- 1164 - Product Price at a Given Date
+- 1174 - Immediate Food Delivery II
+- 1731 - The Number of Employees Which Report to Each Employee
+- 197 - Rising Temperature
+- 570 - Managers with at Least 5 Direct Reports
+- 180 - Consecutive Numbers
+- 176 - Second Highest Salary
+- 1070 - Product Sales Analysis III
+- 1341 - Movie Rating
+- 1251 - Average Selling Price
