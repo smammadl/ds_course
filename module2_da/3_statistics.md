@@ -557,6 +557,16 @@ A mapping from the sample space of a random experiment to the set of real number
     - **Additional Example**: What is the probability that a randomly selected person is between 160 cm and 180 cm tall?
     - **Solution**: Using standard normal transformation:
         $P(160 \leq X \leq 180) = \Phi\left(\frac{180-170}{10}\right) - \Phi\left(\frac{160-170}{10}\right) = \Phi(1) - \Phi(-1) \approx 0.8413 - 0.1587 = 0.6826$
+> **Note on Standardization**:
+> - **Standard Normal Distribution**: A special case with $\mu = 0$ and $\sigma = 1$, denoted $Z \sim \mathcal{N}(0,1)$. Any normal variable $X \sim \mathcal{N}(\mu,\sigma)$ can be converted to a standard normal variable $Z$ using a $z$-score.
+> - **Z-scores and Standardization**: The $z$-score of a value $x$ from $X \sim \mathcal{N}(\mu,\sigma)$ is
+>     $z = \frac{x - \mu}{\sigma}$.
+>     This measures how many standard deviations $x$ is above ($z>0$) or below ($z<0$) the mean. Probabilities for $X$ are usually computed by first converting to $Z$ and then using the standard normal CDF $\Phi(z)$.
+> - **Empirical Rule (68-95-99.7)**: For a normal distribution, approximately 68% of the data lie within $1\sigma$ of the mean, 95% within $2\sigma$, and 99.7% within $3\sigma$. The height example above confirms the 68% part since
+>     $P(160 \leq X \leq 180) = P(\mu - \sigma \leq X \leq \mu + \sigma) \approx 0.6826 \approx 68\%$.
+> - **Normal Tables and Percentiles**: Standard normal tables list values of $\Phi(z) = P(Z \leq z)$ for $Z \sim \mathcal{N}(0,1)$. To find a percentile (for example, the 90th percentile of heights), find $z$ such that $\Phi(z) = 0.90$ in the table (approximately $z \approx 1.28$), then transform back:
+>     $x = \mu + z\sigma$.
+>     For the height example, the 90th percentile is $x \approx 170 + 1.28 \times 10 = 182.8$ cm.
 *   **Exponential Distribution**: Models the time between events in a Poisson process.
     - **Random Variable ($X$)**: Time until next event
     - **Support**: $[0, \infty)$ (non-negative real numbers)
@@ -705,3 +715,110 @@ else:
     print("Decision: Fail to reject H0. No significant evidence of an effect.")
 ```
 
+## 2. Point Estimation
+
+Point estimation focuses on using sample data to calculate a single, best-guess value (a **point estimate**) for an unknown population parameter.
+
+*   **Point Estimates for Means and Proportions**
+    *   The **sample mean** $\bar{X}$ is the point estimate of the population mean $\mu$:
+        $\hat{\mu} = \bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$.
+    *   The **sample proportion** $\hat{p}$ is the point estimate of the population proportion $p$:
+        $\hat{p} = \frac{\text{Number of "successes"}}{\text{Sample size } n}$.
+    *   These estimates summarize the sample with a single number and are the building blocks for further inference such as confidence intervals and hypothesis tests.
+
+*   **Properties of Estimators (Bias, Variance, Consistency)**
+    *   An **estimator** is a rule or formula (like $\bar{X}$ or $\hat{p}$) used to compute an estimate from data.
+    *   **Bias**:
+        *   Measures whether, on average, the estimator hits the true parameter.
+        *   An estimator $\hat{\theta}$ of a parameter $\theta$ is **unbiased** if $E[\hat{\theta}] = \theta$.
+        *   Example: The sample mean $\bar{X}$ is an unbiased estimator of $\mu$.
+    *   **Variance**:
+        *   Measures how much the estimator varies from sample to sample.
+        *   Lower variance means more stable estimates across different samples.
+    *   **Consistency**:
+        *   An estimator is **consistent** if, as the sample size $n \to \infty$, the estimator converges in probability to the true parameter.
+        *   Intuitively: with more data, the estimator gets closer and closer to the true value.
+
+**Python Example**:
+```python
+import numpy as np
+
+# 1. Point Estimate for Mean
+# Data: Weights of 10 apples
+weights = [150, 155, 148, 152, 151, 153, 149, 150, 154, 152]
+point_est_mean = np.mean(weights)
+print(f"Point Estimate (Mean): {point_est_mean:.2f}g")
+
+# 2. Point Estimate for Proportion
+# Data: 100 website visitors, 12 clicked an ad
+n = 100
+successes = 12
+point_est_prop = successes / n
+print(f"Point Estimate (Proportion): {point_est_prop:.2%}")
+```
+
+## 3. Confidence Intervals
+
+While point estimates give a single value, they do not tell us how uncertain that value is. **Confidence intervals (CIs)** provide a range of plausible values for a population parameter along with a confidence level.
+
+*   **Confidence Level and Interpretation**
+    *   A **confidence level** (e.g., 90%, 95%, 99%) describes how often the interval procedure would capture the true parameter if we repeated the sampling process many times.
+    *   A **95% confidence interval for $\mu$** means:
+        *   If we took many random samples and built an interval from each, about 95% of those intervals would contain the true $\mu$.
+        *   It does **not** mean there is a 95% probability that $\mu$ is in a specific, already-calculated interval.
+
+*   **Margin of Error**
+    *   A confidence interval generally has the form:
+        $\text{Estimate} \pm \text{Margin of Error}$.
+    *   The **margin of error (ME)** reflects both variability in the data and the chosen confidence level.
+    *   Larger samples (larger $n$) and lower confidence levels lead to smaller margins of error; higher confidence levels lead to larger margins of error.
+
+*   **Critical Values (Z and t)**
+    *   The **critical value** comes from a reference distribution and determines how many standard errors we extend from the estimate.
+    *   **Z critical values** (from the standard normal distribution) are used when:
+        *   The population standard deviation is known or the sample size is large and conditions justify normal approximation.
+        *   Example: For a 95% confidence level, the two-sided critical value is $z_{0.975} \approx 1.96$.
+    *   **t critical values** (from the Student’s t distribution) are used when:
+        *   The population standard deviation is unknown and the sample size is small.
+        *   The exact critical value depends on both the confidence level and the **degrees of freedom** (typically $n-1$).
+
+*   **Confidence Intervals for Means and Proportions**
+    *   **Mean with known $\sigma$ (Normal or large-sample case)**:
+        *   For $X_1, \dots, X_n$ i.i.d. with mean $\mu$ and known standard deviation $\sigma$, a $(1-\alpha)$ confidence interval for $\mu$ is:
+            $\bar{X} \pm z_{1-\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}$.
+    *   **Mean with unknown $\sigma$ (t-interval)**:
+        *   When $\sigma$ is unknown and the sample size is small but data are approximately normal, use:
+            $\bar{X} \pm t_{1-\alpha/2,\, n-1} \cdot \frac{s}{\sqrt{n}}$,
+            where $s$ is the sample standard deviation.
+    *   **Proportion (large-sample z-interval)**:
+        *   For a sample proportion $\hat{p}$ with sufficiently large $n$ so that normal approximation is appropriate, a $(1-\alpha)$ confidence interval for $p$ is:
+            $\hat{p} \pm z_{1-\alpha/2} \cdot \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$.
+
+**Python Example**:
+```python
+import numpy as np
+from scipy import stats
+
+# 1. Confidence Interval for Mean (Unknown sigma -> t-distribution)
+data = [85, 88, 90, 82, 91, 89, 87, 84, 92, 86]
+confidence = 0.95
+n = len(data)
+mean = np.mean(data)
+sem = stats.sem(data) # Standard error of the mean (s / sqrt(n))
+
+# Using scipy.stats.t.interval
+ci_mean = stats.t.interval(confidence, df=n-1, loc=mean, scale=sem)
+print(f"95% CI for Mean: ({ci_mean[0]:.2f}, {ci_mean[1]:.2f})")
+
+# 2. Confidence Interval for Proportion (Large sample -> z-distribution)
+p_hat = 0.12 # Sample proportion (12/100)
+n_prop = 100
+# Z-critical value for 95% confidence
+z_crit = stats.norm.ppf((1 + confidence) / 2) 
+
+margin_error = z_crit * np.sqrt((p_hat * (1 - p_hat)) / n_prop)
+ci_prop = (p_hat - margin_error, p_hat + margin_error)
+print(f"95% CI for Proportion: ({ci_prop[0]:.4f}, {ci_prop[1]:.4f})")
+```
+
+These ideas connect directly back to sampling distributions and the Central Limit Theorem: the distribution of estimates like $\bar{X}$ and $\hat{p}$ is approximately normal for large $n$, which allows us to use $z$ or $t$ critical values to build meaningful confidence intervals around our point estimates.
