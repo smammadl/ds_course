@@ -232,7 +232,7 @@
     *   Visualizing a Three-Dimensional Function
     *   Histograms, Binnings, and Density
     *   Two-Dimensional Histograms and Binnings
-*   Customizing Plot Legends
+<!-- *   Customizing Plot Legends
     *   Choosing Elements for the Legend
     *   Legend for Size of Points
     *   Multiple Legends
@@ -240,13 +240,13 @@
     *   Customizing Colorbars
     *   Choosing the Colormap
     *   Color Limits and Extensions
-    *   Discrete Colorbars
+    *   Discrete Colorbars -->
 *   Multiple Subplots
     *   plt.axes: Subplots by Hand
     *   plt.subplot: Simple Grids of Subplots
     *   plt.subplots: The Whole Grid in One Go
     *   plt.GridSpec: More Complicated Arrangements
-*   Text and Annotation
+<!--*   Text and Annotation
     *   Transforms and Text Position
     *   Arrows and Annotation
 *   Customizing Ticks
@@ -264,7 +264,7 @@
     *   Three-Dimensional Contour Plots
     *   Wireframes and Surface Plots
     *   Surface Triangulations
-    *   Example: Visualizing a Möbius Strip
+    *   Example: Visualizing a Möbius Strip -->
 *   Visualization with Seaborn
     *   Exploring Seaborn Plots
         *   Histograms, KDE, and Densities
@@ -291,7 +291,7 @@
     *   Logical operators: `AND`, `OR`, `NOT`
     *   Comparison operators: `IN`, `NOT IN`, `BETWEEN`
     *   Pattern matching with `LIKE`
-    *   Handling nulls with `IS NULL`, `IS NOT NULL`
+    *   Handling nulls with `IS NULL`, `IS NOT NULL`, `COALESCE`, `NULLIF`
 *   Data Manipulation and Cleaning (similar to `df.apply`, `.astype`, and string methods)
     *   `CASE` statements for conditional logic
     *   `CAST` for type conversion
@@ -315,10 +315,15 @@
         *   `POWER`
         *   `LOG`
     *   Date Functions
+        *   `EXTRACT` / `PART`
+        *   `DATE_TRUNC`
+        *   `DATEDIFF`
+        *   `DATE_ADD` / `DATE_SUB`
 *   Aggregation and Grouping (similar to `df.groupby()` and aggregation functions)
     *   Aggregate Functions: `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`
     *   `GROUP BY`
     *   `HAVING` for filtering groups
+    *   Rollups and Cubes (briefly)
 *   Combining Tables (similar to `pd.merge` and `pd.concat`)
     *   Keys
     *   `INNER`, `LEFT`, `RIGHT`, `FULL OUTER JOIN`
@@ -326,13 +331,14 @@
     *   `UNION`, `UNION ALL`
     *   `INTERSECT`, `EXCEPT`
 *   Advanced Querying
-    *   Subqueries
+    *   Subqueries (Scalar, Multi-row, Correlated)
     *   Common Table Expressions (CTEs) with `WITH`
-    *   Window Functions: `ROW_NUMBER`, `RANK`, `LEAD`, `LAG`
+    *   Window Functions: `ROW_NUMBER`, `RANK`, `DENSE_RANK`, `LEAD`, `LAG`, `NTILE`
 *   Advanced Topics
-    *   Data Cleaning and Transformation
+    *   Data Cleaning and Transformation (Pivot/Unpivot patterns)
+    *   DDL for Analysts: `CREATE TABLE AS SELECT` (CTAS), `CREATE VIEW`
     *   Indexes, Triggers, Views, Stored Procedures, Transactions
-    *   Connectors and ORMs for Python
+    *   Connectors and ORMs for Python (SQLAlchemy, psycopg2)
 
 ## 2.5. Analytics applications
 *   Interactive Visualization with Plotly
@@ -345,13 +351,6 @@
     *   Time Series and Animation
     *   Integrating with Pandas
     *   Exporting: static images, HTML
-* PowerBI
-    *   Introduction to PowerBI
-    *   Data Sources
-    *   Data Modeling
-    *   Data Visualization
-    *   Dashboards
-    *   Reports
 *   Streamlit
     *   App Structure and `streamlit run`
     *   Widgets and Interactivity
@@ -364,9 +363,82 @@
     *   File Upload/Download
     *   Multipage Apps
     *   Deployment Basics
+* PowerBI
+    *   Introduction to PowerBI
+    *   Data Sources
+    *   Data Modeling
+    *   Data Visualization
+    *   Dashboards
+    *   Reports
 
-# 5. Statistics and Data Science
+# 3. Statistics
 
-# 6. Machine Learning
-## Scikit-learn
-## PyTorch
+## 3.1. Descriptive Statistics
+*   Measures of Central Tendency
+    *   Mean
+    *   Median
+    *   Mode
+*   Measures of Dispersion
+    *   Range
+    *   Variance
+    *   Standard Deviation
+    *   Interquartile Range (IQR)
+*   Skewness and Kurtosis
+*   Descriptive Statistics with Statsmodels
+
+## 3.2. Probability Theory
+*   Basic Probability Concepts
+    *   Sample Space and Events
+    *   Independent and Dependent Events
+*   Conditional Probability
+*   Bayes' Theorem
+
+## 3.3. Probability Distributions
+*   Random Variables
+    *   Discrete Random Variables
+    *   Continuous Random Variables
+*   Common Discrete Distributions
+    *   Bernoulli Distribution
+    *   Binomial Distribution
+    *   Poisson Distribution
+*   Common Continuous Distributions
+    *   Uniform Distribution
+    *   Normal (Gaussian) Distribution
+    *   Exponential Distribution
+*   Sampling Distributions
+    *   Central Limit Theorem (CLT)
+    *   Law of Large Numbers
+
+## 3.4. Statistical Inference
+*   Hypothesis Testing
+    *   Null and Alternative Hypotheses
+    *   Type I and Type II Errors
+    *   p-values and Significance Levels
+*   Parametric Tests
+    *   t-tests (One-sample, Two-sample, Paired)
+    *   ANOVA (Analysis of Variance)
+*   Non-Parametric Tests
+    *   Mann-Whitney U Test
+    *   Wilcoxon Signed-Rank Test
+*   Chi-Square Tests
+*   Statistical Tests with `statsmodels.stats`
+    *   Proportion Tests
+    *   Power Analysis
+
+## 3.5. Correlation and Regression
+*   Correlation
+    *   Pearson Correlation Coefficient
+    *   Spearman Rank Correlation
+*   Simple Linear Regression with `statsmodels`
+    *   Ordinary Least Squares (OLS)
+    *   Model Summary and Interpretation
+    *   R-squared and Adjusted R-squared
+    *   Residual Analysis and Diagnostics
+*   Multiple Linear Regression
+    *   Formula API (`statsmodels.formula.api`)
+    *   Handling Categorical Variables (Dummies)
+    *   Multicollinearity and VIF
+
+# 4. Data Science & Machine Learning
+## 4.1. Scikit-learn
+## 4.2. PyTorch
