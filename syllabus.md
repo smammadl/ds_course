@@ -404,6 +404,10 @@
 *   Common Continuous Distributions
     *   Uniform Distribution
     *   Normal (Gaussian) Distribution
+        *   Standard Normal Distribution
+        *   Z-scores and Standardization
+        *   Empirical Rule (68-95-99.7)
+        *   Normal Tables and Percentiles
     *   Exponential Distribution
 *   Sampling Distributions
     *   Central Limit Theorem (CLT)
@@ -414,6 +418,14 @@
     *   Null and Alternative Hypotheses
     *   Type I and Type II Errors
     *   p-values and Significance Levels
+*   Point Estimation
+    *   Point Estimates for Means and Proportions
+    *   Properties of Estimators (Bias, Variance, Consistency)
+*   Confidence Intervals
+    *   Confidence Level and Interpretation
+    *   Margin of Error
+    *   Critical Values (Z and t)
+    *   Confidence Intervals for Means and Proportions
 *   Parametric Tests
     *   t-tests (One-sample, Two-sample, Paired)
     *   ANOVA (Analysis of Variance)
@@ -438,6 +450,12 @@
     *   Formula API (`statsmodels.formula.api`)
     *   Handling Categorical Variables (Dummies)
     *   Multicollinearity and VIF
+
+---
+*   Outlier Detection
+    *   Visual Methods (Boxplots, Histograms, Scatterplots)
+    *   Rule-based Methods (IQR, Z-score)
+    *   Handling Outliers (Transformation, Winsorization, Trimming)
 
 # 4. Data Science & Machine Learning
 ## 4.1. Scikit-learn
