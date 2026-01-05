@@ -690,9 +690,10 @@ The decision to reject or fail to reject the null hypothesis is based on compari
 
 > **Crucial Note**: We never "accept" the null hypothesis. We only "fail to reject" it, meaning we don't have enough evidence to disprove it yet.
 
-**Python Example**:
+**Statsmodels Example**:
 ```python
-from scipy import stats
+import statsmodels.api as sm
+from statsmodels.stats.weightstats import DescrStatsW
 
 # Sample data: scores of students using a new study method
 sample_scores = [85, 88, 90, 82, 91, 89, 87, 84, 92, 86]
@@ -701,8 +702,9 @@ sample_scores = [85, 88, 90, 82, 91, 89, 87, 84, 92, 86]
 # Ha: The population mean is NOT 80
 null_mean = 80
 
-# Perform a One-Sample T-Test
-t_stat, p_value = stats.ttest_1samp(sample_scores, null_mean)
+# Perform a One-Sample T-Test using statsmodels
+d_stats = DescrStatsW(sample_scores)
+t_stat, p_value, df = d_stats.ttest_mean(null_mean)
 
 alpha = 0.05
 
@@ -794,30 +796,24 @@ While point estimates give a single value, they do not tell us how uncertain tha
         *   For a sample proportion $\hat{p}$ with sufficiently large $n$ so that normal approximation is appropriate, a $(1-\alpha)$ confidence interval for $p$ is:
             $\hat{p} \pm z_{1-\alpha/2} \cdot \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$.
 
-**Python Example**:
+**Statsmodels Example**:
 ```python
-import numpy as np
-from scipy import stats
+from statsmodels.stats.weightstats import DescrStatsW
+from statsmodels.stats.proportion import proportion_confint
 
 # 1. Confidence Interval for Mean (Unknown sigma -> t-distribution)
 data = [85, 88, 90, 82, 91, 89, 87, 84, 92, 86]
-confidence = 0.95
-n = len(data)
-mean = np.mean(data)
-sem = stats.sem(data) # Standard error of the mean (s / sqrt(n))
+d_stats = DescrStatsW(data)
 
-# Using scipy.stats.t.interval
-ci_mean = stats.t.interval(confidence, df=n-1, loc=mean, scale=sem)
+# tconfint_mean returns (lower, upper)
+ci_mean = d_stats.tconfint_mean(alpha=0.05) 
 print(f"95% CI for Mean: ({ci_mean[0]:.2f}, {ci_mean[1]:.2f})")
 
 # 2. Confidence Interval for Proportion (Large sample -> z-distribution)
-p_hat = 0.12 # Sample proportion (12/100)
-n_prop = 100
-# Z-critical value for 95% confidence
-z_crit = stats.norm.ppf((1 + confidence) / 2) 
-
-margin_error = z_crit * np.sqrt((p_hat * (1 - p_hat)) / n_prop)
-ci_prop = (p_hat - margin_error, p_hat + margin_error)
+# Data: 12 successes in 100 trials
+count = 12
+nobs = 100
+ci_prop = proportion_confint(count, nobs, alpha=0.05, method='normal')
 print(f"95% CI for Proportion: ({ci_prop[0]:.4f}, {ci_prop[1]:.4f})")
 ```
 
