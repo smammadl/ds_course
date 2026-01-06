@@ -531,6 +531,7 @@ A mapping from the sample space of a random experiment to the set of real number
         $P(X \leq 3) \approx 0.0067 + 0.0337 + 0.0842 + 0.1404 = 0.2650$
 
 ## 3. Common Continuous Distributions
+### 3.1. Uniform Distribution
 *   **Uniform Distribution**: All outcomes in a range $[a, b]$ are equally likely.
     - **Random Variable ($X$)**: Any value within the interval $[a, b]$
     - **Support**: $[a, b]$ (continuous interval)
@@ -544,6 +545,8 @@ A mapping from the sample space of a random experiment to the set of real number
     - **Additional Example**: What is the probability that a value from Uniform(2, 8) falls between 3 and 5?
     - **Solution**: 
         $P(3 \leq X \leq 5) = \frac{5-3}{8-2} = \frac{2}{6} = \frac{1}{3} \approx 0.3333$
+
+### 3.2. Normal (Gaussian) Distribution
 *   **Normal (Gaussian) Distribution**: The "Bell Curve," symmetrical and defined by mean ($\mu$) and standard deviation ($\sigma$).
     - **Random Variable ($X$)**: Any real number
     - **Support**: $(-\infty, \infty)$ (all real numbers)
@@ -567,6 +570,8 @@ A mapping from the sample space of a random experiment to the set of real number
 > - **Normal Tables and Percentiles**: Standard normal tables list values of $\Phi(z) = P(Z \leq z)$ for $Z \sim \mathcal{N}(0,1)$. To find a percentile (for example, the 90th percentile of heights), find $z$ such that $\Phi(z) = 0.90$ in the table (approximately $z \approx 1.28$), then transform back:
 >     $x = \mu + z\sigma$.
 >     For the height example, the 90th percentile is $x \approx 170 + 1.28 \times 10 = 182.8$ cm.
+
+### 3.3. Exponential Distribution
 *   **Exponential Distribution**: Models the time between events in a Poisson process.
     - **Random Variable ($X$)**: Time until next event
     - **Support**: $[0, \infty)$ (non-negative real numbers)
@@ -818,3 +823,143 @@ print(f"95% CI for Proportion: ({ci_prop[0]:.4f}, {ci_prop[1]:.4f})")
 ```
 
 These ideas connect directly back to sampling distributions and the Central Limit Theorem: the distribution of estimates like $\bar{X}$ and $\hat{p}$ is approximately normal for large $n$, which allows us to use $z$ or $t$ critical values to build meaningful confidence intervals around our point estimates.
+
+---
+
+# Correlation and Regression
+
+Correlation measures the strength and direction of the relationship between two variables, while regression analyzes the nature of that relationship to make predictions.
+
+## 1. Correlation
+
+Correlation coefficients quantify the degree to which two variables change together. The value always ranges between **-1** and **1**.
+
+*   **+1**: Perfect positive correlation (as one increases, the other increases).
+*   **-1**: Perfect negative correlation (as one increases, the other decreases).
+*   **0**: No correlation.
+
+### 1.1. Pearson Correlation Coefficient ($r$)
+The most common measure of correlation. It measures the strength of the **linear** relationship between two continuous variables.
+
+*   **Assumptions**:
+    *   Variables are continuous (interval or ratio).
+    *   Relationship is linear.
+    *   No significant outliers.
+    *   Variables are approximately normally distributed (for significance testing).
+
+*   **Formula**:
+    $$ r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \sum(y_i - \bar{y})^2}} $$
+
+### 1.2. Spearman Rank Correlation ($\rho$)
+A non-parametric measure that assesses how well the relationship between two variables can be described using a **monotonic** function.
+
+*   **When to use**:
+    *   The relationship is non-linear but monotonic (e.g., exponential).
+    *   Data is ordinal (ranked).
+    *   Data has outliers (Spearman is more robust than Pearson).
+
+*   **Mechanism**: It converts raw scores to ranks and then calculates the Pearson correlation on the ranks.
+
+### 1.3. Python Implementation
+
+```python
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+# Sample Data
+data = {
+    'Study_Hours': [1, 2, 3, 4, 5, 6, 7],
+    'Score': [60, 65, 70, 75, 80, 85, 90],        # Perfect linear with Hours
+    'Rank_Data': [10, 20, 30, 80, 85, 90, 100]    # Monotonic but not strictly linear
+}
+df = pd.DataFrame(data)
+
+# 1. Pearson Correlation
+pearson_corr = df['Study_Hours'].corr(df['Score'], method='pearson')
+print(f"Pearson Correlation (Hours vs Score): {pearson_corr:.2f}")
+
+# 2. Spearman Correlation
+spearman_corr = df['Study_Hours'].corr(df['Rank_Data'], method='spearman')
+print(f"Spearman Correlation (Hours vs Rank_Data): {spearman_corr:.2f}")
+
+# 3. Significance Test (using SciPy)
+corr, p_value = stats.pearsonr(df['Study_Hours'], df['Score'])
+print(f"Pearson P-value: {p_value:.4f}")
+```
+
+#### 1.4. Multivariate Normal Distribution
+The Multivariate Normal Distribution generalizes the normal distribution to higher dimensions (vectors of random variables).
+*   **Parameters**:
+    -   **Mean Vector ($\boldsymbol{\mu}$)**: A vector of length $k$ (where $k$ is the number of dimensions), representing the center of the distribution.
+    -   **Covariance Matrix ($\boldsymbol{\Sigma}$)**: A $k \times k$ symmetric, positive-definite matrix describing the spread and orientation. The diagonal elements represent the variance of each variable, while the off-diagonal elements represent the covariance between variables.
+*   **PDF**:
+    $$ f(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^k |\boldsymbol{\Sigma}|}} \exp\left(-\frac{1}{2}(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})\right) $$
+*   **Key Insight**: While the univariate normal distribution is defined by a bell-shaped curve, the bivariate (2D) normal distribution forms a bell-shaped "hill" or 3D surface. The shape of the hill (circular vs. elliptical) depends on the covariance matrix.
+*   **Python Example**:
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import multivariate_normal
+
+# Define parameters for a Bivariate Normal Distribution
+mean = [0, 0]
+cov = [[1, 0.5], 
+       [0.5, 1]]  # Correlation of 0.5 between X and Y
+
+# Create the distribution
+rv = multivariate_normal(mean, cov)
+
+# Generate random samples
+samples = rv.rvs(size=1000)
+
+# Calculate PDF at a specific point
+point = [0.5, 0.5]
+pdf_value = rv.pdf(point)
+print(f"PDF at {point}: {pdf_value:.4f}")
+```
+
+## 2. Simple Linear Regression
+
+Regression analysis estimates the relationship between a dependent variable (target) and one or more independent variables (predictors).
+
+*   **Simple Linear Regression**: Involves one independent variable.
+*   **Equation**:
+    $$ Y = \beta_0 + \beta_1 X + \epsilon $$
+    *   $Y$: Dependent variable.
+    *   $X$: Independent variable.
+    *   $\beta_0$: Intercept (value of $Y$ when $X=0$).
+    *   $\beta_1$: Slope (change in $Y$ for a 1-unit change in $X$).
+    *   $\epsilon$: Error term (residuals).
+
+*   **Ordinary Least Squares (OLS)**: The method used to find the "best-fitting" line by minimizing the sum of squared residuals (differences between observed and predicted values).
+
+### 2.1. Python Implementation (Statsmodels)
+
+```python
+import statsmodels.api as sm
+import pandas as pd
+
+# Data
+X = [1, 2, 3, 4, 5] # Independent Variable (e.g., Hours)
+Y = [2, 4, 5, 4, 5] # Dependent Variable (e.g., Performance)
+
+# Add a constant (intercept) to X because statsmodels doesn't add it by default
+X_with_const = sm.add_constant(X)
+
+# Fit the model
+model = sm.OLS(Y, X_with_const)
+results = model.fit()
+
+# Print Summary
+print(results.summary())
+
+# Predictions
+predictions = results.predict(X_with_const)
+print("\nPredicted Values:", predictions)
+```
+
+*   **Interpreting Results**:
+    *   **R-squared ($R^2$)**: The proportion of variance in the dependent variable explained by the model (0 to 1). Higher is better.
+    *   **Coef (Slope)**: If $\beta_1 = 0.5$, then for every 1 unit increase in $X$, $Y$ increases by 0.5.
+    *   **P>|t|**: P-value for the coefficient. If < 0.05, the variable is statistically significant.
