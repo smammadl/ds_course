@@ -919,6 +919,46 @@ pdf_value = rv.pdf(point)
 print(f"PDF at {point}: {pdf_value:.4f}")
 ```
 
+### 1.5. Connection between Covariance, Variance, and Correlation
+
+> **Clarification**: When discussing the mathematical link between covariance and correlation (as shown below), we are specifically referring to the **Pearson Correlation Coefficient**. While other methods like Spearman exist, the standard definition of correlation as "normalized covariance" is the Pearson method.
+
+Understanding the relationship between these three terms is crucial for interpreting the **Covariance Matrix**.
+
+1.  **Variance ($\sigma^2$)**: Measures the spread of a single variable.
+2.  **Covariance ($Cov(X, Y)$)**: Measures how two variables change together. However, its magnitude depends on the units of the variables (e.g., meters vs. kilometers).
+3.  **Correlation ($r$ or $\rho$)**: A **normalized** version of covariance. It is dimensionless and bounded between -1 and 1.
+
+**Mathematical Relationship**:
+$$ \text{Correlation}(X, Y) = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X) \cdot \text{Var}(Y)}} = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y} $$
+
+**Analyzing the Covariance Matrix**:
+A covariance matrix $\boldsymbol{\Sigma}$ for two variables $X$ and $Y$ looks like this:
+$$
+\boldsymbol{\Sigma} = \begin{bmatrix} 
+\text{Var}(X) & \text{Cov}(X, Y) \\ 
+\text{Cov}(Y, X) & \text{Var}(Y) 
+\end{bmatrix}
+$$
+
+**Validating with the Python Example above**:
+In the code snippet from **1.4**, we defined the covariance matrix as:
+```python
+cov = [[1, 0.5], 
+       [0.5, 1]]
+```
+
+*   **Variances** (Diagonal):
+    *   $\text{Var}(X) = 1$
+    *   $\text{Var}(Y) = 1$
+    *   Standard Deviations: $\sigma_X = \sqrt{1} = 1$, $\sigma_Y = \sqrt{1} = 1$.
+*   **Covariance** (Off-diagonal):
+    *   $\text{Cov}(X, Y) = 0.5$
+*   **Calculated Correlation**:
+    $$ r = \frac{0.5}{1 \cdot 1} = 0.5 $$
+    
+This matches the comment in the code: `# Correlation of 0.5 between X and Y`. If the variances were different (e.g., 4), the covariance would need to be higher to maintain the same correlation.
+
 ## 2. Simple Linear Regression
 
 Regression analysis estimates the relationship between a dependent variable (target) and one or more independent variables (predictors).
