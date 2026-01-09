@@ -1,1 +1,1 @@
-files can be found in the shared dropbox folder `data/files`.
+files can be found in the shared dropbox folder `data/postgres-dumps`.
