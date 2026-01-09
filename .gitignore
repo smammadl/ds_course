@@ -1,6 +1,8 @@
 others/
-files/
 build/
 dist/
 *.spec
 *.csv
+data/files/*.csv
+data/postgres-dumps/*.dump
+data/postgres-sql/*.sql
