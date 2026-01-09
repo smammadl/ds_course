@@ -1,0 +1,16 @@
+services:
+  div_postgres:
+    image: postgres:17
+    container_name: div_postgres_service
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./postgres-dumps:/docker-entrypoint-initdb.d/dumps:ro
+      - ./postgres_db_init.sh:/docker-entrypoint-initdb.d/10_postgres_db_init.sh:ro
+    ports:
+      - 5432:5432
+    restart: unless-stopped
