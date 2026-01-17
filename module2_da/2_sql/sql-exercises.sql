@@ -313,7 +313,7 @@
 
 -- ...
 
--------------------------------------------- GROUPING SETS --------------------------------------------
+-------------------------------------------- ROLLUP, CUBE, GROUPING SETS --------------------------------------------
 
 /*
 *  Calculate the total amount of employees per department using grouping sets
