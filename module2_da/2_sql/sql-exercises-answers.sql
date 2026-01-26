@@ -711,6 +711,43 @@ window w1 as (partition by emp_no order by from_date)
 order by emp_no; 
 
 
+-------------------------------------------- CUMULATIVE OPS / ROWS BETWEEN --------------------------------------------
+-- Find the cumulative total order amount during each month
+-- Database: Store
+-- Table: products, orderlines
+
+with x as 
+(select 
+    prod_id, 
+    orderdate,
+    extract(month from orderdate) as month, 
+    price, 
+    quantity, 
+    price*quantity as orderamount
+from orderlines join products using(prod_id))
+select distinct
+    month, 
+    orderdate, 
+    sum(orderamount) over (partition by month order by orderdate)
+from x;
+
+
+-- Find the 3 day rolling average of the order amount
+-- Database: Store
+-- Table: products, orderlines
+
+with x as 
+(select 
+    orderdate,
+    sum(price*quantity) as orderamount
+from orderlines left join products using(prod_id)
+group by orderdate
+order by orderdate)
+
+select 
+    *, 
+    avg(orderamount) over (order by orderdate rows between 1 preceding and 1 following)
+from x;
 
 -------------------------------------------- UNION --------------------------------------------
 

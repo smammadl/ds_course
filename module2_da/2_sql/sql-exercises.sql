@@ -418,6 +418,19 @@
 
 -- ...
 
+-------------------------------------------- CUMULATIVE OPS / ROWS BETWEEN --------------------------------------------
+-- Find the cumulative total order amount during each month
+-- Database: Store
+-- Table: products, orderlines
+
+-- ...
+
+-- Find the 3 day rolling average of the order amount
+-- Database: Store
+-- Table: products, orderlines
+
+-- ...
+
 -------------------------------------------- UNION --------------------------------------------
 
 /*
