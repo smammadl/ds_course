@@ -257,12 +257,52 @@ iqr_pd = q3 - q1
         - *Best for*: Skewed data or datasets with outliers.
         - *Strength*: **Robust** measure. It only looks at the middle 50% of the data, meaning extreme outliers have zero effect on it.
 
+#### 2.4.1 Boxplot
+
+The **Boxplot** (or Box-and-Whisker Plot) is a standardized way of displaying the distribution of data based on a five-number summary: minimum, first quartile (Q1), median, third quartile (Q3), and maximum. It is the visual representation of the **Interquartile Range (IQR)**.
+
+**Key Visual Components**:
+1.  **The Box**: Represents the **IQR** (the middle 50% of the data).
+    -   The bottom of the box is **Q1** (25th percentile).
+    -   The top of the box is **Q3** (75th percentile).
+2.  **The Center Line**: Represents the **Median** (Q2 / 50th percentile).
+3.  **The Whiskers**: Extend from the box to the smallest and largest values within $1.5 \times \text{IQR}$ from the quartiles. They represent the typical spread of "non-outlier" data.
+4.  **Individual Points (Fliers)**: Data points that fall outside the whiskers are considered **outliers**. This visual helps identify the extreme values mentioned in the "Robustness" section of the IQR.
+
+**Python Example (Seaborn)**:
+In the example below, we use the `tips` dataset to compare how much people tip on different days, grouped by gender. This allows us to see not just the average, but the spread and presence of high-spenders (outliers) across different categories.
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load sample dataset
+tips = sns.load_dataset('tips')
+
+# Create a boxplot
+# x="day" creates a box for each day (Category)
+# y="total_bill" shows the distribution of bills (Value)
+# hue="sex" splits each day into Male and Female boxes
+with sns.axes_style(style='ticks'):
+    g = sns.catplot(x="day", y="total_bill", hue="sex", data=tips, kind="box")
+    g.set_axis_labels("Day", "Total Bill")
+    plt.show()
+```
+
+By looking at this plot, we can immediately see which days have the most variability (larger boxes) and whether the data is skewed (if the median line is not centered in the box).
+
 ---
 
 ## 3. Skewness and Kurtosis
 
 ### 3.1. Skewness
 Measures the asymmetry of the probability distribution.
+
+**Mathematical Formulation**:
+Skewness is the third standardized moment.
+$$ \text{Skewness} = E\left[\left(\frac{X - \mu}{\sigma}\right)^3\right] = \frac{\mu_3}{\sigma^3} $$
+Where $\mu_3$ is the third central moment and $\sigma$ is the standard deviation.
+
 *   **Positive Skew (> 0)**: The right tail is longer or fatter. Most data points are clustered on the left.
 *   **Negative Skew (< 0)**: The left tail is longer or fatter. Most data points are clustered on the right.
 *   **Zero Skew (= 0)**: The distribution is perfectly symmetrical (e.g., a Normal Distribution).
@@ -290,6 +330,12 @@ Measures the "tailedness" and the presence of outliers.
 *   **Mesokurtic (Kurtosis = 0)**: Similar to a Normal Distribution.
 
 > **Note on Excess Kurtosis**: Most libraries (SciPy, Pandas) calculate **Excess Kurtosis** by subtracting 3 from the Pearson kurtosis. This centers the Normal Distribution at 0.
+
+**Mathematical Formulation**:
+Kurtosis is the fourth standardized moment.
+$$ \text{Kurtosis} = E\left[\left(\frac{X - \mu}{\sigma}\right)^4\right] = \frac{\mu_4}{\sigma^4} $$
+$$ \text{Excess Kurtosis} = \text{Kurtosis} - 3 $$
+Where $\mu_4$ is the fourth central moment and $\sigma$ is the standard deviation.
 
 **Python Examples**:
 ```python
@@ -505,6 +551,25 @@ A mapping from the sample space of a random experiment to the set of real number
         $P(X=1) = \binom{20}{1} (0.05)^1 (0.95)^{19} = 20 \times 0.05 \times 0.3774 \approx 0.3774$
         $P(X=2) = \binom{20}{2} (0.05)^2 (0.95)^{18} = 190 \times 0.0025 \times 0.3972 \approx 0.1886$
         $P(X \leq 2) \approx 0.3585 + 0.3774 + 0.1886 = 0.9245$
+
+> example from geron
+> 
+> To find the probability that a random sample of 1,000 people contains less than 49% female or more than 54% female when the population's female ratio is 51.6%, we use the [binomial distribution](https://en.wikipedia.org/wiki/Binomial_distribution). The `cdf()` method of the binomial distribution gives us the probability that the number of females will be equal or less than the given value.
+> # extra code – shows how to compute the 10.7% proba of getting a bad sample
+> 
+> from scipy.stats import binom
+> 
+> sample_size = 1000
+> ratio_female = 0.516
+> proba_too_small = binom(sample_size, ratio_female).cdf(490 - 1)
+> proba_too_large = 1 - binom(sample_size, ratio_female).cdf(540)
+> print(proba_too_small + proba_too_large)
+> 
+> # extra code – shows another way to estimate the probability of bad sample
+> 
+> rng = np.random.default_rng(seed=42)
+> samples = (rng.random((100_000, sample_size)) < ratio_female).sum(axis=1)
+> ((samples < 490) | (samples > 540)).mean()
 
 *   **Poisson Distribution**: Models the number of events occurring in a fixed interval of time or space.
     - **Random Variable ($X$)**: Number of occurrences in the interval
