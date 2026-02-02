@@ -903,6 +903,10 @@ Correlation coefficients quantify the degree to which two variables change toget
 *   **-1**: Perfect negative correlation (as one increases, the other decreases).
 *   **0**: No correlation.
 
+Correlation does not imply causation; it only indicates association.
+
+![Correlation](https://upload.wikimedia.org/wikipedia/commons/d/d4/Correlation_examples2.svg)
+
 ### 1.1. Pearson Correlation Coefficient ($r$)
 The most common measure of correlation. It measures the strength of the **linear** relationship between two continuous variables.
 
