@@ -917,7 +917,7 @@ The most common measure of correlation. It measures the strength of the **linear
     *   Variables are approximately normally distributed (for significance testing).
 
 *   **Formula**:
-    $$ r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \sum(y_i - \bar{y})^2}} $$
+    $$r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \sum(y_i - \bar{y})^2}}$$
 
 ### 1.2. Spearman Rank Correlation ($\rho$)
 A non-parametric measure that assesses how well the relationship between two variables can be described using a **monotonic** function.
