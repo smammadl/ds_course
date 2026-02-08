@@ -33,7 +33,7 @@ The middle value when the data is ordered. The calculation depends on whether th
 *   **Even $n$**: There is no single middle value. The median is the arithmetic mean of the two middle values at positions $\frac{n}{2}$ and $\frac{n}{2} + 1$.
 
 *   **Mathematical Concept**: 
-    $$ \text{Median} = \begin{cases} x_{(\frac{n+1}{2})} & \text{if } n \text{ is odd} \\ \frac{x_{(\frac{n}{2})} + x_{(\frac{n}{2} + 1)}}{2} & \text{if } n \text{ is even} \end{cases} $$
+    $$\text{Median} = \begin{cases} x_{(\frac{n+1}{2})} & \text{if } n \text{ is odd} \\ \frac{x_{(\frac{n}{2})} + x_{(\frac{n}{2} + 1)}}{2} & \text{if } n \text{ is even} \end{cases}$$
 *   **Python Calculation Methods**:
 ```python
 import numpy as np
@@ -57,7 +57,7 @@ median_stat = statistics.median(data)
 The value that appears most frequently in a dataset. For grouped data (data organized into classes or intervals), the mode is estimated using the following formula:
 
 *   **Mathematical Formula (Grouped Data)**: 
-    $$ \text{Mode} = L + \left( \frac{f_1 - f_0}{(f_1 - f_0) + (f_1 - f_2)} \right) \times h $$
+    $$\text{Mode} = L + \left( \frac{f_1 - f_0}{(f_1 - f_0) + (f_1 - f_2)} \right) \times h$$
     Where:
     - $L$: Lower limit of the modal class (the class with the highest frequency).
     - $f_1$: Frequency of the modal class.
@@ -300,7 +300,7 @@ Measures the asymmetry of the probability distribution.
 
 **Mathematical Formulation**:
 Skewness is the third standardized moment.
-$$ \text{Skewness} = E\left[\left(\frac{X - \mu}{\sigma}\right)^3\right] = \frac{\mu_3}{\sigma^3} $$
+$$\text{Skewness} = E\left[\left(\frac{X - \mu}{\sigma}\right)^3\right] = \frac{\mu_3}{\sigma^3}$$
 Where $\mu_3$ is the third central moment and $\sigma$ is the standard deviation.
 
 *   **Positive Skew (> 0)**: The right tail is longer or fatter. Most data points are clustered on the left.
@@ -333,8 +333,8 @@ Measures the "tailedness" and the presence of outliers.
 
 **Mathematical Formulation**:
 Kurtosis is the fourth standardized moment.
-$$ \text{Kurtosis} = E\left[\left(\frac{X - \mu}{\sigma}\right)^4\right] = \frac{\mu_4}{\sigma^4} $$
-$$ \text{Excess Kurtosis} = \text{Kurtosis} - 3 $$
+$$\text{Kurtosis} = E\left[\left(\frac{X - \mu}{\sigma}\right)^4\right] = \frac{\mu_4}{\sigma^4}$$
+$$\text{Excess Kurtosis} = \text{Kurtosis} - 3$$
 Where $\mu_4$ is the fourth central moment and $\sigma$ is the standard deviation.
 
 **Python Examples**:
@@ -963,7 +963,7 @@ The Multivariate Normal Distribution generalizes the normal distribution to high
     -   **Mean Vector ($\boldsymbol{\mu}$)**: A vector of length $k$ (where $k$ is the number of dimensions), representing the center of the distribution.
     -   **Covariance Matrix ($\boldsymbol{\Sigma}$)**: A $k \times k$ symmetric, positive-definite matrix describing the spread and orientation. The diagonal elements represent the variance of each variable, while the off-diagonal elements represent the covariance between variables.
 *   **PDF**:
-    $$ f(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^k |\boldsymbol{\Sigma}|}} \exp\left(-\frac{1}{2}(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})\right) $$
+    $$f(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^k |\boldsymbol{\Sigma}|}} \exp\left(-\frac{1}{2}(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})\right)$$
 *   **Key Insight**: While the univariate normal distribution is defined by a bell-shaped curve, the bivariate (2D) normal distribution forms a bell-shaped "hill" or 3D surface. The shape of the hill (circular vs. elliptical) depends on the covariance matrix.
 *   **Python Example**:
 ```python
@@ -999,7 +999,7 @@ Understanding the relationship between these three terms is crucial for interpre
 3.  **Correlation ($r$ or $\rho$)**: A **normalized** version of covariance. It is dimensionless and bounded between -1 and 1.
 
 **Mathematical Relationship**:
-$$ \text{Correlation}(X, Y) = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X) \cdot \text{Var}(Y)}} = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y} $$
+$$\text{Correlation}(X, Y) = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X) \cdot \text{Var}(Y)}} = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y}$$
 
 **Analyzing the Covariance Matrix**:
 A covariance matrix $\boldsymbol{\Sigma}$ for two variables $X$ and $Y$ looks like this:
@@ -1024,7 +1024,7 @@ cov = [[1, 0.5],
 *   **Covariance** (Off-diagonal):
     *   $\text{Cov}(X, Y) = 0.5$
 *   **Calculated Correlation**:
-    $$ r = \frac{0.5}{1 \cdot 1} = 0.5 $$
+    $$r = \frac{0.5}{1 \cdot 1} = 0.5$$
     
 This matches the comment in the code: `# Correlation of 0.5 between X and Y`. If the variances were different (e.g., 4), the covariance would need to be higher to maintain the same correlation.
 
@@ -1034,7 +1034,7 @@ Regression analysis estimates the relationship between a dependent variable (tar
 
 *   **Simple Linear Regression**: Involves one independent variable.
 *   **Equation**:
-    $$ Y = \beta_0 + \beta_1 X + \epsilon $$
+    $$Y = \beta_0 + \beta_1 X + \epsilon$$
     *   $Y$: Dependent variable.
     *   $X$: Independent variable.
     *   $\beta_0$: Intercept (value of $Y$ when $X=0$).
