@@ -1,16 +1,14 @@
-# Handling Text and Categorical Variables in Data Science and Machine Learning
+# Handling Categorical Variables in Data Science and Machine Learning
 
 ## Introduction
 
-Text and categorical variables are fundamental components in many datasets, but they present unique challenges in machine learning pipelines. Unlike numerical variables, these data types cannot be directly processed by most algorithms, which require numerical inputs. This chapter explores various techniques for transforming text and categorical variables into meaningful numerical representations while preserving important information.
+Unlike numerical variables, these data types cannot be directly processed by most algorithms, which require numerical inputs.
 
 ## Theoretical Background
 
 ### Mathematical Foundation
 
 Categorical variables represent discrete values that belong to specific categories or classes. Mathematically, if we have a categorical variable $X$ with $k$ distinct categories $\{c_1, c_2, ..., c_k\}$, we need to map each category to a numerical representation that preserves the relationships and information inherent in the original categories.
-
-For text variables, the challenge is even greater as raw text contains semantic meaning, syntactic structure, and contextual information that must be encoded numerically. The transformation process involves converting symbolic representations into vector spaces where mathematical operations can be performed.
 
 ### Types of Categorical Variables
 
