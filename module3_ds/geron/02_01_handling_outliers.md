@@ -33,7 +33,7 @@ Extreme outliers are defined as:
 
 ### 3. Modified Z-Score
 - $\tilde{x}$ is the median
-- $MED = median(\{|x_i - \tilde{x}| : i = 1, 2, ..., n\})$
+- $MAD = median(\{|x_i - \tilde{x}| : i = 1, 2, ..., n\})$
 
 The modified z-score uses the median absolute deviation (MAD) instead of the standard deviation:
 
