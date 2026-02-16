@@ -9,7 +9,7 @@
 - X is a variable with missing values
 - R is the indicator variable for missingness (R=1 if observed, R=0 if missing)
 - Z is other observed variables (covariates)
-$$ R \perp X,Z $$
+$$R \perp X,Z$$
 - Missingness is independent of everything, i.e. observed and unobserved data
 $$E[X|\text{missing}] = E[X|\text{observed}] = E[X]$$
 - The units with missing values are statistically identical to those with observed values, i.e. the probability of missing data is the same for all observations
@@ -32,7 +32,7 @@ $$E[X|\text{missing}] = E[X|\text{observed}] = E[X]$$
 - X is a variable with missing values
 - R is the indicator variable for missingness (R=1 if observed, R=0 if missing)
 - Z is other observed variables (covariates)
-$$ R \perp X | Z $$
+$$R \perp X | Z$$
 - Missingness depends on Z (observed data), but not on X (unobserved data) itself once Z is known
 $$E[X|\text{missing}, Z] = E[X|\text{observed}, Z]$$
 - Within groups defined by Z, missing and observed cases have the same expected X.
@@ -61,7 +61,7 @@ $$E[X|\text{missing}, Z] = E[X|\text{observed}, Z]$$
 
 #### Definition
 
-$$ R \not\perp X | Z $$
+$$R \not\perp X | Z$$
 - Missingness depends on the unobserved value of X itself.
 $$E[X|\text{missing}] \neq E[X|\text{observed}]$$
 - Even after conditioning on all observed variables

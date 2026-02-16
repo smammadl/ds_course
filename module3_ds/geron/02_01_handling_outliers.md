@@ -9,12 +9,12 @@ Outliers are data points that significantly deviate from the majority of the dat
 ### 1. Standard Deviation Method
 A data point is considered an outlier if it lies beyond a certain number of standard deviations from the mean:
 
-$$|x - μ| > kσ$$
+$$|x - \mu| > k\sigma$$
 
 Where:
 - x is the data point
-- μ is the mean
-- σ is the standard deviation
+- $\mu$ is the mean
+- $\sigma$ is the standard deviation
 - k is typically 2 or 3 (based on the empirical rule)
 
 ### 2. Interquartile Range (IQR) Method
@@ -37,7 +37,7 @@ Extreme outliers are defined as:
 
 The modified z-score uses the median absolute deviation (MAD) instead of the standard deviation:
 
-$$M_i = 0.6745(x_i - x̃) / MAD$$
+$$M_i = 0.6745(x_i - \tilde{x}) / MAD$$
 
 An observation is considered an outlier if $|M_i| > 3.5$
 
@@ -79,19 +79,19 @@ Based on the IQR method, box plots visually represent outliers as points beyond 
 
 #### Z-Score Method
 Calculates how many standard deviations a data point is from the mean:
-$$z = (x - μ) / σ$$
+$$z = (x - \mu) / \sigma$$
 
 ### 2. Multivariate Outlier Detection
 
 #### Mahalanobis Distance
 Measures the distance of a point from the center of the distribution, accounting for correlations between variables:
 
-$$D² = (x - μ)ᵀ Σ⁻¹ (x - μ)$$
+$$D^2 = (x - \mu)^T \Sigma^{-1} (x - \mu)$$
 
 Where:
 - x is the vector of observations
-- μ is the vector of means
-- Σ is the covariance matrix
+- $\mu$ is the vector of means
+- $\Sigma$ is the covariance matrix
 
 #### Isolation Forest
 An ensemble method that isolates outliers by randomly selecting features and split values.
@@ -115,13 +115,13 @@ $$y = log(x)$$
 compresses the scale, reducing the effect of large values
 
 #### Square Root Transformation
-$$y = √x$$
+$$y = \sqrt{x}$$
 also compresses the scale but less aggressively than log
 
 #### Box-Cox Transformation
-for λ ≠ 0:
-$$y = (x^λ - 1) / λ$$
-for λ = 0:
+for $\lambda \neq 0$:
+$$y = (x^\lambda - 1) / \lambda$$
+for $\lambda = 0$:
 $$y = log(x)$$
 
 ### 3. Winsorization
