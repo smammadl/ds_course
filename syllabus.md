@@ -371,92 +371,30 @@
     *   Dashboards
     *   Reports
 
-# 3. Statistics
+# 3. Data Science and Machine Learning
 
-## 3.1. Descriptive Statistics
-*   Measures of Central Tendency
-    *   Mean
-    *   Median
-    *   Mode
-*   Measures of Dispersion
-    *   Range
-    *   Variance
-    *   Standard Deviation
-    *   Interquartile Range (IQR)
-*   Skewness and Kurtosis
-*   Descriptive Statistics with Statsmodels
+* Scikit-learn
+    * Statistics
+    * Handling Outliers
+    * Handling Nulls
+    * Handling Categorical Variables
+    * Feature Scaling
+    * Logs, exponentials, etc.
+    * Regression
+    * Classification
+    * Regression and Classification Models
+    * Metrics
+    * Ensembles
+    * Tuning
+    * Unsupervised learning
+    * Dimensionality Reduction???
 
-## 3.2. Probability Theory
-*   Basic Probability Concepts
-    *   Sample Space and Events
-    *   Independent and Dependent Events
-*   Conditional Probability
-*   Bayes' Theorem
-
-## 3.3. Probability Distributions
-*   Random Variables
-    *   Discrete Random Variables
-    *   Continuous Random Variables
-*   Common Discrete Distributions
-    *   Bernoulli Distribution
-    *   Binomial Distribution
-    *   Poisson Distribution
-*   Common Continuous Distributions
-    *   Uniform Distribution
-    *   Normal (Gaussian) Distribution
-        *   Standard Normal Distribution
-        *   Z-scores and Standardization
-        *   Empirical Rule (68-95-99.7)
-        *   Normal Tables and Percentiles
-    *   Exponential Distribution
-*   Sampling Distributions
-    *   Central Limit Theorem (CLT)
-    *   Law of Large Numbers
-
-## 3.4. Statistical Inference
-*   Hypothesis Testing
-    *   Null and Alternative Hypotheses
-    *   Type I and Type II Errors
-    *   p-values and Significance Levels
-*   Point Estimation
-    *   Point Estimates for Means and Proportions
-    *   Properties of Estimators (Bias, Variance, Consistency)
-*   Confidence Intervals
-    *   Confidence Level and Interpretation
-    *   Margin of Error
-    *   Critical Values (Z and t)
-    *   Confidence Intervals for Means and Proportions
-*   Parametric Tests
-    *   t-tests (One-sample, Two-sample, Paired)
-    *   ANOVA (Analysis of Variance)
-*   Non-Parametric Tests
-    *   Mann-Whitney U Test
-    *   Wilcoxon Signed-Rank Test
-*   Chi-Square Tests
-*   Statistical Tests with `statsmodels.stats`
-    *   Proportion Tests
-    *   Power Analysis
-
-## 3.5. Correlation and Regression
-*   Correlation
-    *   Pearson Correlation Coefficient
-    *   Spearman Rank Correlation
-*   Simple Linear Regression with `statsmodels`
-    *   Ordinary Least Squares (OLS)
-    *   Model Summary and Interpretation
-    *   R-squared and Adjusted R-squared
-    *   Residual Analysis and Diagnostics
-*   Multiple Linear Regression
-    *   Formula API (`statsmodels.formula.api`)
-    *   Handling Categorical Variables (Dummies)
-    *   Multicollinearity and VIF
-
----
-*   Outlier Detection
-    *   Visual Methods (Boxplots, Histograms, Scatterplots)
-    *   Rule-based Methods (IQR, Z-score)
-    *   Handling Outliers (Transformation, Winsorization, Trimming)
-
-# 4. Data Science & Machine Learning
-## 4.1. Scikit-learn
-## 4.2. PyTorch
+* Pytorch
+    * Introduction to Pytorch
+    * Tensor Operations
+    * Neural Networks
+    * Training Loop
+    * Metrics
+    * Evaluation
+    * More Complex Models
+    * Saving and Inference
