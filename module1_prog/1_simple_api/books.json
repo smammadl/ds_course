@@ -1,0 +1,20 @@
+{
+  "1": {
+    "title": "The Pragmatic Programmer",
+    "author": "David Thomas & Andrew Hunt",
+    "year": 1999,
+    "genre": "Technology"
+  },
+  "2": {
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "year": 2008,
+    "genre": "Technology"
+  },
+  "3": {
+    "title": "Dune",
+    "author": "Frank Herbert",
+    "year": 1965,
+    "genre": "Science Fiction"
+  }
+}
