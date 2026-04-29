@@ -5,6 +5,50 @@ import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
 
+def train_one_epoch(
+	model, 
+	optimizer, 
+	criterion, 
+	metric, 
+	train_loader, 
+	clip_grad_norm,
+	device
+	):
+	losses = []
+	metric.reset()
+	model.train()
+	for X_batch, y_batch in train_loader:
+		X_batch, y_batch = X_batch.to(device), y_batch.to(device)
+		y_pred = model(X_batch)
+		loss = criterion(y_pred, y_batch)
+		losses.append(loss.item())
+		loss.backward()
+		if clip_grad_norm is not None:
+			nn.utils.clip_grad_norm_(model.parameters(), max_norm=clip_grad_norm)
+		optimizer.step()
+		optimizer.zero_grad()
+		metric.update(y_pred, y_batch)
+	
+	train_loss = np.mean(losses)
+	train_metric = metric.compute().item()
+	return train_loss, train_metric
+
+def evaluate_one_epoch(
+	model, 
+	metric, 
+	valid_loader, 
+	device
+	):
+	model.eval()
+	metric.reset()
+	with torch.no_grad():
+		for X_batch, y_batch in valid_loader:
+			X_batch, y_batch = X_batch.to(device), y_batch.to(device)
+			y_pred = model(X_batch)
+			metric.update(y_pred, y_batch)
+	valid_metric = metric.compute().item()
+	return valid_metric
+
 def train(
 	model, 
 	optimizer, 
@@ -37,38 +81,17 @@ def train(
 		#--------------------------------------------
 		#                  Training
 		#--------------------------------------------
-		losses = []
-		metric.reset()
-		model.train()
 		t0 = time.time()
-
-		for X_batch, y_batch in train_loader:
-			X_batch, y_batch = X_batch.to(device), y_batch.to(device)
-			y_pred = model(X_batch)
-			loss = criterion(y_pred, y_batch)
-			losses.append(loss.item())
-			loss.backward()
-			if clip_grad_norm is not None:
-				nn.utils.clip_grad_norm_(model.parameters(), max_norm=clip_grad_norm)
-			optimizer.step()
-			optimizer.zero_grad()
-			metric.update(y_pred, y_batch)
-		
-		train_loss = np.mean(losses)
-		train_metric = metric.compute().item()
+		train_loss, train_metric = train_one_epoch(
+			model, optimizer, criterion, metric, train_loader, clip_grad_norm, device
+		)	
 
 		#--------------------------------------------
 		#                 Evaluation
 		#--------------------------------------------
-		model.eval()
-		metric.reset()
-		with torch.no_grad():
-			for X_batch, y_batch in valid_loader:
-				X_batch, y_batch = X_batch.to(device), y_batch.to(device)
-				y_pred = model(X_batch)
-				metric.update(y_pred, y_batch)
-
-		valid_metric = metric.compute().item()
+		valid_metric = evaluate_one_epoch(
+			model, metric, valid_loader, device
+		)
 
 		#---------------------------------------------
 		#                 Checkpoint
@@ -122,8 +145,6 @@ def train(
 					print(f"Early stopping, best valid metric: {best_valid_metric:.3f}, epoch: {best_epoch}")
 					break
 
-		# if epoch>=2:
-		# 	break
 	print(f"Restoring best model from epoch {best_epoch} with valid metric: {best_valid_metric:.3f}")
 	model.load_state_dict(torch.load(checkpoint_path))
 
