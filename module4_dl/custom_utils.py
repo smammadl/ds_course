@@ -49,6 +49,16 @@ def evaluate_one_epoch(
 	valid_metric = metric.compute().item()
 	return valid_metric
 
+def scheduler_lr(epoch, optimizer, scheduler, warmup_scheduler, valid_metric):
+	if scheduler is not None:
+		if epoch >= (warmup_scheduler.total_iters if warmup_scheduler is not None else 0):
+			if isinstance(scheduler, torch.optim.lr_scheduler.ReduceLROnPlateau):
+				scheduler.step(valid_metric)
+			else:
+				scheduler.step()
+	learning_rate = optimizer.param_groups[0]["lr"]
+	return learning_rate
+
 def train(
 	model, 
 	optimizer, 
@@ -106,13 +116,7 @@ def train(
 		#---------------------------------------------
 		#                 Scheduling
 		#---------------------------------------------
-		if scheduler is not None:
-			if epoch >= (warmup_scheduler.total_iters if warmup_scheduler is not None else 0):
-				if isinstance(scheduler, torch.optim.lr_scheduler.ReduceLROnPlateau):
-					scheduler.step(valid_metric)
-				else:
-					scheduler.step()
-		learning_rate = optimizer.param_groups[0]["lr"]
+		learning_rate = scheduler_lr(epoch, optimizer, scheduler, warmup_scheduler, valid_metric)
 
 		#---------------------------------------------
 		#                 Logging
