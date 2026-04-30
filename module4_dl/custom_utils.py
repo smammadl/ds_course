@@ -1,6 +1,6 @@
 import time
 import torch
-import torchmetrics
+# import torchmetrics
 import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,16 +17,20 @@ def train_one_epoch(
 	losses = []
 	metric.reset()
 	model.train()
-	for X_batch, y_batch in train_loader:
-		X_batch, y_batch = X_batch.to(device), y_batch.to(device)
-		y_pred = model(X_batch)
+	for *X_batch_list, y_batch in train_loader:
+		X_batch_list = [X.to(device) for X in X_batch_list]
+		y_batch = y_batch.to(device)
+
+		y_pred = model(*X_batch_list)
 		loss = criterion(y_pred, y_batch)
 		losses.append(loss.item())
+
 		loss.backward()
 		if clip_grad_norm is not None:
 			nn.utils.clip_grad_norm_(model.parameters(), max_norm=clip_grad_norm)
 		optimizer.step()
 		optimizer.zero_grad()
+
 		metric.update(y_pred, y_batch)
 	
 	train_loss = np.mean(losses)
@@ -42,9 +46,11 @@ def evaluate_one_epoch(
 	model.eval()
 	metric.reset()
 	with torch.no_grad():
-		for X_batch, y_batch in valid_loader:
-			X_batch, y_batch = X_batch.to(device), y_batch.to(device)
-			y_pred = model(X_batch)
+		for *X_batch_list, y_batch in valid_loader:
+			X_batch_list = [X.to(device) for X in X_batch_list]
+			y_batch = y_batch.to(device)
+			
+			y_pred = model(*X_batch_list)
 			metric.update(y_pred, y_batch)
 	valid_metric = metric.compute().item()
 	return valid_metric
@@ -72,7 +78,9 @@ def train(
 	patience=None,
 	checkpoint_path='best_model.pt',
 	clip_grad_norm=None,
-    device='cpu'
+    device='cpu', 
+	train_one_epoch=train_one_epoch,
+	evaluate_one_epoch=evaluate_one_epoch,
 	):
 	history = {
 		'train_losses' : [],
