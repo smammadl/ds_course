@@ -77,6 +77,7 @@ def train(
 	scheduler=None, 
 	patience=None,
 	checkpoint_path='best_model.pt',
+	restore_best_model=True,
 	clip_grad_norm=None,
     device='cpu', 
 	train_one_epoch=train_one_epoch,
@@ -157,8 +158,9 @@ def train(
 					print(f"Early stopping, best valid metric: {best_valid_metric:.3f}, epoch: {best_epoch}")
 					break
 
-	print(f"Restoring best model from epoch {best_epoch} with valid metric: {best_valid_metric:.3f}")
-	model.load_state_dict(torch.load(checkpoint_path))
+	if restore_best_model:
+		print(f"Restoring best model from epoch {best_epoch} with valid metric: {best_valid_metric:.3f}")
+		model.load_state_dict(torch.load(checkpoint_path))
 
 	return history
 
