@@ -10,7 +10,7 @@
     <!-- Reveal.js Theme (Night theme looks great for tech presentations) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css">
     <style>
-        .reveal h1, .reveal h2, .reveal h3 { color: #42A5F5; text-transform: none; }
+        .reveal h1, .reveal h2, .reveal h3 { color: #d1f246; text-transform: none; }
         .highlight { color: #FFA726; font-weight: bold; }
         .small-text { font-size: 0.7em; }
     </style>
@@ -19,51 +19,108 @@
     <div class="reveal">
         <div class="slides">
 
-            <!-- Slide 1: Title -->
-            <section>
-                <h2>Demystifying Data Science</h2>
-                <p>From Buzzword to Real-World Impact</p>
-                <p class="small-text">Press the <em>Right Arrow</em> to advance. Press <em>'S'</em> for Speaker Notes.</p>
-                <aside class="notes">
-                    Welcome everyone! Thank you for being here. Today we are going to talk about Data Science. Some of you might be writing machine learning algorithms already, and some of you might just think it's a cool buzzword you keep hearing. My goal today is to level the playing field so everyone leaves here understanding what Data Science is, why it matters, and how you can be a part of it.
-                </aside>
-            </section>
-
-            <!-- Slide 2: What is Data Science? -->
             <section>
                 <section>
-                    <h2>What is Data Science?</h2>
-                    <p>It is the intersection of three domains:</p>
+                    <h2>Data Science Case Study</h2>
+                    <p>Predicting Car Prices</p>
+                    <!-- <p class="small-text">Press the <em>Right Arrow</em> to advance. Press <em>'S'</em> for Speaker Notes.</p> -->
+                    <aside class="notes">
+                        keywords: machine learning algorithms
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>What Questions Can We Answer?</h2>
                     <ul>
-                        <li>Computer Science (Hacking Skills)</li>
-                        <li>Math & Statistics</li>
-                        <li>Domain Expertise (Business Knowledge)</li>
+                        <li class="fragment"><strong>Regression:</strong> What is the price of a car?</li>
+                        <li class="fragment"><strong>Classification:</strong> Is the car damaged?</li>
+                        <li class="fragment"><strong>Time Series:</strong> What will the price of a car be in the future?</li>
                     </ul>
                     <aside class="notes">
-                        Data science isn't just coding, and it isn't just math. It's the sweet spot in the middle. You use coding to wrangle the data, math to analyze it, and domain expertise to ask the right questions. If you only have coding and math, you have machine learning, but without business knowledge, you don't know what problems actually need solving.
+                        keywords: regression, time series, classification
                     </aside>
                 </section>
                 <section>
                     <h2>In Simple Terms...</h2>
-                    <p>Using <span class="highlight">historical data</span> to discover patterns and predict <span class="highlight">future outcomes</span>.</p>
+                    <p>Using <span class="highlight">existing data</span> to discover patterns and predict <span class="highlight">the unknown</span>.</p>
+                </section>
+            </section>
+            
+            <section>
+                <section>
+                    <h2>Components of Data Science</h2>
+                    <ul>
+                        <li>Business Problem</li>
+                        <li>Data</li>
+                        <li>Computer</li>
+                    </ul>
+                    <aside class="notes">
+                        keywords: computer, data, business problem
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>Tools for each component</h2>
+                    <ul>
+                        <li>Domain Expertise</li>
+                        <li>Math & Statistics</li>
+                        <li>Programming</li>
+                    </ul>
+                    <aside class="notes">
+                        keywords: coding, math.
+                    </aside>
                 </section>
             </section>
 
-            <!-- Slide 3: Problems it Solves -->
             <section>
-                <h2>What Problems Does It Solve?</h2>
-                <ul>
-                    <li class="fragment"><strong>Personalization:</strong> Netflix suggesting your next binge.</li>
-                    <li class="fragment"><strong>Logistics:</strong> Uber matching drivers to riders in real-time.</li>
-                    <li class="fragment"><strong>Healthcare:</strong> Predicting patient readmission rates.</li>
-                    <li class="fragment"><strong>Finance:</strong> Instantly flagging a fraudulent credit card swipe.</li>
-                </ul>
-                <aside class="notes">
-                    [Click to reveal each point] Think about your day today. You woke up and checked social media (algorithm curated). You used Google Maps (predictive traffic routing). You bought coffee (supply chain optimization). Data science is invisible, but it runs the modern world.
-                </aside>
+                <section>
+                    <h2>Tools of the Trade: Languages</h2>
+                    <ul>
+                        <li><span class="highlight">Python:</span> Default language for Data Science right now.</li>
+                        <li><span class="highlight">SQL:</span> Essential for talking to databases.</li>
+                        <li><span class="highlight">R:</span> Language for statistical analysis.</li>
+                    </ul>
+                    <aside class="notes">
+                        If you want to start today, learn Python and SQL. Python is readable, versatile, and has the biggest ecosystem. SQL has been around since the 1970s and is still the most reliable way to pull data out of a company's database.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Tools of the Trade: Libraries</h2>
+                    <ul>
+                        <li><span class="highlight">Data Manipulation:</span> Pandas, NumPy</li>
+                        <li><span class="highlight">Visualization:</span> Matplotlib, Seaborn</li>
+                        <li><span class="highlight">Machine Learning:</span> Scikit-Learn, PyTorch</li>
+                    </ul>
+                    <aside class="notes">
+                        built-in algorithms, Pandas = Excel
+                    </aside>
+                </section>
+                <section>
+                    <h2>Tools of the Trade: Math & Statistics</h2>
+                    <ul>
+                        <li><span class="highlight">Linear Algebra:</span> Vectors, Matrices</li>
+                        <li><span class="highlight">Calculus:</span> Functions, Derivatives</li>
+                        <li><span class="highlight">Statistics:</span> Mean, Median, Mode, Standard Deviation, Variance, Correlation, Probability.</li>
+                    </ul>
+                    <aside class="notes">
+                        Math & Statistics are the foundation of Data Science. Without a strong understanding of math and statistics, you will not be able to build effective models.
+                    </aside>
+                </section>
             </section>
 
-            <!-- Slide 4: The Data Science Lifecycle -->
+            <section>
+                <h2>Data Science and related fields</h2>
+                <ol>
+                    <li>Data Analytics</li>
+                    <li>Machine Learning</li>
+                    <li>Artificial Intelligence</li>
+                    <li>Data Engineering</li>
+                    <li>Database Administration</li>
+                    <li>Backend Development</li>
+                    <li>Frontend Development</li>
+                </ol>
+            </section>
+
             <section>
                 <h2>The Data Science Lifecycle</h2>
                 <ol>
@@ -74,48 +131,39 @@
                     <li class="fragment">Deployment & Monitoring</li>
                 </ol>
                 <aside class="notes">
-                    A lot of beginners think Data Science is just training cool AI models. The reality is that 80% of a Data Scientist's job is finding data, cleaning it, fixing missing values, and formatting it. If you put garbage data into a brilliant model, you get garbage out.
+                    garbage in, garbage out.
                 </aside>
             </section>
 
-            <!-- Slide 5: The Tools of the Trade -->
-            <section>
-                <section>
-                    <h2>Tools of the Trade: Languages</h2>
-                    <ul>
-                        <li><span class="highlight">Python:</span> The undisputed king of Data Science right now.</li>
-                        <li><span class="highlight">SQL:</span> Essential for talking to databases. You must know this.</li>
-                        <li><span class="highlight">R:</span> Fantastic for deep statistical analysis.</li>
-                    </ul>
-                    <aside class="notes">
-                        If you want to start today, learn Python and SQL. Python is readable, versatile, and has the biggest ecosystem. SQL has been around since the 1970s and is still the most reliable way to pull data out of a company's database.
-                    </aside>
-                </section>
-                <section>
-                    <h2>Tools of the Trade: Libraries</h2>
-                    <ul>
-                        <li><strong>Data Manipulation:</strong> Pandas, NumPy</li>
-                        <li><strong>Visualization:</strong> Matplotlib, Seaborn, Tableau</li>
-                        <li><strong>Machine Learning:</strong> Scikit-Learn, TensorFlow, PyTorch</li>
-                    </ul>
-                    <aside class="notes">
-                        You don't need to write algorithms from scratch. We have libraries for that. Pandas is like Excel on steroids. Scikit-learn has almost every standard machine learning algorithm built-in.
-                    </aside>
-                </section>
-            </section>
 
             <!-- Slide 6: Current Demand -->
             <section>
-                <h2>Current Job Market & Demand</h2>
-                <p>The "Sexiest Job of the 21st Century"</p>
-                <ul>
-                    <li>Massive data generation = Massive need for analysts.</li>
-                    <li>Companies don't just want "AI" anymore; they want <span class="highlight">ROI (Return on Investment)</span>.</li>
-                    <li>Roles are specializing: Data Analyst, Data Engineer, Machine Learning Engineer.</li>
-                </ul>
-                <aside class="notes">
-                    Harvard Business Review famously called this the sexiest job of the 21st century. The demand is still incredibly high, but it's maturing. Companies don't just want to hire "Data Scientists" to do everything. They are hiring Data Engineers to build pipelines, and ML Engineers to put models into production. 
-                </aside>
+                <section>
+                    <h2>Current Job Market & Opportunities</h2>
+                    <p>The "Sexiest Job of the 21st Century"</p>
+                    <ul>
+                        <li>Low cost of entry</li>
+                        <li>Massive data generation = Massive need for analysts</li>
+                        <li>High ROI for companies</li>
+                        <li>Adjacencies: Data Analyst, Data Engineer, Machine Learning Engineer, Backend Engineer, Frontend Engineer, etc.</li>
+                    </ul>
+                    <aside class="notes">
+                        keywords: low cost of entry, massive data generation, high ROI, adjacencies.
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>Current Job Market & Risks</h2>
+                    <ul>
+                        <li>Intense competition</li>
+                        <li>Rapid obsolescence of skills</li>
+                        <li>Automation of basic tasks</li>
+                        <li>Reality Gap</li>
+                    </ul>
+                    <aside class="notes">
+                        keywords: intense competition, rapid obsolescence of skills.
+                    </aside>
+                </section>
             </section>
 
             <!-- Slide 7: Future Prospects -->
@@ -124,24 +172,10 @@
                 <ul>
                     <li class="fragment"><strong>Generative AI (LLMs):</strong> Automating code writing, but requiring human oversight.</li>
                     <li class="fragment"><strong>AutoML:</strong> The basic algorithms will be automated.</li>
-                    <li class="fragment"><strong>The Pivot:</strong> Future Data Scientists will need to be excellent <em>communicators</em> and <em>problem formulators</em>, not just coders.</li>
+                    <li class="fragment"><strong>The Pivot:</strong> Future Data Scientists will need have diverse <em>skills</em>, not just coders.</li>
                 </ul>
                 <aside class="notes">
                     Will AI take Data Science jobs? AI will automate the boring parts of Data Science. AutoML can test 50 algorithms in a minute. The future belongs to the Data Scientist who can look at a messy business problem, figure out how to translate it into math, and then explain the results to a CEO who doesn't know what a neural network is.
-                </aside>
-            </section>
-
-            <!-- Slide 8: How to Get Started -->
-            <section>
-                <h2>How to Get Started?</h2>
-                <ol>
-                    <li>Master the Basics: Python, SQL, Statistics.</li>
-                    <li>Don't just watch tutorials—<span class="highlight">build projects</span>.</li>
-                    <li>Analyze data you actually care about (Sports, Gaming, Finance).</li>
-                    <li>Create a portfolio on GitHub or Kaggle.</li>
-                </ol>
-                <aside class="notes">
-                    Tutorial hell is real. The best way to learn is to find a dataset about something you love. If you love basketball, download NBA stats and try to predict who will win the MVP. Put your work on GitHub. Employers want to see what you can build, not just what certificates you have.
                 </aside>
             </section>
 
