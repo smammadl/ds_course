@@ -22,7 +22,6 @@
         - dataset: 
             - [MovieLens 100K](https://grouplens.org/datasets/movielens/100k/) or [MovieLens 100K](https://www.kaggle.com/datasets/fakhrealam0786/movielens-100k-dataset)
             - [MovieLens 1M](https://grouplens.org/datasets/movielens/1m/) or [MovieLens 1M](https://www.kaggle.com/datasets/odedgolden/movielens-1m-dataset)
-        - classification
         - Model A: neural networks, e.g. Two-Tower Architecture, DeepFM, DCN, etc.
         - Model B: specialized models, using `scikit-surprise` library
         - Model C: no learning, just filtering, e.g. item-based collaborative filtering
