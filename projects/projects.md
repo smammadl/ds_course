@@ -10,12 +10,14 @@
     - recommendation system (ideal)
 2. Nijat 
     - data cleaning
-        - data source, 
+        - data source
+            - bs4
             - raw htmls
             - quality level
-            - db (OLTP): sqlite (postgres)
+            - db (OLTP): sqlite
+            - polars (optional)
         - cleaning
-            - db (OLAP): duckdb (clickhouse)
+            - db (OLAP): duckdb
     - UI for duckdb
 3. Farida
     - recommendation system 
@@ -70,10 +72,25 @@
         - vulgarity
         - labelling
 8. Asgar
+    - Music Genre Classification
+        - data: GTZAN
+    - audio formats
+    - spectogram
+    - model
+    - performance
+    - pipeline (interface)
 10. Aynur
+    - timeseries
+        - data
+        - Model A: Sequence-Based Neural Network Approach (anomaly detection)
+            - ideally LSTM (at least RNN)
+        - Model B: Prophet etc.
+    - performance, evaluation
+    - program to predict
 11. Lala
 12. Aytaj
 13. Isa 
+    syntetic data augmentation
 14. Seymur
 15. Mahammad
 16. Karam
