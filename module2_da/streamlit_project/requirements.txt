@@ -3,3 +3,4 @@ pandas
 streamlit
 numpy
 plotly
+curl_cffi
