@@ -48,6 +48,7 @@
   - [Open-Ended Progress Measures](#open-ended-progress-measures)
   - [A. Domain Programs](#a-domain-programs)
     - [Marketing Intelligence as a Component Ecosystem](#marketing-intelligence-as-a-component-ecosystem)
+    - [Learning and Practice as a Component Ecosystem](#learning-and-practice-as-a-component-ecosystem)
     - [Feasible Data Starting Points](#feasible-data-starting-points)
   - [B. Capability Systems](#b-capability-systems)
   - [C. Platform Programs](#c-platform-programs)
@@ -664,8 +665,7 @@ Domain programs provide the users, data, workflows, and reasons for connecting t
 | **Marketing Intelligence Platform** | Turn changing market information into timely, trustworthy research, statistics, reports, and alerts | Scraping/APIs, source versioning, entity resolution, NLP, search, statistics, reports, alerts, agents, API/UI | Entity/source coverage, freshness, change-detection quality, alert precision, supported claims, report time/cost |
 | **GIS/Open-Data Intelligence Platform** | Integrate spatial and public data to support geographic search, monitoring, analysis, and decisions | Spatial ETL, validation, geocoding, PostGIS/DuckDB Spatial, tiles, search, change detection, forecasting, maps | Geographic/attribute coverage, geometry validity, freshness, spatial correctness, query latency, analyst task time |
 | **Document Intelligence Platform** | Turn documents into validated, searchable, structured, and actionable information | Upload, OCR, layout analysis, extraction, validation, review queues, search, workflow, audit | Field accuracy, CER/WER, review rate, document throughput, retrieval quality, unsupported extraction rate |
-| **Predictive Maintenance Platform** | Use operational data to detect degradation, estimate risk, and support maintenance decisions | Telemetry ingestion, time-series storage, anomaly detection, forecasting, survival models, alerts, scheduling | Detection delay, false-alert rate, calibration, failure recall, data freshness, maintenance lead time |
-| **Risk and Abuse Intelligence Platform** | Detect suspicious entities, transactions, relationships, and behavioral changes and support investigation | Rules, batch/stream scoring, graph analysis, cases, evidence, feedback, monitoring, audit | Precision at review capacity, expected loss, calibration, investigation time, drift, false-positive burden |
+| **Learning and Practice Platform** | Turn learning material into trustworthy practice and adapt future study using review results | PDF/EPUB/HTML ingestion, OCR, concept extraction, flashcards, cloze and language exercises, evidence checks, review, scheduling, Anki export | Card acceptance/edit rate, source support, duplicate/ambiguity rate, time per accepted card, retention, review burden |
 | **Game or Simulated-World Platform** | Create a controllable data-generating environment containing users, agents, events, economies, and decisions | Simulation/game loop, agents, events, marketplace, matchmaking, inventories, telemetry, search, recommendation, abuse detection | Simulation invariants, agent performance, economy stability, discovery quality, fairness, latency, resource use |
 
 #### Marketing Intelligence as a Component Ecosystem
@@ -688,10 +688,57 @@ Sources
 
 This is a map of possible relationships, not a required architecture. Work may focus on one component, one useful vertical slice, or the connections among several components.
 
+#### Learning and Practice as a Component Ecosystem
+
+The central loop is to convert source material into verifiable practice, collect review evidence, and use that evidence to improve later practice.
+
+```text
+PDF, EPUB, HTML, notes, image, audio, or transcript
+  → text, layout, and media extraction
+  → sections, concepts, examples, and prerequisites
+  → flashcards, cloze questions, and exercises
+  → source-support, ambiguity, and duplicate checks
+  → human review
+  → Anki export or built-in practice
+  → review history and learner feedback
+  → improved scheduling, selection, and generation
+```
+
+The program can emphasize either or both of these modes:
+
+- **Knowledge study:** definitions, explanations, formulas, diagrams, comparisons, prerequisites, chapter questions, and image occlusion.
+- **Language learning:** vocabulary in context, sentence cloze, grammar transformations, translation, listening, pronunciation, minimal pairs, and exercises based on recurring errors.
+
+| Component | Possible responsibilities |
+|---|---|
+| **Content ingestion** | Import PDF, EPUB, HTML, Markdown, images, audio, transcripts, and metadata while retaining source locations |
+| **Document processing** | Recover OCR text, layout, reading order, headings, tables, formulas, diagrams, and media |
+| **Concept organization** | Identify terms, definitions, relationships, examples, sections, and possible prerequisites |
+| **Practice generation** | Produce Q&A, cloze, definition, formula, image, listening, pronunciation, and transformation exercises |
+| **Verification** | Check source support, answerability, ambiguity, contradictions, duplicate meaning, and leakage from question to answer |
+| **Human review** | Accept, edit, reject, merge, split, tag, and trace an item back to its source |
+| **Practice and scheduling** | Run sessions, grade answers, schedule reviews, provide hints, and retain learning history |
+| **Integration** | Begin with CSV/TSV export; later add richer Anki packages, media, synchronization, or a built-in client |
+| **Adaptation and analytics** | Track weak concepts, recurring language errors, difficulty, retention, review load, and generation quality |
+
+Possible progress signals include:
+
+| Dimension | Examples |
+|---|---|
+| **Generation quality** | Acceptance/edit rate, unsupported-answer rate, duplicate rate, ambiguity rate, source-reference accuracy, concept coverage |
+| **Learning usefulness** | Time per accepted item, delayed recall, repeated-error rate, difficulty calibration, weak-concept improvement, review burden |
+| **Language practice** | Vocabulary coverage, accepted-answer coverage, cloze ambiguity, grammar-error recurrence, listening/pronunciation performance |
+| **Operations** | Extraction success by format, OCR/layout quality, processing time/cost, recovery from failed documents, export reliability |
+
+Important limitations are also useful areas of study: a grammatical card may be educationally poor; a cloze may have several valid answers; a short passage may lack context; formulas and diagrams may be extracted incorrectly; excessive cards may increase review burden; and copyrighted, DRM-protected, or personal material may require restricted or local processing.
+
+Document Intelligence can supply ingestion and extraction capabilities, while the Learning and Practice Platform adds an end-user feedback loop through review, correction, scheduling, and measured learning outcomes.
+
 #### Feasible Data Starting Points
 
 - Marketing or media intelligence can use regularly updated sources such as [GDELT](https://www.gdeltproject.org/data.html?source=post_page---------------------------), subject to source quality and licensing checks.
 - GIS work can begin with regional [OpenStreetMap extracts](https://wiki.openstreetmap.org/wiki/Extracts) rather than planet-scale processing.
+- Learning work can begin with owned, licensed, or public-domain PDFs and EPUBs, personal notes, open course material, subtitles, and transcripts; preserve page/section references and avoid bypassing DRM.
 - A game, marketplace, logistics simulation, or agent tournament can generate controlled events, interactions, graphs, transactions, and rare cases.
 
 ---
@@ -704,10 +751,11 @@ These can be standalone studies, but often become more meaningful when attached 
 |---|---|---|---|
 | **Search and retrieval** | Can the system return the most useful available information while keeping the index fresh and responsive? | Marketing, documents, GIS, research, games | Recall/MRR/NDCG, zero-result rate, freshness, latency, indexing throughput, cost |
 | **Recommendation and ranking** | Can the system rank useful items for a user or context while maintaining coverage and freshness? | Products, content, locations, research sources, game items | Recall/NDCG, coverage, diversity, novelty, cold-start quality, freshness, latency |
-| **Alerting and workflow automation** | Can meaningful changes trigger timely action without overwhelming users? | Marketing, GIS, maintenance, risk, infrastructure | Detection delay, alert precision, missed-event rate, acknowledgement time, automation success |
+| **Alerting and workflow automation** | Can meaningful changes trigger timely action without overwhelming users? | Marketing, GIS, simulated equipment, marketplaces, infrastructure | Detection delay, alert precision, missed-event rate, acknowledgement time, automation success |
 | **Agentic research and analysis** | Can bounded research or analysis tasks be completed correctly, reproducibly, and with appropriate human involvement? | Marketing, GIS, documents, data exploration | Task completion, supported claims, calculation correctness, intervention rate, recovery, cost/latency |
 | **OCR and information extraction** | Can unstructured documents become trustworthy structured records? | Documents, finance, public records, maps | Recognition/field accuracy, review rate, throughput, confidence calibration, schema validity |
-| **Forecasting and anomaly detection** | Can future behavior or unusual events be identified early enough to support action? | Maintenance, finance, infrastructure, games | Forecast error, interval coverage, event precision/recall, detection delay, alert volume |
+| **Forecasting, anomaly, and failure-risk estimation** | Can future behavior, unusual events, or failure likelihood be estimated early enough to support action? | Simulated equipment, infrastructure, finance, games | Forecast error, interval coverage, calibration, event precision/recall, detection delay, alert volume |
+| **Risk, fraud, and abuse detection** | Can suspicious accounts, events, transactions, or relationships be prioritized within a limited review capacity? | Games, synthetic marketplaces, payment simulations, identity/account systems | Precision at review capacity, expected loss, calibration, investigation time, drift, false-positive burden |
 
 Search and recommendation may start inside a domain program. They can become standalone systems when the corpus or catalog, evaluation data, update behavior, permissions, traffic, or availability requirements make that separation useful.
 
@@ -763,7 +811,9 @@ These programs investigate architecture, scale, feedback, or failure behavior un
 | **Feature Consistency** | Point-in-time joins, offline/online parity, freshness, backfills, and leakage | Versioned event and entity histories with known expected features |
 | **Multi-Tenant Data Systems** | Isolation, quotas, noisy neighbors, tenant-specific configuration, and cost attribution | Synthetic tenants with varied data size, query patterns, and permissions |
 | **Multi-Region Failure Exercise** | Replication lag, routing, recovery objectives, split brain, and reconciliation | Continuous generated transactions and controlled network/process failures |
-| **Game or Marketplace Simulation** | Feedback loops, economies, agents, ranking, fraud, experimentation, and behavioral drift | Rules and agents that generate users, items, transactions, events, and ground truth |
+| **Equipment Monitoring and Maintenance Simulation** | Sensor generation, degradation, failure, maintenance effects, alert capacity, streaming, and recovery | Simulated equipment states, noisy telemetry, injected faults, work orders, and known failure causes |
+| **Transaction Risk and Abuse Simulation** | Account behavior, transactions, collusion, compromise, disputes, investigation, delayed labels, and adversarial adaptation | Synthetic marketplace or payment rules that generate normal and abusive behavior with known ground truth |
+| **Game Economy and Agent Simulation** | Feedback loops, economies, agents, ranking, experimentation, and behavioral drift | Rules and agents that generate users, items, interactions, transactions, events, and ground truth |
 
 The system does not need to claim that its domain requires internet scale. It can state explicitly that distribution, consistency, throughput, cost, or recovery is the subject of the experiment.
 
