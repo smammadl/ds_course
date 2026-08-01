@@ -278,35 +278,175 @@ These are optional progressions; every referenced problem remains independently 
 
 ### C. Infrastructure
 
-| # | Challenge | Suggested technologies or focus |
-|---:|---|---|
-| 21 | Containers and orchestration | Docker, Compose, and Kubernetes |
-| 22 | CI/CD | Build, test, release, deploy, and rollback |
-| 23 | Monitoring and tracing | Grafana, Prometheus, OpenTelemetry, and Jaeger |
-| 24 | Structured logging | Correlation IDs and cross-service diagnostics |
-| 25 | Reverse proxy | Nginx, Caddy, and Traefik |
-| 26 | Database backup and recovery | Backups and point-in-time recovery (PITR) |
-| 27 | High availability | Replication, failover, and degraded operation |
-| 28 | Load testing | Throughput, latency, saturation, and bottlenecks |
-| 29 | Secret management | Vault, Docker Secrets, and Kubernetes Secrets |
-| 30 | Infrastructure as code | Terraform and Ansible |
+Each row is a standalone operational problem. It defines its own system, workload, failure cases, and checks; no shared application or deployment standard is assumed. Within each track, common problems come first and difficulty generally increases.
+
+| Track | Category | Typical problems |
+|---|---|---|
+| **C1** | Runtime and containers | Images, local environments, process lifecycle, and persistent storage |
+| **C2** | Networking and traffic management | DNS, TLS, reverse proxies, load balancing, and network policy |
+| **C3** | CI/CD and release engineering | Builds, artifacts, migrations, deployment strategies, and rollback |
+| **C4** | Infrastructure as code and configuration | Provisioning, convergence, environment promotion, and drift |
+| **C5** | Observability and incident response | Metrics, logs, traces, SLOs, alerts, and investigation |
+| **C6** | Stateful infrastructure and recovery | Backups, PITR, replication, storage failure, and disaster recovery |
+| **C7** | Orchestration, capacity, and resilience | Kubernetes, autoscaling, load testing, scheduling, and fault injection |
+| **C8** | Infrastructure security and governance | Secrets, IAM, supply-chain controls, patching, policy, and cost |
+
+#### C1. Runtime and Container Problems
+
+| ID and operational scenario | Required behavior | Failures and constraints | Workload and checks |
+|---|---|---|---|
+| **C1.1 Containerize a web API** | Build and run the service with configuration, health checks, graceful shutdown, and a fixed application port | Run as non-root; exclude source secrets; handle signals correctly; keep the image reproducible | Fresh-clone build, HTTP requests, termination during traffic, image inspection |
+| **C1.2 Run an API and PostgreSQL locally** | Start both services, initialize the schema, persist data, and expose readiness checks through Compose or an equivalent tool | Survive restarts; avoid startup races; separate configuration from secrets; fail clearly when the database is unavailable | Create/read fixture, stop/start cycle, volume inspection, unavailable-database test |
+| **C1.3 Produce a small production image** | Use multi-stage builds, pinned dependencies, minimal runtime files, and architecture-aware artifacts | Preserve debugging information where required; avoid package-manager caches, build tools, and writable application files | Compare cold build, cached build, image size, startup time, and vulnerability scan |
+| **C1.4 Operate a bounded worker process** | Consume jobs, report health, stop gracefully, and respect CPU, memory, file, and process limits | Handle a killed worker, stuck job, memory exhaustion, temporary filesystem exhaustion, and duplicate delivery | Synthetic jobs, resource limits, forced termination, restart and duplicate-processing checks |
+
+#### C2. Networking and Traffic-Management Problems
+
+| ID and operational scenario | Required behavior | Failures and constraints | Workload and checks |
+|---|---|---|---|
+| **C2.1 Put three API instances behind a TLS reverse proxy** | Terminate TLS, balance requests, preserve request metadata, and remove unhealthy instances | Handle slow instances, uploads, WebSockets, certificate renewal, and graceful backend shutdown | Load generator, synthetic slow backend, certificate-expiry rehearsal, routing distribution |
+| **C2.2 Publish a service through DNS** | Configure records, validate resolution, change the destination, and retire the old endpoint | Account for TTLs, negative caching, partial propagation, resolver differences, and rollback | Local or delegated test zone, repeated queries from multiple resolvers, timed cutover |
+| **C2.3 Route traffic by host and path** | Send multiple applications through one edge while preserving authentication, headers, and client addresses | Reject ambiguous routes and header spoofing; bound request size and timeout; return useful upstream errors | Synthetic upstreams, route matrix, hostile headers, timeout and unavailable-route tests |
+| **C2.4 Balance stateful and stateless traffic** | Compare round-robin, least-connections, hashing, and explicit session storage | Handle uneven request cost, instance churn, hot keys, retry duplication, and unhealthy nodes | Skewed sessions, instance add/remove events, distribution and recovery measurements |
+| **C2.5 Isolate application tiers** | Permit only required flows among edge, application, database, administration, and monitoring components | Deny lateral movement and unintended egress without breaking DNS, updates, or observability | Connectivity matrix, allowed/denied probes, compromised-service simulation, policy audit |
+
+#### C3. CI/CD and Release-Engineering Problems
+
+| ID and operational scenario | Required behavior | Failures and constraints | Workload and checks |
+|---|---|---|---|
+| **C3.1 Build and test every proposed change** | Restore dependencies, lint, test, package, cache safe work, and report failures | Prevent cache poisoning and secret exposure; support clean runners and deterministic dependency resolution | Passing/failing commits, cold and warm runs, altered lockfile, test-report inspection |
+| **C3.2 Publish a versioned artifact once** | Create an immutable package or image, attach source/version metadata, and promote the same artifact between environments | Reject duplicate or mutable versions; preserve provenance; prevent credentials from entering artifacts | Tagged and untagged commits, artifact checksum, metadata inspection, promotion rehearsal |
+| **C3.3 Deploy an API with a database migration** | Run compatibility checks, apply an expand/migrate/contract change, verify health, and roll back the application | Handle failed tests, interrupted migration, mixed application versions, failed health checks, and concurrent release attempts | Disposable environment, seeded database, forced failure at each stage, rollback checks |
+| **C3.4 Perform a zero-downtime rolling release** | Replace instances gradually while preserving availability and draining in-flight work | Detect crash loops; respect readiness; avoid serving incompatible versions; stop rollout on regression | Continuous traffic, long requests, unhealthy release, error-rate and availability timeline |
+| **C3.5 Compare blue-green and canary releases** | Shift traffic in controlled steps, evaluate release health, and return safely to the previous version | Bound false promotion from noisy metrics; handle sticky sessions, asynchronous jobs, and schema compatibility | Stable and defective releases, synthetic business metric, automatic/manual rollback rehearsal |
+
+#### C4. Infrastructure-as-Code and Configuration Problems
+
+| ID and operational scenario | Required behavior | Failures and constraints | Workload and checks |
+|---|---|---|---|
+| **C4.1 Provision one disposable application environment** | Create network, compute, database, identities, and outputs from declarative configuration | Pin providers; avoid plaintext secrets; make repeated plans empty; destroy only owned resources | Isolated test account or local cloud emulator, first/second plan comparison, ownership labels |
+| **C4.2 Reuse infrastructure across development and production** | Extract modules while keeping environment-specific sizes, domains, access, and retention policies explicit | Prevent accidental production defaults, hidden module coupling, broad permissions, and state collisions | Two isolated environments, configuration matrix, plan review, cross-environment access probes |
+| **C4.3 Detect and reconcile configuration drift** | Identify a manual resource change and either import, accept, or revert it deliberately | Preserve externally managed attributes; distinguish harmless from dangerous drift; avoid destructive replacement | Controlled console change, saved plans, state backup, reconciliation and replacement test |
+| **C4.4 Configure a small server fleet convergently** | Install packages, create users, configure a service, rotate configuration, and restart only when necessary | Support repeated runs, partial failure, unreachable hosts, version differences, and secrets | Fresh and partially configured hosts, two consecutive runs, check mode, failed-host recovery |
+| **C4.5 Change shared infrastructure safely** | Preview dependency effects, serialize conflicting changes, gate destructive actions, and recover state | Handle stale plans, concurrent runs, locked or lost state, provider failure, and partial application | Competing changes, forced interruption, remote-state recovery, dependency and blast-radius review |
+
+#### C5. Observability and Incident-Response Problems
+
+| ID and operational scenario | Required behavior | Failures and constraints | Workload and checks |
+|---|---|---|---|
+| **C5.1 Monitor a single HTTP service** | Expose request rate, errors, latency, saturation, build version, and dependency health | Bound label cardinality; distinguish application failure from scrape failure; avoid averages hiding tail latency | Normal, slow, erroring, and saturated traffic; dashboard and alert-value inspection |
+| **C5.2 Trace one request across three services** | Propagate trace and correlation context through HTTP, messaging, logs, and database spans | Handle retries, asynchronous boundaries, missing context, sampling, sensitive attributes, and clock differences | Known request path, retry and queue scenarios, trace completeness and search checks |
+| **C5.3 Diagnose intermittent checkout latency** | Use metrics, structured logs, profiles, and traces to identify the responsible component | Limit telemetry volume and cardinality; account for sampling and coincidental correlated failures | Load generator, injected database/network/CPU delays, expected bottleneck timeline |
+| **C5.4 Define and alert on a service-level objective** | Select a user-visible indicator, calculate error-budget consumption, and page on meaningful burn | Avoid alerting on harmless internal symptoms; handle low traffic, missing data, maintenance, and brief spikes | Generated good/bad requests, slow burn and fast burn, alert timing and false-positive review |
+| **C5.5 Run an incident from detection through review** | Triage, assign roles, mitigate, communicate, recover, and produce follow-up actions | Work with incomplete evidence; preserve a timeline; avoid destructive diagnosis; verify recovery | Injected production-like failure, stale runbook clue, status updates, recurrence test |
+| **C5.6 Operate telemetry at high volume** | Apply sampling, aggregation, retention, indexing, and access controls while preserving diagnostic value | Bound ingestion and storage cost; handle backpressure, collector loss, high-cardinality fields, and sensitive data | Generated logs/metrics/traces, collector outage, cost and query-latency comparison |
+
+#### C6. Stateful Infrastructure and Recovery Problems
+
+| ID and operational scenario | Required behavior | Failures and constraints | Workload and checks |
+|---|---|---|---|
+| **C6.1 Back up and restore a small database** | Create automated backups, retain them, restore into a clean instance, and verify application data | Encrypt backups; separate credentials; detect incomplete copies; do not treat backup creation as proof of recovery | Seeded records, checksums and row invariants, expired backup, timed restore |
+| **C6.2 Recover to the moment before an accidental deletion** | Combine base backups and transaction logs to restore to a selected timestamp | Meet stated RPO/RTO; handle missing or corrupt archive segments; avoid overwriting the source | Generated transaction history, deletion event, multiple recovery targets, timed rehearsal |
+| **C6.3 Fail over a replicated database** | Promote a replica, redirect clients, prevent split brain, and rejoin or rebuild the former primary | Account for replication lag, client retries, stale reads, network partition, and lost acknowledgements | Continuous writes, primary termination, partition simulation, acknowledged-write comparison |
+| **C6.4 Recover from storage exhaustion or corruption** | Detect the condition, stop unsafe writes, expand or replace storage, and validate recovered state | Preserve forensic evidence; handle partial files, full transaction logs, unavailable snapshots, and slow copying | Bounded test volume, forced disk-full event, corrupted blocks/files, integrity verification |
+| **C6.5 Restore a service in a second environment** | Recreate infrastructure, restore state, change routing, validate dependencies, and return to normal operation | Use explicit RPO/RTO; handle stale infrastructure code, missing secrets, external dependencies, and DNS delay | Region/account-like isolation, backup copy, dependency checklist, full timed exercise |
+
+#### C7. Orchestration, Capacity, and Resilience Problems
+
+| ID and operational scenario | Required behavior | Failures and constraints | Workload and checks |
+|---|---|---|---|
+| **C7.1 Deploy an API and worker to Kubernetes** | Define workloads, services, configuration, health probes, resource requests/limits, and controlled updates | Handle bad configuration, crash loops, graceful shutdown, unavailable dependency, and rollback | Local cluster, synthetic jobs and HTTP traffic, pod deletion, rollout status and recovery |
+| **C7.2 Load-test an API to find its first bottleneck** | Generate realistic traffic, measure throughput and latency, locate saturation, and confirm one improvement | Separate client from server limits; control warm-up, data distribution, caching, think time, and coordinated omission | Read/write mixes, cold/warm runs, resource profiles, repeatable before/after comparison |
+| **C7.3 Autoscale a service under bursty traffic** | Scale from demand while maintaining a latency or queue-delay target | Handle cold starts, noisy metrics, downstream saturation, oscillation, and delayed scale-down | Steady, burst, spike, and recovery workloads; replica count, p95 latency, errors, queue depth |
+| **C7.4 Schedule mixed workloads on a constrained cluster** | Place latency-sensitive services, batch jobs, and specialized hardware workloads using explicit priorities | Avoid starvation and unsafe eviction; handle resource fragmentation, affinity rules, and node loss | Synthetic workloads, one unavailable node, pending-work timeline, utilization and eviction review |
+| **C7.5 Test resilience to infrastructure failures** | Inject process, node, network, dependency, and storage faults and verify bounded degradation and recovery | Keep experiments scoped; stop on unsafe conditions; prevent retry storms and hidden data loss | Fault schedule, steady traffic, service-level indicators, recovery and invariant checks |
+| **C7.6 Capacity-plan a growing service** | Forecast resource demand, determine safe headroom, and compare scaling or architecture options | Include peaks, growth uncertainty, quotas, redundancy, downstream limits, and cost discontinuities | Historical or generated demand, benchmark curves, failure headroom, sensitivity scenarios |
+
+#### C8. Infrastructure Security and Governance Problems
+
+| ID and operational scenario | Required behavior | Failures and constraints | Workload and checks |
+|---|---|---|---|
+| **C8.1 Rotate a database credential without downtime** | Issue a new credential, update consumers, revoke the old one, and record the operation | Prevent secret logging, stale workers, broad permissions, and indefinite dual credentials | Multiple service instances, deliberately stale client, leak scan, connection monitoring |
+| **C8.2 Give a deployment pipeline least privilege** | Permit artifact publication and deployment only to declared environments and resources | Prevent privilege escalation, untrusted-fork secrets, lateral access, confused deputy behavior, and persistent credentials | Allowed/denied action matrix, pull-request and protected-branch runs, audit-log review |
+| **C8.3 Secure the container supply chain** | Pin dependencies, generate an SBOM, scan artifacts, sign releases, and verify policy before deployment | Handle vulnerable base images, compromised tags, expired keys, unavailable scanners, and approved exceptions | Clean/vulnerable/tampered images, signature verification, exception expiry, provenance inspection |
+| **C8.4 Patch a running server or node fleet** | Inventory versions, stage an update, preserve capacity, reboot where required, and verify service health | Handle incompatible packages, failed nodes, limited redundancy, rollback, and emergency exposure | Mixed-version fleet, canary node, forced patch failure, version and availability checks |
+| **C8.5 Enforce infrastructure policy automatically** | Reject public storage, unrestricted ingress, missing encryption, unowned resources, and prohibited regions | Distinguish deny, warn, and exception cases; test nested modules and existing resources | Compliant/noncompliant plans, time-bounded exception, policy-unit and integration cases |
+| **C8.6 Reduce infrastructure cost without violating reliability targets** | Attribute cost, find waste, evaluate rightsizing or scheduling, and verify savings after change | Preserve SLOs, redundancy, recovery objectives, contractual commitments, and peak capacity | Billing export or generated costs, utilization series, peak load test, before/after cost and SLO review |
 
 ---
 
 ### D. Mathematics
 
-| # | Challenge | Suggested scope |
-|---:|---|---|
-| 31 | Matrix library | Storage, operations, correctness, and performance |
-| 32 | Singular value decomposition | Derivation, implementation, and verification |
-| 33 | PCA without `eig()` | Centering, SVD, explained variance, and reconstruction |
-| 34 | Fast Fourier transform | Implementation, complexity, and signal examples |
-| 35 | Optimization methods | Gradient descent, Newton, Adam, and L-BFGS |
-| 36 | Automatic differentiation | Forward mode, reverse mode, and gradient checks |
-| 37 | Kalman filter | State estimation, uncertainty, and noisy sensors |
-| 38 | Monte Carlo methods | Simulation, error estimation, and variance reduction |
-| 39 | Graph algorithms | A*, Dijkstra, and Bellman–Ford |
-| 40 | Bayesian inference | Gibbs sampling and convergence diagnostics |
+Each row is a standalone numerical problem with explicit inputs, edge cases, and reference checks. Within each track, common problems come first and difficulty generally increases.
+
+| Track | Practice mode | Purpose |
+|---|---|---|
+| **D1** | Rebuild mathematical and numerical methods | Understand mechanics, assumptions, and failure conditions |
+| **D2** | Compare numerical and mathematical tools | Choose libraries and solvers using controlled evidence |
+| **D3** | Solve applied mathematical problem families | Translate real scenarios into models and decisions |
+| **D4** | Test numerical reliability and performance | Handle precision, conditioning, scale, and runtime constraints |
+
+#### D1. Foundational Numerical Methods: Rebuild and Verify
+
+| Challenge and scenario | Implement | Constraints and checks | Inputs or datasets |
+|---|---|---|---|
+| **D1.1 Transform batches of 2-D and 3-D points without a matrix package** | Dense storage; indexing; addition; multiplication; transpose; norms | Validate shapes and aliasing; test zero-sized and non-square matrices; compare values and scaling with NumPy | Identity, rotation, projection, random, and adversarially shaped matrices |
+| **D1.2 Solve sensor-calibration equations without calling a solver** | Gaussian elimination; partial pivoting; forward/back substitution; LU | Detect singularity; measure residual and conditioning; test nearly dependent equations; compare with NumPy/SciPy | Random systems, Hilbert matrices, synthetic calibration systems |
+| **D1.3 Store and multiply a sparse relationship matrix** | COO, CSR, and CSC formats; conversion; sparse matrix-vector multiplication | Preserve duplicates/zeros deliberately; test empty rows, skew, memory, and dense parity | Graph adjacency matrices, term-document matrices, generated sparsity patterns |
+| **D1.4 Solve least-squares problems robustly** | Normal equations; modified Gram–Schmidt; Householder QR | Compare residuals and coefficient error; test rank deficiency, scaling, and collinearity | Polynomial fits, synthetic regressions, Vandermonde and near-rank-deficient matrices |
+| **D1.5 Factor positive-definite and general matrices** | Cholesky, LU with pivoting, and QR decompositions | Reconstruct inputs; reject invalid assumptions; compare stability, operations, and solve accuracy | Covariance matrices, random matrices, indefinite and nearly singular cases |
+| **D1.6 Find dominant directions and low-rank structure** | Power iteration; QR iteration; singular value decomposition | Test sign ambiguity, repeated values, convergence, reconstruction, and orthogonality | Small hand-checkable matrices, low-rank-plus-noise data, image matrices |
+| **D1.7 Find roots of nonlinear equations** | Bisection, secant, and Newton methods | Require or detect brackets where applicable; handle flat derivatives, multiple roots, divergence, and stopping criteria | Polynomials, transcendental equations, implicit financial and physical equations |
+| **D1.8 Approximate a curve from incomplete samples** | Piecewise linear, polynomial, spline, and barycentric interpolation | Test extrapolation, repeated points, oscillation, continuity, and sensitivity to noise | Analytic functions, irregular samples, Runge-function and sensor-calibration points |
+| **D1.9 Differentiate and integrate functions numerically** | Forward/central differences; trapezoid; Simpson; adaptive quadrature | Balance truncation and round-off error; handle discontinuities, singularities, and evaluation budgets | Functions with known derivatives/integrals, noisy samples, peaked and oscillatory functions |
+| **D1.10 Find frequencies in a noisy signal** | DFT and radix-2 FFT; inverse transform; convolution theorem | Test aliasing, leakage, windowing, non-power-of-two input, reconstruction, and complexity | Synthetic tones, chirps, impulses, ECG or audio excerpts |
+| **D1.11 Differentiate a composed numerical program automatically** | Dual numbers; computation graph; forward and reverse accumulation | Check broadcasting and reused variables; handle nondifferentiable points; compare with finite differences and JAX/PyTorch | Scalar expressions, matrix chains, small neural network, deliberately unstable function |
+| **D1.12 Simulate a dynamical system** | Euler, midpoint, Runge–Kutta, and adaptive step-size integration | Measure global/local error; test stiffness, conserved quantities, event boundaries, and unstable step sizes | Exponential decay, harmonic oscillator, predator–prey, stiff chemical system |
+
+#### D2. Numerical and Mathematical Tool Laboratories
+
+| Laboratory and scenario | Compare | Constraints and checks | Inputs or datasets |
+|---|---|---|---|
+| **D2.1 Choose a dense linear-algebra stack for repeated model calculations** | NumPy/SciPy, JAX, PyTorch, and a compiled baseline | Use identical dtypes and layouts; separate compilation, transfer, and execution; verify error tolerance | Square, tall, batched, contiguous, and strided matrices |
+| **D2.2 Choose a solver for a million-variable sparse system** | Direct factorization, conjugate gradient, GMRES, and preconditioned variants | Match solver assumptions; track convergence, residual, memory, setup cost, and time limit | Generated sparse systems, graph Laplacians, [SuiteSparse Matrix Collection](https://sparse.tamu.edu/) |
+| **D2.3 Choose a constrained optimizer for resource allocation** | SciPy, CVXPY, OR-Tools, and a custom projected-gradient or simplex baseline | Check feasibility, optimality gap, integer decisions, warm starts, infeasible inputs, and time limits | Generated capacity problems, [OR-Library](http://people.brunel.ac.uk/~mastjjb/jeb/info.html) instances |
+| **D2.4 Fit the same hierarchical probability model in multiple systems** | PyMC, Stan, and NumPyro | Match priors and parameterization; compare MCMC/VI, ESS, divergences, predictive fit, and runtime | Eight Schools, radon-style data, synthetic groups with known parameters |
+| **D2.5 Compare exact, arbitrary-precision, and floating-point arithmetic** | Rational/decimal libraries, standard floats, and arbitrary-precision floats | Use equivalent expressions; test cancellation, overflow, repeated rounding, speed, and memory | Financial sums, polynomial evaluation, ill-conditioned formulas, reference constants |
+| **D2.6 Differentiate an optimization objective using three approaches** | Symbolic differentiation, finite differences, and automatic differentiation | Handle branches, nondifferentiable points, step-size choice, graph size, and higher derivatives | Rosenbrock function, logistic loss, matrix factorization objective |
+| **D2.7 Estimate difficult integrals under a fixed evaluation budget** | Adaptive quadrature, importance sampling, stratification, quasi-Monte Carlo, and MCMC | Compare bias, variance, effective sample size, dimensionality, and reproducibility | Known analytic integrals, peaked/multimodal functions, Bayesian normalizing constants |
+| **D2.8 Decide when CPU, vectorized, parallel, or GPU execution wins** | Scalar loops, SIMD/vectorized operations, threaded code, and GPU kernels | Include startup, compilation, transfers, synchronization, memory limits, and numerical parity | Vector reductions, matrix multiplication, convolution, Monte Carlo batches across sizes |
+
+#### D3. Applied Mathematical Problem Families
+
+| Problem and scenario | Methods | Decision constraints and metrics | Inputs or datasets |
+|---|---|---|---|
+| **D3.1 Compress images while retaining recognizable structure** | Centering; covariance; PCA through SVD; truncated reconstruction | Avoid `eig()` in the main implementation; compare variance retained, reconstruction error, storage, and artifacts | Grayscale images, face or digit image matrices, synthetic low-rank data |
+| **D3.2 Track a moving object from noisy and missing readings** | Least squares; Kalman, extended Kalman, and particle filters | Position error, covariance calibration, missing observations, nonlinear motion, outliers, and runtime | Synthetic trajectories, GPS/IMU-style measurements, maneuvering targets |
+| **D3.3 Allocate a fixed budget among competing projects** | Linear programming, integer programming, knapsack approximations, and sensitivity analysis | Capacity, dependencies, minimum allocations, infeasibility, optimality gap, and solution stability | Generated portfolios, OR-Library instances |
+| **D3.4 Find routes under changing travel costs** | Dijkstra, A*, Bellman–Ford, bidirectional search, and admissible heuristics | Disconnected nodes, negative edges where supported, stale weights, memory, optimality, and search effort | Grid maps, road-style graphs, adversarial and randomly weighted graphs |
+| **D3.5 Decide whether an experiment changed conversion** | Confidence intervals, hypothesis tests, bootstrap, Bayesian models, and sequential tests | Type-I/II error, power, optional stopping, multiple comparisons, practical significance, and heterogeneous effects | Synthetic experiments with known effects, generated event-level observations |
+| **D3.6 Staff a service desk with uncertain arrivals** | Poisson/exponential models, queue simulation, Little's Law, and M/M/c approximations | Waiting-time targets, abandonment, time-varying arrivals, priority classes, utilization, and staffing cost | Generated arrival/service logs, burst and outage scenarios |
+| **D3.7 Estimate whether a system will survive its warranty period** | Reliability blocks, survival functions, hazard models, bootstrapping, and importance sampling | Censoring, dependent failures, rare events, uncertainty bounds, repair, and model misspecification | Component test data, synthetic failure times, series/parallel system diagrams |
+| **D3.8 Compare investments with uncertain future cash flows** | Discounted cash flow, internal rate of return, scenario analysis, Monte Carlo, and risk measures | Multiple/no IRR, inflation, correlated returns, tail risk, parameter uncertainty, and decision horizon | Generated cash flows, historical-style return series, stress scenarios |
+| **D3.9 Reconstruct a signal from noisy or incomplete measurements** | Fourier filtering, convolution, regularized least squares, wavelets, and compressed sensing | Boundary effects, sampling rate, sparsity assumptions, noise level, reconstruction error, and latency | Synthetic signals, audio/ECG excerpts, randomly missing samples |
+| **D3.10 Forecast interacting populations or infections** | Difference equations; ODE models; parameter estimation; sensitivity and uncertainty analysis | Identifiability, nonphysical states, changing rates, delayed observations, and extrapolation limits | Synthetic SIR and predator–prey observations, known-parameter simulations |
+| **D3.11 Estimate an unknown rate from limited observations** | Conjugate Bayes, grid integration, Metropolis–Hastings, Gibbs sampling, and posterior prediction | Prior sensitivity, burn-in, autocorrelation, convergence, multimodality, and calibration | Coin/event counts, small hierarchical groups, synthetic parameters with known truth |
+| **D3.12 Propagate uncertain inputs through an expensive model** | Taylor approximation, bootstrap, Monte Carlo, Latin hypercube, and surrogate models | Correlated inputs, rare tails, simulation budget, convergence, confidence intervals, and surrogate error | Analytic reference models, generated engineering tolerances, bounded black-box function |
+| **D3.13 Match participants under preferences and constraints** | Bipartite matching, stable matching, min-cost flow, and fairness-aware formulations | Capacity, ties, forbidden pairs, stability, total utility, group constraints, and infeasibility | Generated applicants/positions, preference lists, adversarial matching cases |
+
+#### D4. Numerical Reliability and Performance Problems
+
+| Runtime scenario | Implement or compare | Numerical and performance constraints | Inputs or reference cases |
+|---|---|---|---|
+| **D4.1 Compute probabilities for extremely unlikely events** | Naive products, log probabilities, log-sum-exp, and arbitrary precision | Avoid zero, infinity, invalid normalization, and loss of relative differences | Extreme synthetic distributions, high-precision reference calculations |
+| **D4.2 Diagnose an unstable numerical answer** | Condition estimates, residuals, perturbation experiments, scaling, and alternative formulations | Separate conditioning from algorithmic error; quantify forward/backward error and sensitivity | Hilbert/Vandermonde matrices, cancellation-prone expressions, perturbed inputs |
+| **D4.3 Verify gradients before trusting an optimizer** | Forward/central differences, directional checks, complex-step differentiation, and autodiff comparison | Choose scale-aware tolerances; handle stochastic objectives, nondifferentiable points, and parameter extremes | Linear/logistic losses, Rosenbrock function, small neural network, injected derivative bug |
+| **D4.4 Use mixed precision without silently changing the result** | FP64, FP32, FP16/bfloat16, loss scaling, and compensated accumulation | Define acceptable error; test overflow, underflow, long reductions, convergence, speed, and memory | Matrix products, softmax, reductions, iterative optimization across input scales |
+| **D4.5 Make a stochastic simulation reproducible** | Explicit random streams, seed derivation, checkpointing, and deterministic/recorded scheduling | Support parallel workers without duplicated streams; document platform/library limits | Monte Carlo estimate, interrupted run, different worker counts, replayed failing sample |
+| **D4.6 Accelerate a matrix calculation on a CPU** | Scalar, vectorized, blocked, and multithreaded implementations | Preserve a stated error tolerance; control warm-up, layout, alignment, cache effects, and oversubscription | Square/tall matrices across cache boundaries, contiguous and strided layouts |
+| **D4.7 Choose dense or sparse representation as structure changes** | Dense arrays, CSR/CSC, block sparse formats, and conversion strategies | Include construction and conversion costs; test fill-in, skewed rows, memory, and operation mix | Matrices swept from very sparse to dense, graph and term-document structures |
+| **D4.8 Explain why parallel reductions disagree** | Sequential, pairwise, tree, Kahan, and parallel/GPU reductions | Account for non-associativity, scheduling, determinism, throughput, and accumulated error | Alternating magnitudes/signs, random arrays, high-precision reference sums |
+| **D4.9 Bound a result when ordinary floating point is insufficient** | Interval arithmetic, arbitrary precision, rational arithmetic, and validated stopping rules | Control interval blow-up and runtime; preserve containment; report indeterminate cases | Root bounds, geometric predicates, accumulated financial values, reference constants |
 
 ---
 
