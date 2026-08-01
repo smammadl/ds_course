@@ -375,78 +375,166 @@ Each row is a standalone operational problem. It defines its own system, workloa
 
 ---
 
-### D. Mathematics
+### D. Mathematical Foundations and Computational Verification
 
-Each row is a standalone numerical problem with explicit inputs, edge cases, and reference checks. Within each track, common problems come first and difficulty generally increases.
+Mathematics supports the problems in A, B, and C rather than forming a separate catalog of applications. The goal is to understand each concept, derive its central results, verify them computationally, and reimplement only the mechanisms that expose important ideas.
 
-| Track | Practice mode | Purpose |
+For each concept family:
+
+1. Learn the definitions, assumptions, and central results.
+2. Derive at least one important identity or algorithm.
+3. Verify small cases manually or symbolically.
+4. Reimplement a compact reference method where useful.
+5. Compare it with a trusted tool and test adversarial cases.
+6. Connect it to concrete work in A, B, or C.
+
+| Track | Concept family | Strongest connections |
 |---|---|---|
-| **D1** | Rebuild mathematical and numerical methods | Understand mechanics, assumptions, and failure conditions |
-| **D2** | Compare numerical and mathematical tools | Choose libraries and solvers using controlled evidence |
-| **D3** | Solve applied mathematical problem families | Translate real scenarios into models and decisions |
-| **D4** | Test numerical reliability and performance | Handle precision, conditioning, scale, and runtime constraints |
+| **D1** | Linear algebra and geometry | ML, graphics, search, optimization, and scientific computing |
+| **D2** | Calculus and numerical analysis | Optimization, simulation, scientific software, and model training |
+| **D3** | Probability and statistics | ML, experimentation, forecasting, reliability, and monitoring |
+| **D4** | Optimization and operations research | Model training, scheduling, routing, allocation, and capacity planning |
+| **D5** | Discrete mathematics and theoretical CS | Algorithms, databases, languages, distributed systems, and security |
+| **D6** | Information theory, signals, and transforms | ML, compression, communications, audio, vision, and observability |
+| **D7** | Dynamical systems, stochastic processes, and control | Forecasting, queues, autoscaling, reliability, and sensor systems |
+| **D8** | Numerical reliability and mathematical verification | Every numerical result in A, B, and C |
 
-#### D1. Foundational Numerical Methods: Rebuild and Verify
+#### D1. Linear Algebra and Geometry
 
-| Challenge and scenario | Implement | Constraints and checks | Inputs or datasets |
-|---|---|---|---|
-| **D1.1 Transform batches of 2-D and 3-D points without a matrix package** | Dense storage; indexing; addition; multiplication; transpose; norms | Validate shapes and aliasing; test zero-sized and non-square matrices; compare values and scaling with NumPy | Identity, rotation, projection, random, and adversarially shaped matrices |
-| **D1.2 Solve sensor-calibration equations without calling a solver** | Gaussian elimination; partial pivoting; forward/back substitution; LU | Detect singularity; measure residual and conditioning; test nearly dependent equations; compare with NumPy/SciPy | Random systems, Hilbert matrices, synthetic calibration systems |
-| **D1.3 Store and multiply a sparse relationship matrix** | COO, CSR, and CSC formats; conversion; sparse matrix-vector multiplication | Preserve duplicates/zeros deliberately; test empty rows, skew, memory, and dense parity | Graph adjacency matrices, term-document matrices, generated sparsity patterns |
-| **D1.4 Solve least-squares problems robustly** | Normal equations; modified Gram–Schmidt; Householder QR | Compare residuals and coefficient error; test rank deficiency, scaling, and collinearity | Polynomial fits, synthetic regressions, Vandermonde and near-rank-deficient matrices |
-| **D1.5 Factor positive-definite and general matrices** | Cholesky, LU with pivoting, and QR decompositions | Reconstruct inputs; reject invalid assumptions; compare stability, operations, and solve accuracy | Covariance matrices, random matrices, indefinite and nearly singular cases |
-| **D1.6 Find dominant directions and low-rank structure** | Power iteration; QR iteration; singular value decomposition | Test sign ambiguity, repeated values, convergence, reconstruction, and orthogonality | Small hand-checkable matrices, low-rank-plus-noise data, image matrices |
-| **D1.7 Find roots of nonlinear equations** | Bisection, secant, and Newton methods | Require or detect brackets where applicable; handle flat derivatives, multiple roots, divergence, and stopping criteria | Polynomials, transcendental equations, implicit financial and physical equations |
-| **D1.8 Approximate a curve from incomplete samples** | Piecewise linear, polynomial, spline, and barycentric interpolation | Test extrapolation, repeated points, oscillation, continuity, and sensitivity to noise | Analytic functions, irregular samples, Runge-function and sensor-calibration points |
-| **D1.9 Differentiate and integrate functions numerically** | Forward/central differences; trapezoid; Simpson; adaptive quadrature | Balance truncation and round-off error; handle discontinuities, singularities, and evaluation budgets | Functions with known derivatives/integrals, noisy samples, peaked and oscillatory functions |
-| **D1.10 Find frequencies in a noisy signal** | DFT and radix-2 FFT; inverse transform; convolution theorem | Test aliasing, leakage, windowing, non-power-of-two input, reconstruction, and complexity | Synthetic tones, chirps, impulses, ECG or audio excerpts |
-| **D1.11 Differentiate a composed numerical program automatically** | Dual numbers; computation graph; forward and reverse accumulation | Check broadcasting and reused variables; handle nondifferentiable points; compare with finite differences and JAX/PyTorch | Scalar expressions, matrix chains, small neural network, deliberately unstable function |
-| **D1.12 Simulate a dynamical system** | Euler, midpoint, Runge–Kutta, and adaptive step-size integration | Measure global/local error; test stiffness, conserved quantities, event boundaries, and unstable step sizes | Exponential decay, harmonic oscillator, predator–prey, stiff chemical system |
+| Concept family | Theory to understand | Connections to A/B/C | Programmatic verification | Reimplement | Tools |
+|---|---|---|---|---|---|
+| **D1.1 Vectors, norms, and similarity** | Vector operations; inner products; norm axioms; angles; metric properties; cosine similarity | **A:** k-NN, embeddings, clustering; **B:** vector search; **C:** telemetry comparison | Check norm/metric axioms; compare geometric identities; test zero and nearly parallel vectors | Vector operations, common norms, cosine and distance functions | NumPy, SymPy, Hypothesis |
+| **D1.2 Vector spaces, basis, and projections** | Span; independence; basis; dimension; orthogonality; subspaces; projections | **A:** regression, feature spaces; **B:** graphics; **C:** dimensional telemetry analysis | Verify basis rank, projection idempotence, orthogonality, and coordinate reconstruction | Gram–Schmidt and orthogonal projection | NumPy, SciPy, SymPy |
+| **D1.3 Linear systems and conditioning** | Rank; null space; existence and uniqueness; conditioning; perturbation sensitivity | **A:** regression; **B:** numerical libraries; **C:** capacity and estimation models | Measure residual and forward error; perturb inputs; compare well- and ill-conditioned systems | Gaussian elimination with partial pivoting and triangular solves | NumPy, SciPy, mpmath |
+| **D1.4 Matrix decompositions and least squares** | LU, QR, Cholesky; normal equations; orthogonal least squares | **A:** linear models; **B:** scientific components; **C:** parameter estimation | Reconstruct matrices; verify orthogonality/triangularity; compare residuals and stability | Householder QR and Cholesky decomposition | NumPy, SciPy |
+| **D1.5 Eigenvalues, SVD, and low-rank structure** | Eigenvectors; spectral theorem; singular values; rank approximation; pseudoinverse | **A:** PCA, recommenders, spectral methods; **B:** compression and search | Check eigen equations, orthogonality, reconstruction, explained energy, and sign ambiguity | Power iteration and truncated SVD for small matrices | NumPy, SciPy, randomized linear-algebra tools |
+| **D1.6 Sparse and structured linear algebra** | COO/CSR/CSC; sparsity; fill-in; iterative methods; preconditioning; tensor products | **A:** graphs and text; **B:** indexes; **C:** dependency and network models | Compare sparse/dense parity; plot residual convergence; measure memory and fill-in | CSR matrix-vector multiplication and conjugate gradient | SciPy Sparse, SuiteSparse, PyTorch/JAX sparse tools |
+| **D1.7 Geometry and coordinate transformations** | Affine/projective transforms; rotations; homogeneous coordinates; distances; intersections | **A:** vision and geospatial ML; **B:** graphics and spatial indexes; **C:** maps and topology | Test inverse/composition identities, rotation invariants, degeneracy, and coordinate round trips | 2-D/3-D transforms and robust orientation tests | NumPy, Shapely, GeoPandas, symbolic algebra |
 
-#### D2. Numerical and Mathematical Tool Laboratories
+#### D2. Calculus and Numerical Analysis
 
-| Laboratory and scenario | Compare | Constraints and checks | Inputs or datasets |
-|---|---|---|---|
-| **D2.1 Choose a dense linear-algebra stack for repeated model calculations** | NumPy/SciPy, JAX, PyTorch, and a compiled baseline | Use identical dtypes and layouts; separate compilation, transfer, and execution; verify error tolerance | Square, tall, batched, contiguous, and strided matrices |
-| **D2.2 Choose a solver for a million-variable sparse system** | Direct factorization, conjugate gradient, GMRES, and preconditioned variants | Match solver assumptions; track convergence, residual, memory, setup cost, and time limit | Generated sparse systems, graph Laplacians, [SuiteSparse Matrix Collection](https://sparse.tamu.edu/) |
-| **D2.3 Choose a constrained optimizer for resource allocation** | SciPy, CVXPY, OR-Tools, and a custom projected-gradient or simplex baseline | Check feasibility, optimality gap, integer decisions, warm starts, infeasible inputs, and time limits | Generated capacity problems, [OR-Library](http://people.brunel.ac.uk/~mastjjb/jeb/info.html) instances |
-| **D2.4 Fit the same hierarchical probability model in multiple systems** | PyMC, Stan, and NumPyro | Match priors and parameterization; compare MCMC/VI, ESS, divergences, predictive fit, and runtime | Eight Schools, radon-style data, synthetic groups with known parameters |
-| **D2.5 Compare exact, arbitrary-precision, and floating-point arithmetic** | Rational/decimal libraries, standard floats, and arbitrary-precision floats | Use equivalent expressions; test cancellation, overflow, repeated rounding, speed, and memory | Financial sums, polynomial evaluation, ill-conditioned formulas, reference constants |
-| **D2.6 Differentiate an optimization objective using three approaches** | Symbolic differentiation, finite differences, and automatic differentiation | Handle branches, nondifferentiable points, step-size choice, graph size, and higher derivatives | Rosenbrock function, logistic loss, matrix factorization objective |
-| **D2.7 Estimate difficult integrals under a fixed evaluation budget** | Adaptive quadrature, importance sampling, stratification, quasi-Monte Carlo, and MCMC | Compare bias, variance, effective sample size, dimensionality, and reproducibility | Known analytic integrals, peaked/multimodal functions, Bayesian normalizing constants |
-| **D2.8 Decide when CPU, vectorized, parallel, or GPU execution wins** | Scalar loops, SIMD/vectorized operations, threaded code, and GPU kernels | Include startup, compilation, transfers, synchronization, memory limits, and numerical parity | Vector reductions, matrix multiplication, convolution, Monte Carlo batches across sizes |
+| Concept family | Theory to understand | Connections to A/B/C | Programmatic verification | Reimplement | Tools |
+|---|---|---|---|---|---|
+| **D2.1 Derivatives and local approximation** | Limits; continuity; derivatives; gradients; Jacobians; Hessians; Taylor expansion | **A:** training and sensitivity; **B:** numerical APIs; **C:** response curves | Compare analytic, finite-difference, complex-step, and automatic derivatives; verify Taylor error order | Central differences and multivariable gradient/Jacobian | SymPy, NumPy, JAX/PyTorch |
+| **D2.2 Multivariable and constrained calculus** | Directional derivatives; chain rule; implicit differentiation; Lagrange multipliers | **A:** constrained learning; **B:** geometry; **C:** resource tradeoffs | Check directional derivatives and stationarity; visualize feasible surfaces; compare symbolic results | Lagrange-multiplier solver for small systems | SymPy, SciPy, JAX |
+| **D2.3 Root finding and fixed points** | Bracketing; convergence order; contraction mappings; Newton, secant, and bisection methods | **A:** calibration; **B:** numerical software; **C:** equilibrium calculations | Verify residuals and convergence rates; test flat derivatives, multiple roots, and bad initial values | Bisection, secant, Newton, and stopping rules | SciPy, SymPy, mpmath |
+| **D2.4 Interpolation and approximation** | Polynomial interpolation; splines; approximation error; Runge phenomenon | **A:** feature construction; **B:** graphics; **C:** sensor and capacity curves | Recover known polynomials; measure interpolation error; test irregular points, noise, and extrapolation | Barycentric interpolation and cubic splines | NumPy, SciPy, SymPy |
+| **D2.5 Numerical integration** | Quadrature; truncation error; adaptive rules; multidimensional integration | **A:** probability calculations; **B:** scientific software; **C:** accumulated utilization | Compare with analytic integrals; verify convergence order; test singular, peaked, and oscillatory functions | Trapezoid, Simpson, and adaptive quadrature | SciPy, SymPy, mpmath |
+| **D2.6 Differential equations** | Initial/boundary-value problems; stability; stiffness; local/global error | **A:** continuous-time models; **B:** simulation software; **C:** system dynamics | Compare with analytic solutions; test conserved quantities, step sensitivity, stiffness, and event handling | Euler, midpoint, and Runge–Kutta integrators | SciPy, SymPy, JAX differential-equation tools |
+| **D2.7 Automatic differentiation** | Dual numbers; computation graphs; forward/reverse accumulation; higher derivatives | **A:** neural networks and optimization; **B:** differentiable software | Compare against symbolic and numerical derivatives; test branching, reused variables, and nondifferentiable points | Dual numbers and a small reverse-mode graph | JAX, PyTorch, SymPy |
 
-#### D3. Applied Mathematical Problem Families
+#### D3. Probability and Statistics
 
-| Problem and scenario | Methods | Decision constraints and metrics | Inputs or datasets |
-|---|---|---|---|
-| **D3.1 Compress images while retaining recognizable structure** | Centering; covariance; PCA through SVD; truncated reconstruction | Avoid `eig()` in the main implementation; compare variance retained, reconstruction error, storage, and artifacts | Grayscale images, face or digit image matrices, synthetic low-rank data |
-| **D3.2 Track a moving object from noisy and missing readings** | Least squares; Kalman, extended Kalman, and particle filters | Position error, covariance calibration, missing observations, nonlinear motion, outliers, and runtime | Synthetic trajectories, GPS/IMU-style measurements, maneuvering targets |
-| **D3.3 Allocate a fixed budget among competing projects** | Linear programming, integer programming, knapsack approximations, and sensitivity analysis | Capacity, dependencies, minimum allocations, infeasibility, optimality gap, and solution stability | Generated portfolios, OR-Library instances |
-| **D3.4 Find routes under changing travel costs** | Dijkstra, A*, Bellman–Ford, bidirectional search, and admissible heuristics | Disconnected nodes, negative edges where supported, stale weights, memory, optimality, and search effort | Grid maps, road-style graphs, adversarial and randomly weighted graphs |
-| **D3.5 Decide whether an experiment changed conversion** | Confidence intervals, hypothesis tests, bootstrap, Bayesian models, and sequential tests | Type-I/II error, power, optional stopping, multiple comparisons, practical significance, and heterogeneous effects | Synthetic experiments with known effects, generated event-level observations |
-| **D3.6 Staff a service desk with uncertain arrivals** | Poisson/exponential models, queue simulation, Little's Law, and M/M/c approximations | Waiting-time targets, abandonment, time-varying arrivals, priority classes, utilization, and staffing cost | Generated arrival/service logs, burst and outage scenarios |
-| **D3.7 Estimate whether a system will survive its warranty period** | Reliability blocks, survival functions, hazard models, bootstrapping, and importance sampling | Censoring, dependent failures, rare events, uncertainty bounds, repair, and model misspecification | Component test data, synthetic failure times, series/parallel system diagrams |
-| **D3.8 Compare investments with uncertain future cash flows** | Discounted cash flow, internal rate of return, scenario analysis, Monte Carlo, and risk measures | Multiple/no IRR, inflation, correlated returns, tail risk, parameter uncertainty, and decision horizon | Generated cash flows, historical-style return series, stress scenarios |
-| **D3.9 Reconstruct a signal from noisy or incomplete measurements** | Fourier filtering, convolution, regularized least squares, wavelets, and compressed sensing | Boundary effects, sampling rate, sparsity assumptions, noise level, reconstruction error, and latency | Synthetic signals, audio/ECG excerpts, randomly missing samples |
-| **D3.10 Forecast interacting populations or infections** | Difference equations; ODE models; parameter estimation; sensitivity and uncertainty analysis | Identifiability, nonphysical states, changing rates, delayed observations, and extrapolation limits | Synthetic SIR and predator–prey observations, known-parameter simulations |
-| **D3.11 Estimate an unknown rate from limited observations** | Conjugate Bayes, grid integration, Metropolis–Hastings, Gibbs sampling, and posterior prediction | Prior sensitivity, burn-in, autocorrelation, convergence, multimodality, and calibration | Coin/event counts, small hierarchical groups, synthetic parameters with known truth |
-| **D3.12 Propagate uncertain inputs through an expensive model** | Taylor approximation, bootstrap, Monte Carlo, Latin hypercube, and surrogate models | Correlated inputs, rare tails, simulation budget, convergence, confidence intervals, and surrogate error | Analytic reference models, generated engineering tolerances, bounded black-box function |
-| **D3.13 Match participants under preferences and constraints** | Bipartite matching, stable matching, min-cost flow, and fairness-aware formulations | Capacity, ties, forbidden pairs, stability, total utility, group constraints, and infeasibility | Generated applicants/positions, preference lists, adversarial matching cases |
+| Concept family | Theory to understand | Connections to A/B/C | Programmatic verification | Reimplement | Tools |
+|---|---|---|---|---|---|
+| **D3.1 Probability, conditioning, and independence** | Events; axioms; conditional probability; Bayes' rule; independence; total probability | **A:** probabilistic models; **B:** randomized algorithms; **C:** failure diagnosis | Enumerate finite spaces; simulate conditional frequencies; construct counterexamples to intuitive claims | Finite probability engine and Bayes calculator | Python/Julia/R, SymPy Stats, NumPy |
+| **D3.2 Random variables and distributions** | PMF/PDF/CDF; expectation; variance; covariance; transformations; common families | **A:** loss and uncertainty; **B:** randomized tests; **C:** arrivals and failures | Compare samples with theoretical moments/CDFs; apply probability-integral-transform checks | Inverse-CDF and rejection samplers for selected distributions | NumPy, SciPy, R |
+| **D3.3 Limit theorems and concentration** | Laws of large numbers; central limit theorem; concentration bounds; asymptotics | **A:** sampling and evaluation; **B:** randomized algorithms; **C:** aggregate traffic | Simulate convergence; compare finite-sample tails with bounds; vary dependence and tail weight | Running estimates and standardized-sum simulation | NumPy, SciPy, plotting tools |
+| **D3.4 Estimation and likelihood** | Bias; variance; consistency; efficiency; sufficient statistics; maximum likelihood | **A:** model fitting; **B:** telemetry summaries; **C:** parameter estimation | Generate known truth; measure estimator bias/variance and likelihood curvature over repetitions | Common estimators and one-dimensional MLE | SciPy, statsmodels, SymPy |
+| **D3.5 Intervals, tests, and experimental design** | Confidence intervals; hypothesis tests; power; effect size; multiple testing; sequential analysis | **A:** evaluation and causal work; **B:** product experiments; **C:** operational experiments | Measure coverage, false-positive rate, and power; test optional stopping and assumption violations | Bootstrap interval, permutation test, and power simulation | SciPy, statsmodels, R |
+| **D3.6 Regression and dependence** | Linear/GLM assumptions; covariance; correlation; confounding; residual analysis | **A:** prediction and causality; **B:** performance modeling; **C:** capacity analysis | Recover synthetic coefficients; inspect residuals; introduce collinearity, heteroscedasticity, and confounding | OLS and logistic likelihood with uncertainty estimates | NumPy, statsmodels, scikit-learn |
+| **D3.7 Bayesian inference** | Priors; likelihood; posterior; conjugacy; hierarchical models; posterior prediction | **A:** probabilistic ML; **B:** decision software; **C:** reliability inference | Compare analytic and sampled posteriors; use prior/posterior predictive checks and simulation-based calibration | Grid posterior, conjugate update, Metropolis–Hastings, and Gibbs sampler | PyMC, Stan, NumPyro, ArviZ |
+| **D3.8 Monte Carlo and resampling** | Monte Carlo error; importance sampling; variance reduction; bootstrap; MCMC diagnostics | **A:** uncertainty; **B:** randomized systems; **C:** risk and capacity simulation | Compare with analytic truth; plot error versus samples; check ESS, autocorrelation, and reproducibility | Bootstrap, importance sampling, and basic MCMC | NumPy, SciPy, ArviZ |
+| **D3.9 Time, survival, and rare events** | Stationarity; autocorrelation; censoring; hazards; extremes; rare-event probability | **A:** forecasting and anomaly detection; **B:** event systems; **C:** reliability and incidents | Simulate known processes; verify coverage/calibration; test censoring, drift, and tail misspecification | Autocorrelation, Kaplan–Meier, and rare-event simulation | statsmodels, lifelines, SciPy |
 
-#### D4. Numerical Reliability and Performance Problems
+#### D4. Optimization and Operations Research
 
-| Runtime scenario | Implement or compare | Numerical and performance constraints | Inputs or reference cases |
-|---|---|---|---|
-| **D4.1 Compute probabilities for extremely unlikely events** | Naive products, log probabilities, log-sum-exp, and arbitrary precision | Avoid zero, infinity, invalid normalization, and loss of relative differences | Extreme synthetic distributions, high-precision reference calculations |
-| **D4.2 Diagnose an unstable numerical answer** | Condition estimates, residuals, perturbation experiments, scaling, and alternative formulations | Separate conditioning from algorithmic error; quantify forward/backward error and sensitivity | Hilbert/Vandermonde matrices, cancellation-prone expressions, perturbed inputs |
-| **D4.3 Verify gradients before trusting an optimizer** | Forward/central differences, directional checks, complex-step differentiation, and autodiff comparison | Choose scale-aware tolerances; handle stochastic objectives, nondifferentiable points, and parameter extremes | Linear/logistic losses, Rosenbrock function, small neural network, injected derivative bug |
-| **D4.4 Use mixed precision without silently changing the result** | FP64, FP32, FP16/bfloat16, loss scaling, and compensated accumulation | Define acceptable error; test overflow, underflow, long reductions, convergence, speed, and memory | Matrix products, softmax, reductions, iterative optimization across input scales |
-| **D4.5 Make a stochastic simulation reproducible** | Explicit random streams, seed derivation, checkpointing, and deterministic/recorded scheduling | Support parallel workers without duplicated streams; document platform/library limits | Monte Carlo estimate, interrupted run, different worker counts, replayed failing sample |
-| **D4.6 Accelerate a matrix calculation on a CPU** | Scalar, vectorized, blocked, and multithreaded implementations | Preserve a stated error tolerance; control warm-up, layout, alignment, cache effects, and oversubscription | Square/tall matrices across cache boundaries, contiguous and strided layouts |
-| **D4.7 Choose dense or sparse representation as structure changes** | Dense arrays, CSR/CSC, block sparse formats, and conversion strategies | Include construction and conversion costs; test fill-in, skewed rows, memory, and operation mix | Matrices swept from very sparse to dense, graph and term-document structures |
-| **D4.8 Explain why parallel reductions disagree** | Sequential, pairwise, tree, Kahan, and parallel/GPU reductions | Account for non-associativity, scheduling, determinism, throughput, and accumulated error | Alternating magnitudes/signs, random arrays, high-precision reference sums |
-| **D4.9 Bound a result when ordinary floating point is insufficient** | Interval arithmetic, arbitrary precision, rational arithmetic, and validated stopping rules | Control interval blow-up and runtime; preserve containment; report indeterminate cases | Root bounds, geometric predicates, accumulated financial values, reference constants |
+| Concept family | Theory to understand | Connections to A/B/C | Programmatic verification | Reimplement | Tools |
+|---|---|---|---|---|---|
+| **D4.1 Convexity and optimality** | Convex sets/functions; subgradients; local/global optima; smoothness; strong convexity | **A:** loss functions; **B:** algorithm choice; **C:** resource planning | Plot slices; test convexity inequalities numerically; check gradients, Hessians, and known minima | Convexity checks for simple functions | SymPy, NumPy, CVXPY |
+| **D4.2 First- and second-order optimization** | Gradient descent; momentum; stochastic gradients; Newton and quasi-Newton methods | **A:** model training; **B:** numerical libraries; **C:** parameter tuning | Plot objective/gradient norms; compare convergence rates; vary scaling, noise, and initialization | Gradient descent, Newton, BFGS, and line search | SciPy Optimize, JAX/PyTorch |
+| **D4.3 Constraints, duality, and KKT conditions** | Equality/inequality constraints; Lagrangians; duality; complementary slackness | **A:** constrained models; **B:** policy engines; **C:** capacity limits | Independently check feasibility, KKT conditions, complementary slackness, and duality gap | Projected gradient and small equality-constrained solver | CVXPY, SciPy, SymPy |
+| **D4.4 Linear and integer optimization** | Linear programs; simplex/interior-point ideas; integrality; relaxations; branch and bound | **A:** decision models; **B:** schedulers; **C:** placement and capacity | Compare with exhaustive search on small cases; check feasibility, objective bounds, and infeasibility | Small simplex or branch-and-bound demonstration | OR-Tools, CVXPY, HiGHS |
+| **D4.5 Networks, flows, and matching** | Shortest paths; max-flow/min-cut; min-cost flow; bipartite and stable matching | **A:** graph ML baselines; **B:** routing and scheduling; **C:** network planning | Check flow conservation and cut equality; compare small graphs with enumeration | Dijkstra, max-flow, and bipartite matching | NetworkX, OR-Tools |
+| **D4.6 Dynamic, online, and sequential decisions** | Bellman equations; dynamic programming; bandits; regret; model-predictive decisions | **A:** reinforcement/bandit learning; **B:** schedulers; **C:** autoscaling | Compare small cases with exhaustive search; verify Bellman consistency; simulate regret | Tabular dynamic programming and basic bandit policies | NumPy, OR-Tools, Gymnasium-style environments |
+| **D4.7 Robust and multi-objective decisions** | Sensitivity; uncertainty sets; Pareto fronts; scalarization; risk-aware objectives | **A:** robust learning; **B:** product tradeoffs; **C:** reliability/cost planning | Perturb inputs; plot Pareto fronts; verify dominance and feasibility across scenarios | Sensitivity analysis and weighted-objective search | CVXPY, SciPy, pymoo |
+
+#### D5. Discrete Mathematics and Theoretical Computer Science
+
+| Concept family | Theory to understand | Connections to A/B/C | Programmatic verification | Reimplement | Tools |
+|---|---|---|---|---|---|
+| **D5.1 Logic and proof methods** | Propositions; predicates; implication; induction; contradiction; invariants | **A:** model assumptions; **B:** program correctness; **C:** operational invariants | Truth-table enumeration; bounded counterexample search; property checks | Formula evaluator and invariant checker for a small state machine | SymPy Logic, Z3, property-based testing |
+| **D5.2 Sets, relations, and functions** | Equivalence/order relations; mappings; closure; lattices; partial orders | **A:** labels and partitions; **B:** schemas and permissions; **C:** dependency ordering | Check reflexivity/symmetry/transitivity and order properties on finite structures | Relation-property and transitive-closure utilities | Python sets, NetworkX, Z3 |
+| **D5.3 Counting and combinatorics** | Permutations; combinations; inclusion–exclusion; pigeonhole principle; generating functions | **A:** sampling spaces; **B:** test combinations; **C:** configuration explosion | Compare formulas with enumeration; generate counterexamples; study asymptotic growth | Combination generator and exact counters | Python itertools, SymPy Combinatorics |
+| **D5.4 Recurrences and complexity** | Recurrence solving; asymptotic notation; amortized and expected analysis; lower bounds | **A:** algorithm scaling; **B:** data structures; **C:** load growth | Fit empirical growth; count operations; compare recurrence solutions with measurements | Instrumented recurrence and amortized-cost simulations | SymPy, benchmarking/profiling tools |
+| **D5.5 Graphs and trees** | Connectivity; traversal; trees; DAGs; cuts; coloring; planarity; spectral properties | **A:** graph learning; **B:** indexes and dependencies; **C:** service/network topology | Check invariants and certificates; compare small cases with enumeration or trusted libraries | BFS/DFS, topological sort, union-find, and selected graph certificates | NetworkX, graph generators, Graphviz |
+| **D5.6 Automata, grammars, and computation** | Finite automata; regular/context-free languages; parsing; computability; decidability | **A:** sequence models; **B:** parsers and protocols; **C:** configuration validation | Generate accepted/rejected strings; compare parser and recognizer; test ambiguity and state reachability | DFA/NFA simulator and small parser | parser generators, automata libraries, model checkers |
+| **D5.7 Hashing, coding, and modular arithmetic** | Universal hashing; collision probability; error-detecting codes; primes; congruences | **A:** feature hashing; **B:** hash tables/compression/security; **C:** integrity checks | Measure collision distribution and avalanche behavior; inject bit errors; compare exact modular identities | Universal hash, Bloom-filter math, checksum/code demonstration | Python integers, SymPy Number Theory, statistical tests |
+| **D5.8 Models of concurrency and distribution** | Partial orders; happens-before; safety/liveness; consensus models; impossibility boundaries | **B:** locks, queues, replication; **C:** failover and orchestration | Enumerate bounded schedules; search invariant violations; simulate delay, loss, duplication, and partitions | Small state-machine and interleaving explorer | TLA+/PlusCal, Alloy, Spin, Jepsen-style histories |
+
+#### D6. Information Theory, Signals, and Transforms
+
+| Concept family | Theory to understand | Connections to A/B/C | Programmatic verification | Reimplement | Tools |
+|---|---|---|---|---|---|
+| **D6.1 Entropy and information** | Entropy; conditional entropy; cross-entropy; KL divergence; mutual information | **A:** losses and feature selection; **B:** compression; **C:** telemetry volume | Check non-negativity and identities; estimate from known distributions; expose estimator bias | Discrete entropy, cross-entropy, KL, and mutual information | NumPy, SciPy, SymPy |
+| **D6.2 Coding and compression limits** | Prefix codes; source coding; redundancy; rate-distortion ideas | **A:** representation learning; **B:** Huffman/LZ; **C:** log and trace compression | Verify prefix-free decoding; compare empirical bits with entropy; test skewed sources | Huffman coding and simple dictionary compression | bit-level libraries, compression tools |
+| **D6.3 Sampling, quantization, and aliasing** | Sampling theorem; reconstruction; quantization error; dynamic range | **A:** audio/vision; **B:** media processing; **C:** metric collection | Sweep sample rate and bit depth; measure reconstruction error; demonstrate alias frequencies | Sampler, quantizer, and sinc-style reconstruction | NumPy, SciPy Signal, audio/image tools |
+| **D6.4 Convolution and correlation** | Linear systems; kernels; convolution theorem; autocorrelation/cross-correlation | **A:** CNNs and time series; **B:** signal/image code; **C:** lag analysis | Compare direct and transform implementations; test impulse response and boundary modes | Direct 1-D/2-D convolution and correlation | NumPy, SciPy Signal, PyTorch |
+| **D6.5 Fourier and time-frequency analysis** | Fourier series; DFT/FFT; spectra; windows; leakage; wavelets | **A:** audio, vision, forecasting; **B:** compression; **C:** periodic telemetry | Verify inverse reconstruction and Parseval's identity; test leakage, aliasing, and resolution | DFT, radix-2 FFT, and basic spectral estimator | NumPy FFT, SciPy Signal, PyWavelets |
+| **D6.6 Noise, filtering, and reconstruction** | Signal-to-noise ratio; linear filters; regularization; spectral filtering; sparse reconstruction | **A:** denoising and anomaly detection; **B:** media tools; **C:** noisy sensors | Add controlled noise; compare frequency response and reconstruction error; test boundary effects | Moving-average/FIR filter and regularized reconstruction | SciPy Signal, CVXPY, audio/image datasets |
+
+#### D7. Dynamical Systems, Stochastic Processes, and Control
+
+| Concept family | Theory to understand | Connections to A/B/C | Programmatic verification | Reimplement | Tools |
+|---|---|---|---|---|---|
+| **D7.1 Difference equations and state evolution** | Discrete-time systems; recurrence dynamics; equilibria; growth and decay | **A:** forecasting; **B:** stateful workflows; **C:** resource evolution | Compare closed forms and simulation; locate equilibria; vary parameters and initial conditions | Difference-equation simulator | NumPy, SymPy, plotting tools |
+| **D7.2 Stability and continuous dynamics** | Phase space; linearization; eigenvalue stability; oscillation; nonlinear behavior | **A:** continuous models; **B:** simulation; **C:** feedback behavior | Plot phase portraits; perturb equilibria; test conservation and solver sensitivity | Small phase-plane and stability analyzer | SciPy Integrate, SymPy, control libraries |
+| **D7.3 Markov chains and hidden states** | Transition matrices; stationary distributions; recurrence; absorption; hidden Markov models | **A:** sequences; **B:** state machines; **C:** health-state models | Verify stochastic matrices; compare analytic stationary/absorption results with simulation | Markov simulator, forward algorithm, and Viterbi decoder | NumPy, SciPy, probabilistic libraries |
+| **D7.4 Arrivals, queues, and renewal processes** | Poisson processes; interarrival/service models; Little's Law; M/M/1 and M/M/c; renewal theory | **A:** event modeling; **B:** workers/queues; **C:** capacity and latency | Compare simulated and theoretical utilization/waiting time; test bursts and non-Poisson arrivals | Discrete-event M/M/1 and M/M/c simulation | SimPy, NumPy, SciPy |
+| **D7.5 State estimation and filtering** | State-space models; observability; Kalman, extended, and particle filters | **A:** tracking and forecasting; **B:** sensor software; **C:** operational estimation | Simulate known trajectories; check covariance calibration, missing observations, and nonlinear failure | Linear Kalman filter | FilterPy, NumPy, SciPy |
+| **D7.6 Feedback, reliability, and repair** | Feedback loops; stability margins; reliability blocks; hazards; repair/availability models | **A:** online systems; **B:** retry/control behavior; **C:** autoscaling and resilience | Simulate step responses and failures; compare reliability formulas; test delay and feedback oscillation | PID controller and series/parallel reliability calculator | python-control, SimPy, SciPy |
+
+#### D8. Numerical Reliability and Mathematical Verification
+
+| Concept family | Theory to understand | Connections to A/B/C | Programmatic verification | Reimplement | Tools |
+|---|---|---|---|---|---|
+| **D8.1 Floating-point representation** | Radix; precision; rounding; machine epsilon; special values; non-associativity | Every numerical calculation | Inspect encodings; find adjacent values; reproduce overflow, underflow, cancellation, and order effects | Minimal floating-point experiments and ULP distance | Python `float`, NumPy, language/runtime numeric tools |
+| **D8.2 Conditioning and algorithmic stability** | Problem conditioning; forward/backward error; stable reformulation; perturbation theory | Linear algebra, optimization, simulation, and statistics | Perturb inputs; measure residual/forward error; compare formulations on ill-conditioned cases | Condition estimates and residual-based checks | NumPy, SciPy, mpmath |
+| **D8.3 Stable reductions and probability calculations** | Error accumulation; compensated/pairwise summation; log-domain arithmetic | **A:** losses/probabilities; **B:** aggregation; **C:** telemetry summaries | Compare input orders and precisions against high-precision references | Kahan/pairwise sum, log-sum-exp, stable softmax | NumPy, mpmath, decimal libraries |
+| **D8.4 Exact, interval, and arbitrary-precision computation** | Rational arithmetic; interval containment; precision selection; validated numerics | **A:** reference checks; **B:** financial/geometry code; **C:** integrity calculations | Cross-check floats; prove containment; increase precision until stable; report indeterminate cases | Rational and interval demonstrations | fractions/decimal, mpmath, interval libraries |
+| **D8.5 Randomness and reproducibility** | PRNG state; streams; seed derivation; independence; deterministic parallelism | **A:** training/sampling; **B:** tests; **C:** simulations | Replay runs; change worker counts; test duplicated streams and distribution quality | Explicit random-stream manager and replayable simulation | NumPy random generators, statistical test suites |
+| **D8.6 Convergence and complexity experiments** | Empirical error order; asymptotic cost; constants; stopping criteria | Algorithm selection throughout A, B, and C | Sweep size/step/iterations; fit slopes; separate warm-up, compilation, transfer, and execution | Benchmark and convergence harness | pytest-benchmark, profilers, plotting tools |
+| **D8.7 Property-based and adversarial verification** | Invariants; metamorphic relations; boundary analysis; counterexamples | Correctness throughout A, B, and C | Generate structured cases; compare trusted implementations; shrink failures; violate assumptions deliberately | Reusable numeric strategies, tolerant comparisons, and invariant checks | Hypothesis/QuickCheck, SymPy, Z3, trusted numerical libraries |
+
+#### Mathematical Verification Ladder
+
+Use the methods that fit the concept; not every method applies to every result.
+
+| Method | What it establishes |
+|---|---|
+| **1. Hand-checkable cases** | Tiny examples agree with manual calculation or exhaustive enumeration |
+| **2. Algebraic invariants** | Properties such as normalization, conservation, feasibility, symmetry, orthogonality, or reconstruction hold |
+| **3. Symbolic verification** | Expressions, derivatives, identities, or recurrences simplify to the expected result |
+| **4. Differential testing** | Independent implementations or trusted libraries agree within a justified tolerance |
+| **5. High-precision reference** | Floating-point results agree with exact, interval, or higher-precision calculations |
+| **6. Simulation with known truth** | Estimators, intervals, or inference procedures recover generated parameters at expected rates |
+| **7. Convergence experiment** | Error decreases at the predicted rate as samples, iterations, or resolution increase |
+| **8. Property-based testing** | Identities and metamorphic relations hold over broad generated inputs |
+| **9. Adversarial cases** | Degenerate, ill-conditioned, extreme, or near-boundary inputs fail safely or remain accurate |
+| **10. Assumption violations** | The consequences of dependence, drift, outliers, nonconvexity, or model misspecification are understood |
+
+#### Selective Reimplementation Checklist
+
+Reimplement compact mechanisms that reveal the mathematics. Use production libraries for broad capability, then compare them against the reference implementation.
+
+| Family | High-value implementations |
+|---|---|
+| **Linear algebra** | Gaussian elimination with pivoting, Householder QR, power iteration, sparse matrix-vector multiplication |
+| **Calculus and numerical analysis** | Finite differences, Newton/bisection, adaptive quadrature, Runge–Kutta, small autodiff engine |
+| **Probability and statistics** | Distribution samplers, bootstrap, maximum likelihood, Metropolis–Hastings, Gibbs sampling |
+| **Optimization** | Gradient descent, Newton/BFGS, projected gradient, small simplex or branch-and-bound demonstration |
+| **Discrete mathematics** | Graph traversals, union-find, shortest path, max-flow, automaton simulator, bounded state explorer |
+| **Signals and control** | DFT/FFT, convolution, spectral estimator, Kalman filter, PID controller |
+| **Numerical reliability** | Kahan/pairwise summation, log-sum-exp, stable softmax, gradient checker, interval demonstration |
+
+#### Boundary with the Engineering Sections
+
+| Section | Primary question |
+|---|---|
+| **D — Mathematics** | Why does the method work, when does it fail, and how can its result be verified? |
+| **A — Data Science / ML** | How is the method used to build and evaluate a data or ML capability? |
+| **B — Software Development** | How is the behavior implemented as reliable, maintainable software? |
+| **C — Infrastructure** | How are systems that depend on it deployed, operated, scaled, and recovered? |
 
 ---
 
