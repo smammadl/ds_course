@@ -7,11 +7,52 @@
 - [Philosophy](#philosophy)
 - [Group 1: Engineering Challenges](#group-1-engineering-challenges)
   - [A. Data Science and Machine Learning](#a-data-science--machine-learning)
+    - [A1. Foundational Algorithms](#a1-foundational-algorithms-rebuild-verify-compare)
+    - [A2. Specialized Library Laboratories](#a2-specialized-library-laboratories)
+    - [A3. Applied Problem Families](#a3-applied-problem-families-and-typical-solution-methods)
+    - [A4. Language and Runtime Implementations](#a4-language-and-runtime-implementations)
   - [B. Programming](#b-programming)
+    - [B1. Fundamental CS Problems](#b1-fundamental-cs-through-concrete-problems)
+    - [B2. Core Components From Scratch](#b2-core-components-from-scratch)
+    - [B3. Language and Framework Laboratories](#b3-language-and-framework-laboratories)
+    - [B4. Application Problem Families](#b4-application-problem-families)
+    - [B5. Architecture and Distributed Systems](#b5-architecture-and-distributed-system-problems)
+    - [B6. Security and Trust Boundaries](#b6-security-and-trust-boundary-problems)
+    - [B7. Maintenance, Quality, and Performance](#b7-maintenance-quality-and-performance-problems)
   - [C. Infrastructure](#c-infrastructure)
-  - [D. Mathematics](#d-mathematics)
-- [Group 2: Systems Projects](#group-2-systems-projects)
-- [What Makes These Valuable?](#what-makes-these-valuable)
+    - [C1. Runtime and Containers](#c1-runtime-and-container-problems)
+    - [C2. Networking and Traffic Management](#c2-networking-and-traffic-management-problems)
+    - [C3. CI/CD and Release Engineering](#c3-cicd-and-release-engineering-problems)
+    - [C4. Infrastructure as Code and Configuration](#c4-infrastructure-as-code-and-configuration-problems)
+    - [C5. Observability and Incident Response](#c5-observability-and-incident-response-problems)
+    - [C6. Stateful Infrastructure and Recovery](#c6-stateful-infrastructure-and-recovery-problems)
+    - [C7. Orchestration, Capacity, and Resilience](#c7-orchestration-capacity-and-resilience-problems)
+    - [C8. Infrastructure Security and Governance](#c8-infrastructure-security-and-governance-problems)
+  - [D. Mathematical Foundations and Computational Verification](#d-mathematical-foundations-and-computational-verification)
+    - [D1. Linear Algebra and Geometry](#d1-linear-algebra-and-geometry)
+    - [D2. Calculus and Numerical Analysis](#d2-calculus-and-numerical-analysis)
+    - [D3. Probability and Statistics](#d3-probability-and-statistics)
+    - [D4. Optimization and Operations Research](#d4-optimization-and-operations-research)
+    - [D5. Discrete Mathematics and Theoretical CS](#d5-discrete-mathematics-and-theoretical-computer-science)
+    - [D6. Information Theory, Signals, and Transforms](#d6-information-theory-signals-and-transforms)
+    - [D7. Dynamical Systems, Stochastic Processes, and Control](#d7-dynamical-systems-stochastic-processes-and-control)
+    - [D8. Numerical Reliability and Mathematical Verification](#d8-numerical-reliability-and-mathematical-verification)
+    - [Mathematical Verification Ladder](#mathematical-verification-ladder)
+    - [Selective Reimplementation Checklist](#selective-reimplementation-checklist)
+    - [Boundary with the Engineering Sections](#boundary-with-the-engineering-sections)
+- [Group 2: Integrated Systems Programs](#group-2-integrated-systems-programs)
+  - [Purpose and Ways to Use the Programs](#purpose-and-ways-to-use-the-programs)
+  - [Rough Maturity Guide](#rough-maturity-guide)
+  - [Project Compass](#project-compass)
+  - [Data and Scale Modes](#data-and-scale-modes)
+  - [Open-Ended Progress Measures](#open-ended-progress-measures)
+  - [A. Domain Programs](#a-domain-programs)
+    - [Marketing Intelligence as a Component Ecosystem](#marketing-intelligence-as-a-component-ecosystem)
+    - [Feasible Data Starting Points](#feasible-data-starting-points)
+  - [B. Capability Systems](#b-capability-systems)
+  - [C. Platform Programs](#c-platform-programs)
+  - [D. Simulation and Scale Laboratories](#d-simulation-and-scale-laboratories)
+  - [Ways to Deepen Any Program](#ways-to-deepen-any-program)
 
 ---
 
@@ -538,59 +579,205 @@ Reimplement compact mechanisms that reveal the mathematics. Use production libra
 
 ---
 
-## Group 2: Systems Projects
+## Group 2: Integrated Systems Programs
 
-> **Typical duration:** 1 month to 6+ months per project.
+These programs connect many independently useful parts into larger systems. A developer may build one component, connect several components, deepen a particular capability, or expand the whole program over time. The categories describe the role of a program; they are not difficulty rankings or mandatory sequences.
 
-These projects combine multiple disciplines into production-like systems. Scope and operational depth should increase at each level.
+### Purpose and Ways to Use the Programs
 
-### Level 1
+- Start with a domain, capability, platform component, or scale question that has suitable data and genuine interest.
+- Complete individual parts when they are useful learning units.
+- Connect parts when the connection reveals assumptions, interfaces, failure modes, or operational tradeoffs.
+- Reuse a component in another program when doing so tests whether it is genuinely general.
+- Add distribution or scale to answer a measured constraint or a deliberate systems question.
+- Revisit scope and remove complexity that no longer serves the program.
 
-| # | Project |
-|---:|---|
-| 1 | Marketing Intelligence Platform |
-| 2 | Fraud Detection Platform |
-| 3 | Predictive Maintenance Platform |
-| 4 | OCR Document Platform |
-| 5 | Recommendation System |
+### Rough Maturity Guide
 
-### Level 2
+These stages are orientation points, not completion requirements. Programs may skip stages, remain at one stage, or advance unevenly across components.
 
-| # | Project |
-|---:|---|
-| 6 | Data Platform |
-| 7 | MLOps Platform |
-| 8 | Agentic Research Platform |
-| 9 | GIS Intelligence Platform |
-| 10 | Financial Risk Platform |
+| Rough stage | Typical state |
+|---|---|
+| **Exploration** | The problem, available data, users, and plausible approaches are being investigated |
+| **Working core** | One important workflow works from beginning to end |
+| **Connected system** | Several components exchange data and support a broader workflow |
+| **Operational system** | Recurring execution, failures, observability, security, and recovery receive attention |
+| **Expanded system** | The program supports more domains, users, data, automation, or scale |
 
-### Level 3
+A program may have an operational ingestion pipeline, an exploratory model, a basic interface, and an advanced search component at the same time. Maturity is a profile, not a single level.
 
-| # | Project |
-|---:|---|
-| 11 | Distributed Search Engine |
-| 12 | Feature Store |
-| 13 | Lakehouse |
-| 14 | Enterprise AI Platform |
-| 15 | Autonomous Data Scientist |
+### Project Compass
+
+These prompts can help plan work and assess progress. They are optional lenses rather than a required specification.
+
+| Lens | Questions to consider |
+|---|---|
+| **Purpose** | What broad problem is addressed? Who might use the result? What decision, action, or workflow could improve? |
+| **Current scope** | Which part is being attempted now? What is deliberately excluded? Which component can stand alone? What is the smallest useful connection? |
+| **Data reality** | What data is available? Is it real, collected, simulated, or generated? Is it sufficiently varied, fresh, reliable, and legally usable? |
+| **System shape** | What are the inputs, transformations, stored states, interfaces, and actions? Where should human review or approval occur? |
+| **Progress** | What works? What remains manual, unreliable, unverified, or difficult to reproduce? Which missing connection would add the most value? |
+| **Shortcomings** | Where can incorrect data enter? Which results are hard to verify? What can fail silently? Which assumptions are weakest? |
+| **Risks** | What privacy, security, licensing, cost, misuse, or misleading-output risks exist? |
+| **Possible directions** | Improve the core result, add data, connect a component, strengthen evaluation, automate work, improve operations, generalize, scale, or simplify |
+
+### Data and Scale Modes
+
+| Data mode | Best use |
+|---|---|
+| **Real public data** | Domain behavior, relevance, correctness, and genuine irregularities |
+| **Collected data** | Recurring workflows, freshness, change tracking, and source failures |
+| **Simulation** | Feedback loops, users, agents, rare events, and controlled experiments |
+| **Generated volume** | Throughput, storage, partitioning, and recovery |
+| **Replayed events** | Streaming behavior, ordering, retries, and operational testing |
+
+Keep two meanings of scale separate:
+
+- **Semantic scale:** enough genuine diversity and interaction to support meaningful conclusions.
+- **Systems scale:** enough bytes, events, requests, or partitions to test architecture.
+
+Generated volume can test partitioning and recovery, but it does not automatically create meaningful model, search, or recommendation evaluation.
+
+### Open-Ended Progress Measures
+
+Each program can define a broad problem, one or two initial value measures, and optional supporting measures. These indicate direction rather than form a universal grading system.
+
+| Dimension | Possible measures |
+|---|---|
+| **Usefulness** | Time saved, useful findings, successful workflows, accepted recommendations, completed decisions |
+| **Data** | Coverage, freshness, duplicates, invalid records, schema failures, reproducibility, lineage |
+| **Analytical quality** | Precision, recall, ranking quality, calibration, forecast error, uncertainty coverage |
+| **Operations** | Availability, recovery time, failed-job rate, throughput, p95 latency, backlog |
+| **Trust** | Supported claims, false alerts, audit coverage, human correction, permission violations |
+| **Efficiency** | Cost per entity, document, query, prediction, event, or completed workflow |
+
+Avoid collapsing every measure into one score. Improvement is usually multi-objective: one dimension should not improve by quietly violating important constraints in another.
 
 ---
 
-## What Makes These Valuable?
+### A. Domain Programs
 
-Increase project difficulty with constraints such as:
+Domain programs provide the users, data, workflows, and reasons for connecting technical components.
 
-- Use an unfamiliar language such as Go or Rust.
-- Compare high-level frameworks with minimal-dependency implementations.
-- Handle datasets larger than memory.
-- Meet strict latency and throughput budgets.
-- Deploy to Kubernetes, serverless, or air-gapped environments.
-- Add retries, backups, disaster recovery, and graceful degradation.
-- Implement metrics, tracing, dashboards, and structured logging.
-- Integrate existing open-source platforms before building simplified versions.
-- Add authentication, authorization, encryption, auditing, and secret management.
-- Produce architecture diagrams, API documentation, automated tests, and runbooks.
+| Program | Main problem | Possible parts | Example progress signals |
+|---|---|---|---|
+| **Marketing Intelligence Platform** | Turn changing market information into timely, trustworthy research, statistics, reports, and alerts | Scraping/APIs, source versioning, entity resolution, NLP, search, statistics, reports, alerts, agents, API/UI | Entity/source coverage, freshness, change-detection quality, alert precision, supported claims, report time/cost |
+| **GIS/Open-Data Intelligence Platform** | Integrate spatial and public data to support geographic search, monitoring, analysis, and decisions | Spatial ETL, validation, geocoding, PostGIS/DuckDB Spatial, tiles, search, change detection, forecasting, maps | Geographic/attribute coverage, geometry validity, freshness, spatial correctness, query latency, analyst task time |
+| **Document Intelligence Platform** | Turn documents into validated, searchable, structured, and actionable information | Upload, OCR, layout analysis, extraction, validation, review queues, search, workflow, audit | Field accuracy, CER/WER, review rate, document throughput, retrieval quality, unsupported extraction rate |
+| **Predictive Maintenance Platform** | Use operational data to detect degradation, estimate risk, and support maintenance decisions | Telemetry ingestion, time-series storage, anomaly detection, forecasting, survival models, alerts, scheduling | Detection delay, false-alert rate, calibration, failure recall, data freshness, maintenance lead time |
+| **Risk and Abuse Intelligence Platform** | Detect suspicious entities, transactions, relationships, and behavioral changes and support investigation | Rules, batch/stream scoring, graph analysis, cases, evidence, feedback, monitoring, audit | Precision at review capacity, expected loss, calibration, investigation time, drift, false-positive burden |
+| **Game or Simulated-World Platform** | Create a controllable data-generating environment containing users, agents, events, economies, and decisions | Simulation/game loop, agents, events, marketplace, matchmaking, inventories, telemetry, search, recommendation, abuse detection | Simulation invariants, agent performance, economy stability, discovery quality, fairness, latency, resource use |
 
-The goal is to become capable of designing, building, deploying,
-operating, and maintaining production-quality systems rather than merely
-implementing algorithms.
+#### Marketing Intelligence as a Component Ecosystem
+
+One possible shape is:
+
+```text
+Sources
+  → scraping and API connectors
+  → raw storage and versioning
+  → parsing and entity resolution
+  → historical data model
+  → statistics and machine learning
+  → search and retrieval
+  → reports and alerts
+  → agentic research
+  → API and user interface
+  → monitoring and recovery
+```
+
+This is a map of possible relationships, not a required architecture. Work may focus on one component, one useful vertical slice, or the connections among several components.
+
+#### Feasible Data Starting Points
+
+- Marketing or media intelligence can use regularly updated sources such as [GDELT](https://www.gdeltproject.org/data.html?source=post_page---------------------------), subject to source quality and licensing checks.
+- GIS work can begin with regional [OpenStreetMap extracts](https://wiki.openstreetmap.org/wiki/Extracts) rather than planet-scale processing.
+- A game, marketplace, logistics simulation, or agent tournament can generate controlled events, interactions, graphs, transactions, and rare cases.
+
+---
+
+### B. Capability Systems
+
+These can be standalone studies, but often become more meaningful when attached to a domain program.
+
+| Capability | Main question | Possible host programs | Example progress signals |
+|---|---|---|---|
+| **Search and retrieval** | Can the system return the most useful available information while keeping the index fresh and responsive? | Marketing, documents, GIS, research, games | Recall/MRR/NDCG, zero-result rate, freshness, latency, indexing throughput, cost |
+| **Recommendation and ranking** | Can the system rank useful items for a user or context while maintaining coverage and freshness? | Products, content, locations, research sources, game items | Recall/NDCG, coverage, diversity, novelty, cold-start quality, freshness, latency |
+| **Alerting and workflow automation** | Can meaningful changes trigger timely action without overwhelming users? | Marketing, GIS, maintenance, risk, infrastructure | Detection delay, alert precision, missed-event rate, acknowledgement time, automation success |
+| **Agentic research and analysis** | Can bounded research or analysis tasks be completed correctly, reproducibly, and with appropriate human involvement? | Marketing, GIS, documents, data exploration | Task completion, supported claims, calculation correctness, intervention rate, recovery, cost/latency |
+| **OCR and information extraction** | Can unstructured documents become trustworthy structured records? | Documents, finance, public records, maps | Recognition/field accuracy, review rate, throughput, confidence calibration, schema validity |
+| **Forecasting and anomaly detection** | Can future behavior or unusual events be identified early enough to support action? | Maintenance, finance, infrastructure, games | Forecast error, interval coverage, event precision/recall, detection delay, alert volume |
+
+Search and recommendation may start inside a domain program. They can become standalone systems when the corpus or catalog, evaluation data, update behavior, permissions, traffic, or availability requirements make that separation useful.
+
+Useful data ladders include:
+
+- [BEIR](https://github.com/beir-cellar/beir) for retrieval evaluation across different domains; generated documents and traffic can separately test systems scale.
+- [MovieLens](https://grouplens.org/datasets/movielens/) for recommendation experiments ranging from small development data to larger and synthetic variants.
+
+Without real user interaction, offline recommendation results and simulated feedback should be presented as such rather than treated as direct evidence of user value.
+
+---
+
+### C. Platform Programs
+
+Platform programs provide reusable foundations. They need not be built in this order, and a substantial component may first emerge inside a domain program.
+
+| Program | Main purpose | Natural signs that it is useful |
+|---|---|---|
+| **Data Acquisition Framework** | Reusable scraping, API ingestion, scheduling, checkpointing, versioning, and validation | Several sources share lifecycle concerns; failures need consistent recovery and visibility |
+| **Data Platform** | Collection, processing, storage, cataloging, quality, lineage, and data access | Multiple workflows need dependable historical and current data rather than isolated files |
+| **MLOps Platform** | Experiments, datasets, models, evaluation, deployment, and monitoring | Several models repeat lifecycle work or require consistent comparison and promotion |
+| **Feature Platform** | Reusable batch and online features with freshness and point-in-time correctness | Multiple models share features or require consistent training/serving values |
+| **Lakehouse** | Large historical tables, schema evolution, partitioning, and distributed analytics | Data volume, history, concurrency, or processing patterns exceed simpler storage approaches |
+| **Enterprise AI Platform** | Shared model access, permissions, governance, quotas, auditing, and tenant isolation | Multiple teams or applications require common controls and observable resource use |
+| **Autonomous Analysis Platform** | Bounded automated analysis, model experimentation, verification, and human approval | A collection of recurring, evaluable tasks exists and tool behavior can be constrained |
+
+These programs may evolve loosely:
+
+```text
+Reusable acquisition
+  → shared data capabilities
+    → model and feature capabilities
+      → larger-scale storage and processing
+        → shared governance and bounded automation
+```
+
+This is an extension path, not a prescribed architecture. A reusable platform is easier to evaluate when it has concrete consumers, but even one demanding consumer may justify focused platform work.
+
+“Autonomous Data Scientist” is better treated as a possible direction within bounded autonomous analysis. Start with identifiable task families, datasets, tools, verification methods, and approval points rather than assuming unrestricted autonomy.
+
+---
+
+### D. Simulation and Scale Laboratories
+
+These programs investigate architecture, scale, feedback, or failure behavior under controlled conditions. They may use components from any domain or platform program.
+
+| Laboratory | Questions to explore | Suitable data or workload |
+|---|---|---|
+| **Distributed Search** | Partitioning, replication, routing, index updates, rebalancing, failure recovery, and tail latency | Judged corpus for relevance plus generated/replayed volume for systems behavior |
+| **Distributed Recommendation** | Candidate generation, partitioned embeddings, freshness, batching, caching, and degraded operation | Public interactions, simulated users, expanded catalog, replayed requests |
+| **Stream Processing and Recovery** | Ordering, event time, watermarks, checkpoints, duplicates, backpressure, and replay | Generated or replayed event streams with injected late, duplicate, and missing events |
+| **Lakehouse Tables and Queries** | Partitioning, compaction, schema evolution, concurrent writes, metadata scale, and query planning | Generated tables plus smaller semantically meaningful datasets |
+| **Feature Consistency** | Point-in-time joins, offline/online parity, freshness, backfills, and leakage | Versioned event and entity histories with known expected features |
+| **Multi-Tenant Data Systems** | Isolation, quotas, noisy neighbors, tenant-specific configuration, and cost attribution | Synthetic tenants with varied data size, query patterns, and permissions |
+| **Multi-Region Failure Exercise** | Replication lag, routing, recovery objectives, split brain, and reconciliation | Continuous generated transactions and controlled network/process failures |
+| **Game or Marketplace Simulation** | Feedback loops, economies, agents, ranking, fraud, experimentation, and behavioral drift | Rules and agents that generate users, items, transactions, events, and ground truth |
+
+The system does not need to claim that its domain requires internet scale. It can state explicitly that distribution, consistency, throughput, cost, or recovery is the subject of the experiment.
+
+### Ways to Deepen Any Program
+
+- Add a new data source, user workflow, consumer, or domain.
+- Replace a manual step with observable, recoverable automation.
+- Compare a high-level platform with a minimal implementation.
+- Introduce delayed, duplicated, missing, corrupt, or adversarial data.
+- Establish realistic latency, throughput, freshness, recovery, or cost budgets.
+- Add authentication, authorization, encryption, auditing, and secret management where relevant.
+- Exercise backup, restore, rollback, graceful degradation, and disaster recovery.
+- Improve metrics, logs, traces, dashboards, runbooks, and incident diagnosis.
+- Test an unfamiliar language, runtime, deployment environment, or operating constraint.
+- Extract a reusable component, connect an existing one, or simplify an unnecessary abstraction.
+
+> Start wherever the data and interest make sense. Build useful parts, connect them where the connection teaches something, assess current shortcomings, and expand only in directions that add value or answer a deliberate engineering question.
