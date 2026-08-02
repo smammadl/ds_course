@@ -625,45 +625,7 @@ Reimplement compact mechanisms that reveal the mathematics. Use production libra
 
 ## Group 2: Integrated Systems Programs
 
-These programs connect many independently useful parts into larger systems. A developer may build one component, connect several components, deepen a particular capability, or expand the whole program over time. The categories describe the role of a program; they are not difficulty rankings or mandatory sequences.
-
-### Purpose and Ways to Use the Programs
-
-- Start with a domain, capability, platform component, or scale question that has suitable data and genuine interest.
-- Complete individual parts when they are useful learning units.
-- Connect parts when the connection reveals assumptions, interfaces, failure modes, or operational tradeoffs.
-- Reuse a component in another program when doing so tests whether it is genuinely general.
-- Add distribution or scale to answer a measured constraint or a deliberate systems question.
-- Revisit scope and remove complexity that no longer serves the program.
-
-### Rough Maturity Guide
-
-These stages are orientation points, not completion requirements. Programs may skip stages, remain at one stage, or advance unevenly across components.
-
-| Rough stage | Typical state |
-|---|---|
-| **Exploration** | The problem, available data, users, and plausible approaches are being investigated |
-| **Working core** | One important workflow works from beginning to end |
-| **Connected system** | Several components exchange data and support a broader workflow |
-| **Operational system** | Recurring execution, failures, observability, security, and recovery receive attention |
-| **Expanded system** | The program supports more domains, users, data, automation, or scale |
-
-A program may have an operational ingestion pipeline, an exploratory model, a basic interface, and an advanced search component at the same time. Maturity is a profile, not a single level.
-
-### Project Compass
-
-These prompts can help plan work and assess progress. They are optional lenses rather than a required specification.
-
-| Lens | Questions to consider |
-|---|---|
-| **Purpose** | What broad problem is addressed? Who might use the result? What decision, action, or workflow could improve? |
-| **Current scope** | Which part is being attempted now? What is deliberately excluded? Which component can stand alone? What is the smallest useful connection? |
-| **Data reality** | What data is available? Is it real, collected, simulated, or generated? Is it sufficiently varied, fresh, reliable, and legally usable? |
-| **System shape** | What are the inputs, transformations, stored states, interfaces, and actions? Where should human review or approval occur? |
-| **Progress** | What works? What remains manual, unreliable, unverified, or difficult to reproduce? Which missing connection would add the most value? |
-| **Shortcomings** | Where can incorrect data enter? Which results are hard to verify? What can fail silently? Which assumptions are weakest? |
-| **Risks** | What privacy, security, licensing, cost, misuse, or misleading-output risks exist? |
-| **Possible directions** | Improve the core result, add data, connect a component, strengthen evaluation, automate work, improve operations, generalize, scale, or simplify |
+These programs connect many independently useful parts into larger systems. 
 
 ### Data and Scale Modes
 
@@ -681,21 +643,6 @@ Keep two meanings of scale separate:
 - **Systems scale:** enough bytes, events, requests, or partitions to test architecture.
 
 Generated volume can test partitioning and recovery, but it does not automatically create meaningful model, search, or recommendation evaluation.
-
-### Open-Ended Progress Measures
-
-Each program can define a broad problem, one or two initial value measures, and optional supporting measures. These indicate direction rather than form a universal grading system.
-
-| Dimension | Possible measures |
-|---|---|
-| **Usefulness** | Time saved, useful findings, successful workflows, accepted recommendations, completed decisions |
-| **Data** | Coverage, freshness, duplicates, invalid records, schema failures, reproducibility, lineage |
-| **Analytical quality** | Precision, recall, ranking quality, calibration, forecast error, uncertainty coverage |
-| **Operations** | Availability, recovery time, failed-job rate, throughput, p95 latency, backlog |
-| **Trust** | Supported claims, false alerts, audit coverage, human correction, permission violations |
-| **Efficiency** | Cost per entity, document, query, prediction, event, or completed workflow |
-
-Avoid collapsing every measure into one score. Improvement is usually multi-objective: one dimension should not improve by quietly violating important constraints in another.
 
 ---
 
