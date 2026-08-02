@@ -48,6 +48,7 @@
   - [Open-Ended Progress Measures](#open-ended-progress-measures)
   - [A. Domain Programs](#a-domain-programs)
     - [Marketing Intelligence as a Component Ecosystem](#marketing-intelligence-as-a-component-ecosystem)
+    - [Job Opportunity Intelligence as a Component Ecosystem](#job-opportunity-intelligence-as-a-component-ecosystem)
     - [Learning and Practice as a Component Ecosystem](#learning-and-practice-as-a-component-ecosystem)
     - [Feasible Data Starting Points](#feasible-data-starting-points)
   - [B. Capability Systems](#b-capability-systems)
@@ -705,6 +706,7 @@ Domain programs provide the users, data, workflows, and reasons for connecting t
 | Program | Main problem | Possible parts | Example progress signals |
 |---|---|---|---|
 | **Marketing Intelligence Platform** | Turn changing market information into timely, trustworthy research, statistics, reports, and alerts | Scraping/APIs, source versioning, entity resolution, NLP, search, statistics, reports, alerts, agents, API/UI | Entity/source coverage, freshness, change-detection quality, alert precision, supported claims, report time/cost |
+| **Job Opportunity Intelligence Platform** | Collect active vacancies and help users discover suitable opportunities through CV upload, free-text intent, filters, saved searches, and subscriptions | Compliant connectors, vacancy versioning, normalization, deduplication, CV parsing, taxonomy mapping, hybrid search, ranking, explanations, alerts, feedback, API/UI | Source coverage, freshness, active-status accuracy, duplicate rate, hard-filter compliance, ranking relevance, alert precision, time to discovery |
 | **GIS/Open-Data Intelligence Platform** | Integrate spatial and public data to support geographic search, monitoring, analysis, and decisions | Spatial ETL, validation, geocoding, PostGIS/DuckDB Spatial, tiles, search, change detection, forecasting, maps | Geographic/attribute coverage, geometry validity, freshness, spatial correctness, query latency, analyst task time |
 | **Document Intelligence Platform** | Turn documents into validated, searchable, structured, and actionable information | Upload, OCR, layout analysis, extraction, validation, review queues, search, workflow, audit | Field accuracy, CER/WER, review rate, document throughput, retrieval quality, unsupported extraction rate |
 | **Learning and Practice Platform** | Turn learning material into trustworthy practice and adapt future study using review results | PDF/EPUB/HTML ingestion, OCR, concept extraction, flashcards, cloze and language exercises, evidence checks, review, scheduling, Anki export | Card acceptance/edit rate, source support, duplicate/ambiguity rate, time per accepted card, retention, review burden |
@@ -729,6 +731,56 @@ Sources
 ```
 
 This is a map of possible relationships, not a required architecture. Work may focus on one component, one useful vertical slice, or the connections among several components.
+
+#### Job Opportunity Intelligence as a Component Ecosystem
+
+The central loop is to maintain a trustworthy view of active vacancies, translate a user's stated preferences or CV into controllable search intent, and deliver timely matches without hiding why they were selected.
+
+```text
+Permitted job feeds, APIs, and web sources
+  → collection, snapshots, and source-change handling
+  → normalization, company/entity resolution, and deduplication
+  → active/expired/reposted vacancy history
+  → occupation, skill, location, seniority, and contract taxonomy
+  → CV upload, free text, filters, or saved-search intent
+  → lexical/semantic retrieval and hard filtering
+  → ranking, suitability explanation, and missing-requirement analysis
+  → saved results, subscriptions, alerts, and periodic digests
+  → user feedback and matching evaluation
+```
+
+| Interaction mode | Possible behavior and constraints |
+|---|---|
+| **CV upload** | Extract roles, skills, experience, education, languages, and preferences; let the user correct the profile; minimize retention of the original document |
+| **Free-text search** | Accept goals such as role changes, technologies, industries, location, or remote-work preferences; combine semantic and lexical retrieval |
+| **Structured filters** | Enforce location, remote/on-site mode, occupation, seniority, experience, salary, contract type, language, company, and posting date as explicit constraints |
+| **Combined search** | Use CV/text for ranking while treating selected filters as hard requirements; show which evidence affected each match |
+| **Saved search or subscription** | Store a user-controlled search definition; send immediate alerts or periodic digests; deduplicate notifications and provide pause/unsubscribe controls |
+
+| Component | Possible responsibilities |
+|---|---|
+| **Source acquisition** | Use permitted feeds, APIs, or scraping; respect access rules and rate limits; detect source-layout and schema changes |
+| **Vacancy history** | Store observed versions, first/last-seen times, active status, edits, expiry, reposts, and source provenance |
+| **Normalization** | Canonicalize employers, titles, skills, locations, currencies, salary periods, experience levels, and contract types |
+| **Deduplication** | Link cross-posted or reposted vacancies without merging genuinely different roles; retain evidence and confidence |
+| **Candidate intent** | Parse a CV or accept editable skills, experience, goals, exclusions, preferred locations, and other user-supplied constraints |
+| **Retrieval and filtering** | Combine lexical search, embeddings, taxonomy expansion, geographic logic, and exact user-selected filters |
+| **Ranking and explanation** | Rank suitable active vacancies; expose matching skills, unmet requirements, uncertain inferences, source freshness, and ranking factors |
+| **Subscriptions and alerts** | Detect newly suitable or materially changed vacancies; schedule digests; suppress duplicates and expired listings |
+| **Feedback and analytics** | Record useful/not-useful, saved, hidden, opened, or applied signals without assuming that absence of feedback means irrelevance |
+
+Possible progress signals include:
+
+| Dimension | Examples |
+|---|---|
+| **Vacancy data** | Source coverage, collection success, freshness, active-status accuracy, duplicate/repost rate, normalization completeness |
+| **Retrieval and matching** | Recall@K, NDCG, judged suitability, hard-filter violations, cold-start quality, explanation correctness, query latency |
+| **Alerts** | Time to alert, alert precision, repeated-notification rate, stale-link rate, digest usefulness, pause/unsubscribe success |
+| **User value** | Time to find a useful vacancy, saved or applied rate when available, correction rate, useful-result coverage |
+| **Trust and privacy** | CV deletion/export success, retention compliance, sensitive-field exposure, access violations, unsupported inferences |
+| **Operations** | Source-breakage detection, recovery time, collection cost, indexing delay, notification-delivery failures |
+
+Important limitations are part of the program: websites may prohibit or restrict collection; vacancies can be stale, duplicated, misleading, or fraudulent; titles and requirements are inconsistent; salary and remote-work descriptions may be ambiguous; user feedback is selective; CVs contain sensitive personal data; and historical hiring patterns may reproduce discrimination. Prefer permitted APIs and feeds, let users inspect and correct extracted profiles, avoid sensitive attributes in ranking, provide deletion and retention controls, and describe results as matches rather than hiring predictions.
 
 #### Learning and Practice as a Component Ecosystem
 
@@ -779,6 +831,7 @@ Document Intelligence can supply ingestion and extraction capabilities, while th
 #### Feasible Data Starting Points
 
 - Marketing or media intelligence can use regularly updated sources such as [GDELT](https://www.gdeltproject.org/data.html?source=post_page---------------------------), subject to source quality and licensing checks.
+- Job-opportunity work can begin with permitted APIs/feeds, public research data, or a replayable synthetic vacancy corpus; preserve source provenance and expiry while avoiding collection that violates access terms.
 - GIS work can begin with regional [OpenStreetMap extracts](https://wiki.openstreetmap.org/wiki/Extracts) rather than planet-scale processing.
 - Learning work can begin with owned, licensed, or public-domain PDFs and EPUBs, personal notes, open course material, subtitles, and transcripts; preserve page/section references and avoid bypassing DRM.
 - A game, marketplace, logistics simulation, or agent tournament can generate controlled events, interactions, graphs, transactions, and rare cases.
@@ -791,11 +844,11 @@ These can be standalone studies, but often become more meaningful when attached 
 
 | Capability | Main question | Possible host programs | Example progress signals |
 |---|---|---|---|
-| **Search and retrieval** | Can the system return the most useful available information while keeping the index fresh and responsive? | Marketing, documents, GIS, research, games | Recall/MRR/NDCG, zero-result rate, freshness, latency, indexing throughput, cost |
-| **Recommendation and ranking** | Can the system rank useful items for a user or context while maintaining coverage and freshness? | Products, content, locations, research sources, game items | Recall/NDCG, coverage, diversity, novelty, cold-start quality, freshness, latency |
-| **Alerting and workflow automation** | Can meaningful changes trigger timely action without overwhelming users? | Marketing, GIS, simulated equipment, marketplaces, infrastructure | Detection delay, alert precision, missed-event rate, acknowledgement time, automation success |
+| **Search and retrieval** | Can the system return the most useful available information while keeping the index fresh and responsive? | Marketing, job vacancies, documents, GIS, research, games | Recall/MRR/NDCG, zero-result rate, freshness, latency, indexing throughput, cost |
+| **Recommendation and ranking** | Can the system rank useful items for a user or context while maintaining coverage and freshness? | Vacancies, products, content, locations, research sources, game items | Recall/NDCG, coverage, diversity, novelty, cold-start quality, freshness, latency |
+| **Alerting and workflow automation** | Can meaningful changes trigger timely action without overwhelming users? | Marketing, job vacancies, GIS, simulated equipment, marketplaces, infrastructure | Detection delay, alert precision, missed-event rate, acknowledgement time, automation success |
 | **Agentic research and analysis** | Can bounded research or analysis tasks be completed correctly, reproducibly, and with appropriate human involvement? | Marketing, GIS, documents, data exploration | Task completion, supported claims, calculation correctness, intervention rate, recovery, cost/latency |
-| **OCR and information extraction** | Can unstructured documents become trustworthy structured records? | Documents, finance, public records, maps | Recognition/field accuracy, review rate, throughput, confidence calibration, schema validity |
+| **OCR and information extraction** | Can unstructured documents become trustworthy structured records? | Documents, CVs, finance, public records, maps | Recognition/field accuracy, review rate, throughput, confidence calibration, schema validity |
 | **Forecasting, anomaly, and failure-risk estimation** | Can future behavior, unusual events, or failure likelihood be estimated early enough to support action? | Simulated equipment, infrastructure, finance, games | Forecast error, interval coverage, calibration, event precision/recall, detection delay, alert volume |
 | **Risk, fraud, and abuse detection** | Can suspicious accounts, events, transactions, or relationships be prioritized within a limited review capacity? | Games, synthetic marketplaces, payment simulations, identity/account systems | Precision at review capacity, expected loss, calibration, investigation time, drift, false-positive burden |
 
