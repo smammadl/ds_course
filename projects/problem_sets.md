@@ -625,7 +625,40 @@ Reimplement compact mechanisms that reveal the mathematics. Use production libra
 
 ## Group 2: Integrated Systems Programs
 
-These programs connect many independently useful parts into larger systems. 
+These programs connect many independently useful parts into larger systems. A developer may build one component, connect several components, deepen a capability, or expand the whole program over time.
+
+### Purpose and Ways to Use the Programs
+
+- Start where the data and interest make sense.
+- Complete useful components independently or connect them to expose interfaces and failure modes.
+- Reuse components when doing so tests whether they are genuinely general.
+- Add scale or distribution only for a measured constraint or deliberate systems experiment.
+
+### Rough Maturity Guide
+
+These are orientation points, not required stages. Different parts of one program may mature at different rates.
+
+| Rough stage | Typical state |
+|---|---|
+| **Exploration** | The problem, data, users, and plausible approaches are being investigated |
+| **Working core** | One useful workflow works from beginning to end |
+| **Connected system** | Several components exchange data and support a broader workflow |
+| **Operational system** | Recurring execution, failures, observability, security, and recovery receive attention |
+| **Expanded system** | The program supports additional users, domains, data, automation, or scale |
+
+### Project Compass
+
+Use these prompts when they help; they are not a required specification.
+
+| Lens | Questions to consider |
+|---|---|
+| **Purpose** | What problem, user, decision, action, or workflow could improve? |
+| **Scope** | What is being attempted now, excluded, independently useful, or worth connecting? |
+| **Data** | What is available, sufficiently varied, fresh, reliable, and legally usable? |
+| **System** | What are the inputs, transformations, stored states, interfaces, actions, and human review points? |
+| **Progress** | What works, remains manual, is unreliable, or is difficult to reproduce? |
+| **Shortcomings and risks** | Which assumptions, silent failures, privacy, security, licensing, cost, or misuse concerns matter most? |
+| **Next directions** | Improve, connect, evaluate, automate, operate, generalize, scale, or simplify? |
 
 ### Data and Scale Modes
 
@@ -644,11 +677,28 @@ Keep two meanings of scale separate:
 
 Generated volume can test partitioning and recovery, but it does not automatically create meaningful model, search, or recommendation evaluation.
 
+### Open-Ended Progress Measures
+
+Choose a few measures that fit the program; do not force them into one universal score.
+
+| Dimension | Possible measures |
+|---|---|
+| **Usefulness** | Time saved, useful findings, successful workflows, accepted recommendations, completed decisions |
+| **Data** | Coverage, freshness, duplicates, invalid records, schema failures, reproducibility, lineage |
+| **Analytical quality** | Precision, recall, ranking quality, calibration, forecast error, uncertainty coverage |
+| **Operations** | Availability, recovery time, failed-job rate, throughput, p95 latency, backlog |
+| **Trust** | Supported claims, false alerts, audit coverage, human correction, permission violations |
+| **Efficiency** | Cost per entity, document, query, prediction, event, or completed workflow |
+
+Improvement is usually multi-objective: one dimension should not improve by quietly violating an important constraint in another.
+
 ---
 
 ### A. Domain Programs
 
 Domain programs provide the users, data, workflows, and reasons for connecting technical components.
+
+The ecosystem notes below are reminders, not prescribed architectures. Components and boundaries should emerge during project development.
 
 | Program | Main problem | Possible parts | Example progress signals |
 |---|---|---|---|
@@ -661,119 +711,29 @@ Domain programs provide the users, data, workflows, and reasons for connecting t
 
 #### Marketing Intelligence as a Component Ecosystem
 
-One possible shape is:
-
-```text
-Sources
-  → scraping and API connectors
-  → raw storage and versioning
-  → parsing and entity resolution
-  → historical data model
-  → statistics and machine learning
-  → search and retrieval
-  → reports and alerts
-  → agentic research
-  → API and user interface
-  → monitoring and recovery
-```
-
-This is a map of possible relationships, not a required architecture. Work may focus on one component, one useful vertical slice, or the connections among several components.
+| Reminder | Essentials |
+|---|---|
+| **Core loop** | Sources → versioned history → entity resolution → analysis/search → reports and alerts |
+| **Useful signals** | Coverage, freshness, change-detection quality, alert precision, supported claims, report time/cost |
+| **Watch for** | Source changes, duplicates, weak provenance, unsupported claims, stale information, and noisy alerts |
 
 #### Job Opportunity Intelligence as a Component Ecosystem
 
-The central loop is to maintain a trustworthy view of active vacancies, translate a user's stated preferences or CV into controllable search intent, and deliver timely matches without hiding why they were selected.
-
-```text
-Permitted job feeds, APIs, and web sources
-  → collection, snapshots, and source-change handling
-  → normalization, company/entity resolution, and deduplication
-  → active/expired/reposted vacancy history
-  → occupation, skill, location, seniority, and contract taxonomy
-  → CV upload, free text, filters, or saved-search intent
-  → lexical/semantic retrieval and hard filtering
-  → ranking, suitability explanation, and missing-requirement analysis
-  → saved results, subscriptions, alerts, and periodic digests
-  → user feedback and matching evaluation
-```
-
-| Interaction mode | Possible behavior and constraints |
+| Reminder | Essentials |
 |---|---|
-| **CV upload** | Extract roles, skills, experience, education, languages, and preferences; let the user correct the profile; minimize retention of the original document |
-| **Free-text search** | Accept goals such as role changes, technologies, industries, location, or remote-work preferences; combine semantic and lexical retrieval |
-| **Structured filters** | Enforce location, remote/on-site mode, occupation, seniority, experience, salary, contract type, language, company, and posting date as explicit constraints |
-| **Combined search** | Use CV/text for ranking while treating selected filters as hard requirements; show which evidence affected each match |
-| **Saved search or subscription** | Store a user-controlled search definition; send immediate alerts or periodic digests; deduplicate notifications and provide pause/unsubscribe controls |
-
-| Component | Possible responsibilities |
-|---|---|
-| **Source acquisition** | Use permitted feeds, APIs, or scraping; respect access rules and rate limits; detect source-layout and schema changes |
-| **Vacancy history** | Store observed versions, first/last-seen times, active status, edits, expiry, reposts, and source provenance |
-| **Normalization** | Canonicalize employers, titles, skills, locations, currencies, salary periods, experience levels, and contract types |
-| **Deduplication** | Link cross-posted or reposted vacancies without merging genuinely different roles; retain evidence and confidence |
-| **Candidate intent** | Parse a CV or accept editable skills, experience, goals, exclusions, preferred locations, and other user-supplied constraints |
-| **Retrieval and filtering** | Combine lexical search, embeddings, taxonomy expansion, geographic logic, and exact user-selected filters |
-| **Ranking and explanation** | Rank suitable active vacancies; expose matching skills, unmet requirements, uncertain inferences, source freshness, and ranking factors |
-| **Subscriptions and alerts** | Detect newly suitable or materially changed vacancies; schedule digests; suppress duplicates and expired listings |
-| **Feedback and analytics** | Record useful/not-useful, saved, hidden, opened, or applied signals without assuming that absence of feedback means irrelevance |
-
-Possible progress signals include:
-
-| Dimension | Examples |
-|---|---|
-| **Vacancy data** | Source coverage, collection success, freshness, active-status accuracy, duplicate/repost rate, normalization completeness |
-| **Retrieval and matching** | Recall@K, NDCG, judged suitability, hard-filter violations, cold-start quality, explanation correctness, query latency |
-| **Alerts** | Time to alert, alert precision, repeated-notification rate, stale-link rate, digest usefulness, pause/unsubscribe success |
-| **User value** | Time to find a useful vacancy, saved or applied rate when available, correction rate, useful-result coverage |
-| **Trust and privacy** | CV deletion/export success, retention compliance, sensitive-field exposure, access violations, unsupported inferences |
-| **Operations** | Source-breakage detection, recovery time, collection cost, indexing delay, notification-delivery failures |
-
-Important limitations are part of the program: websites may prohibit or restrict collection; vacancies can be stale, duplicated, misleading, or fraudulent; titles and requirements are inconsistent; salary and remote-work descriptions may be ambiguous; user feedback is selective; CVs contain sensitive personal data; and historical hiring patterns may reproduce discrimination. Prefer permitted APIs and feeds, let users inspect and correct extracted profiles, avoid sensitive attributes in ranking, provide deletion and retention controls, and describe results as matches rather than hiring predictions.
+| **Core loop** | Permitted sources → normalized/versioned active vacancies → CV, text, or filters → retrieval/ranking → explanations → saved searches and alerts |
+| **Interaction modes** | CV upload with editable extraction, free-text intent, hard filters, combined search, and immediate or periodic subscriptions |
+| **Useful signals** | Freshness, active-status accuracy, duplicate rate, filter violations, ranking relevance, explanation correctness, alert precision, time to discovery |
+| **Watch for** | Source terms and breakage, stale/reposted or fraudulent ads, ambiguous fields, CV privacy, ranking bias, unsupported inferences, and notification spam |
 
 #### Learning and Practice as a Component Ecosystem
 
-The central loop is to convert source material into verifiable practice, collect review evidence, and use that evidence to improve later practice.
-
-```text
-PDF, EPUB, HTML, notes, image, audio, or transcript
-  → text, layout, and media extraction
-  → sections, concepts, examples, and prerequisites
-  → flashcards, cloze questions, and exercises
-  → source-support, ambiguity, and duplicate checks
-  → human review
-  → Anki export or built-in practice
-  → review history and learner feedback
-  → improved scheduling, selection, and generation
-```
-
-The program can emphasize either or both of these modes:
-
-- **Knowledge study:** definitions, explanations, formulas, diagrams, comparisons, prerequisites, chapter questions, and image occlusion.
-- **Language learning:** vocabulary in context, sentence cloze, grammar transformations, translation, listening, pronunciation, minimal pairs, and exercises based on recurring errors.
-
-| Component | Possible responsibilities |
+| Reminder | Essentials |
 |---|---|
-| **Content ingestion** | Import PDF, EPUB, HTML, Markdown, images, audio, transcripts, and metadata while retaining source locations |
-| **Document processing** | Recover OCR text, layout, reading order, headings, tables, formulas, diagrams, and media |
-| **Concept organization** | Identify terms, definitions, relationships, examples, sections, and possible prerequisites |
-| **Practice generation** | Produce Q&A, cloze, definition, formula, image, listening, pronunciation, and transformation exercises |
-| **Verification** | Check source support, answerability, ambiguity, contradictions, duplicate meaning, and leakage from question to answer |
-| **Human review** | Accept, edit, reject, merge, split, tag, and trace an item back to its source |
-| **Practice and scheduling** | Run sessions, grade answers, schedule reviews, provide hints, and retain learning history |
-| **Integration** | Begin with CSV/TSV export; later add richer Anki packages, media, synchronization, or a built-in client |
-| **Adaptation and analytics** | Track weak concepts, recurring language errors, difficulty, retention, review load, and generation quality |
-
-Possible progress signals include:
-
-| Dimension | Examples |
-|---|---|
-| **Generation quality** | Acceptance/edit rate, unsupported-answer rate, duplicate rate, ambiguity rate, source-reference accuracy, concept coverage |
-| **Learning usefulness** | Time per accepted item, delayed recall, repeated-error rate, difficulty calibration, weak-concept improvement, review burden |
-| **Language practice** | Vocabulary coverage, accepted-answer coverage, cloze ambiguity, grammar-error recurrence, listening/pronunciation performance |
-| **Operations** | Extraction success by format, OCR/layout quality, processing time/cost, recovery from failed documents, export reliability |
-
-Important limitations are also useful areas of study: a grammatical card may be educationally poor; a cloze may have several valid answers; a short passage may lack context; formulas and diagrams may be extracted incorrectly; excessive cards may increase review burden; and copyrighted, DRM-protected, or personal material may require restricted or local processing.
-
-Document Intelligence can supply ingestion and extraction capabilities, while the Learning and Practice Platform adds an end-user feedback loop through review, correction, scheduling, and measured learning outcomes.
+| **Core loop** | Learning material → extraction and concepts → cards/cloze/exercises → verification and review → Anki or built-in practice → learning feedback |
+| **Modes** | Knowledge study through definitions, formulas, diagrams, and comparisons; language practice through vocabulary, grammar, cloze, listening, and pronunciation |
+| **Useful signals** | Acceptance/edit rate, source support, duplicate/ambiguity rate, time per accepted item, retention, recurring errors, and review burden |
+| **Watch for** | Educationally weak or ambiguous items, missing context, OCR/formula errors, excessive card volume, copyright/DRM limits, and personal-data exposure |
 
 #### Feasible Data Starting Points
 
